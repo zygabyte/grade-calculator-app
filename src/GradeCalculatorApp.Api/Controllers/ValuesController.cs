@@ -21,7 +21,7 @@ namespace GradeCalculatorApp.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return "hello world!!!!";
         }
 
         // POST api/values
