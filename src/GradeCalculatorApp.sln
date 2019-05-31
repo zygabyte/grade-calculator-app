@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Data", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.EnumLibrary", "GradeCalculatorApp.EnumLibrary\GradeCalculatorApp.EnumLibrary.csproj", "{9011BD1E-DC81-486C-BD2C-D77B4978AD51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Core", "GradeCalculatorApp.Core\GradeCalculatorApp.Core.csproj", "{BFE2990C-B4BC-4518-B17E-113F9291308E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{9011BD1E-DC81-486C-BD2C-D77B4978AD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9011BD1E-DC81-486C-BD2C-D77B4978AD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9011BD1E-DC81-486C-BD2C-D77B4978AD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
