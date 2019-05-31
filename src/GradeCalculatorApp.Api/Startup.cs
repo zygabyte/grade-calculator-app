@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeCalculatorApp.Core.Repositories.Implementations;
+using GradeCalculatorApp.Core.Repositories.Interfaces;
+using GradeCalculatorApp.Core.Services.Implementations;
+using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +36,32 @@ namespace GradeCalculatorApp.Api
             var connString = Configuration.GetConnectionString("GradeCalculatorContext");
 
             services.AddDbContext<GradeCalculatorContext>(s => s.UseSqlServer(connString));
+
+            //  configure repositories
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<ILecturerCourseRepository, LecturerCourseRepository>();
+            services.AddScoped<ILecturerRepository, LecturerRepository>();
+            services.AddScoped<IProgrammeCourseRepository, ProgrammeCourseRepository>();
+            services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
+            services.AddScoped<ISemesterRepository, SemesterRepository>();
+            services.AddScoped<ISessionCourseRepository, SessionCourseRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            
+            //  configure services
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<ILecturerCourseService, LecturerCourseService>();
+            services.AddScoped<ILecturerService, LecturerService>();
+            services.AddScoped<IProgrammeCourseService, ProgrammeCourseService>();
+            services.AddScoped<IProgrammeService, ProgrammeService>();
+            services.AddScoped<ISchoolService, SchoolService>();
+            services.AddScoped<ISemesterService, SemesterService>();
+            services.AddScoped<ISessionCourseService, SessionCourseService>();
+            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

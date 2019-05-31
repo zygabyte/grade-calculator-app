@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GradeCalculatorApp.Core\GradeCalculatorApp.Core.csproj" />
       <ProjectReference Include="..\GradeCalculatorApp.Data\GradeCalculatorApp.Data.csproj" />
     </ItemGroup>
 
