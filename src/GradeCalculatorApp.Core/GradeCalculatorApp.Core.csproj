@@ -5,11 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Services\Implementations" />
-      <Folder Include="Services\Interfaces" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\GradeCalculatorApp.Data\GradeCalculatorApp.Data.csproj" />
     </ItemGroup>
 

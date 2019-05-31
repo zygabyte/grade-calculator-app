@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return sessionId > 0 ? _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive) : null;
+                return _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
             }
             catch (Exception e)
             {
@@ -82,7 +82,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 var currentSession = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
 
-                if (session == null || currentSession == null) return false;
+                if (currentSession == null) return false;
                 
                 currentSession.Courses = session.Courses;
                 currentSession.Semester = session.Semester;

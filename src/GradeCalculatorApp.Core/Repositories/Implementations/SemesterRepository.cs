@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return semesterId > 0 ? _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive) : null;
+                return _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
             }
             catch (Exception e)
             {
@@ -82,7 +82,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 var currentSemester = _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
 
-                if (semester == null || currentSemester == null) return false;
+                if (currentSemester == null) return false;
                 
                 currentSemester.Name = semester.Name;
                 currentSemester.Modified = DateTime.Now;

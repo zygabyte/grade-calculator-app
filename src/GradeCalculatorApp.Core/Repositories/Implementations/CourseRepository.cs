@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return courseId > 0 ? _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive) : null;
+                return _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
             }
             catch (Exception e)
             {
@@ -82,7 +82,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
 
-                if (course == null || currentCourse == null) return false;
+                if (currentCourse == null) return false;
                 
                 currentCourse.Code = course.Code;
                 currentCourse.Title = course.Title;

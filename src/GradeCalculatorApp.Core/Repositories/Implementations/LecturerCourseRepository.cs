@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return lecturerCourseId > 0 ? _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive) : null;
+                return _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
             }
             catch (Exception e)
             {
@@ -68,7 +68,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 _gradeCalculatorContext.Entry(lecturerCourse).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
-
             }
             catch (Exception e)
             {
@@ -82,7 +81,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 var currentLecturerCourse = _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
 
-                if (lecturerCourse == null || currentLecturerCourse == null) return false;
+                if (currentLecturerCourse == null) return false;
                 
                 currentLecturerCourse.Courses = lecturerCourse.Courses;
                 currentLecturerCourse.Lecturer = lecturerCourse.Lecturer;

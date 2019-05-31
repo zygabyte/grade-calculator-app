@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return studentId > 0 ? _gradeCalculatorContext.Students.FirstOrDefault(x => !x.IsDeleted && x.IsActive) : null;
+                return _gradeCalculatorContext.Students.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
             }
             catch (Exception e)
             {
@@ -82,7 +82,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 var currentStudent = _gradeCalculatorContext.Students.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
 
-                if (student == null || currentStudent == null) return false;
+                if (currentStudent == null) return false;
                 
                 currentStudent.Email = student.Email;
                 currentStudent.LastName = student.LastName;
