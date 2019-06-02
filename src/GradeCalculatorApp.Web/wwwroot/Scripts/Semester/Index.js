@@ -1,3 +1,5 @@
+let semesterId;
+
 $(document).ready(function () {
     pageLoad();
 });
@@ -20,7 +22,7 @@ function readSemestersResponse(data){
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + semester.name + '</td>';
             row += '<td>' + semester.code + '</td>';
-            row += '<td><button type="button" class="btn btn-success btn-sm" onclick="editSemesterClick(\'' + semester.id + '\')">Edit</button> | <button type="button" class="btn btn-danger btn-sm" onclick="deleteSemester(\'' + semester.id + '\')">Delete</button></td>';
+            row += '<td><button type="button" class="btn btn-success btn-sm" onclick="editSemesterClick(\'' + semester.id + '\')">Edit</button> | <a href="#deleteSemesterModal" data-toggle="modal" class="btn btn-danger btn-sm" onclick="deleteSemesterClick(\'' + semester.id + '\')">Delete</a></td>';
             row += '</tr>';
 
             $('#semesterTable tbody').append(row);
@@ -53,12 +55,7 @@ function createSemester(){
 }
 
 function createSemesterResponse(data){
-    if (data.status){
-        pageLoad();
-        resetField();
-
-        $('#newSemesterModal').modal('hide');
-    }
+    if (data.status) onSuccessModalHide();
 }
 
 function editSemesterClick(semesterId){
@@ -99,12 +96,28 @@ function editSemester(){
 }
 
 function editSemesterResponse(data) {
-    if (data.status){
-        pageLoad();
-        resetField();
+    if (data.status) onSuccessModalHide();
+}
 
-        $('#newSemesterModal').modal('hide');
-    }
+function deleteSemesterClick(semesterId) {
+    window.semesterId = semesterId;
+}
+
+function deleteSemester() {
+    api('POST', '/Semester/DeleteSemester',
+        {semesterId: window.semesterId}, true, deleteSemesterResponse, true);
+}
+
+function deleteSemesterResponse(data) {
+    if (data.status) onSuccessModalHide();
+}
+
+function onSuccessModalHide() {
+    pageLoad();
+    resetField();
+
+    $('#newSemesterModal').modal('hide');
+    $('#deleteSemesterModal').modal('hide');
 }
 
 function resetField() {
