@@ -5,7 +5,7 @@ using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GradeCalculatorApp.Web.Controllers
+namespace GradeCalculatorApp.Web.Controllers.Apis
 {
     public class ProgrammeCourseController : Controller
     {

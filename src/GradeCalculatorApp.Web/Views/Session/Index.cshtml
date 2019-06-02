@@ -1,0 +1,418 @@
+@model object
+
+@{
+    ViewBag.Title = "Sessions";
+    Layout = "_Layout";
+}
+
+<section class="wrapper">
+      <!-- page start-->
+      <section class="card">
+          <header class="card-header">
+              All Sessions
+              <span class="pull-right">
+                  <a href="#newSessionModal" data-toggle="modal" class="btn btn-success btn-sm">New Session</a>
+              </span>
+          </header>
+      <div class="card-body">
+          <div class="row">
+    
+              <div class="col-md-12">
+                  <div class="adv-table">
+      
+            <table class="table table-hover p-table" id="dynamic-table">
+                  <thead>
+                  <tr>
+                      <th>Session</th>
+                      <th>Semester</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">New Dashboard BS3</a>
+                          <br>
+                          <small>Created 27.11.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>87% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Creative Portfolio</a>
+                          <br>
+                          <small>Created 21.10.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>65% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Directory & listing</a>
+                          <br>
+                          <small>Created 2.09.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>55% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">New Dashboard BS3</a>
+                          <br>
+                          <small>Created 27.11.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>87% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Creative Portfolio</a>
+                          <br>
+                          <small>Created 21.10.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>65% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Directory & listing</a>
+                          <br>
+                          <small>Created 2.09.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>55% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-default">Inactive</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">New Dashboard BS3</a>
+                          <br>
+                          <small>Created 27.11.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>87% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Creative Portfolio</a>
+                          <br>
+                          <small>Created 21.10.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>65% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-default">Inactive</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Directory & listing</a>
+                          <br>
+                          <small>Created 2.09.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>55% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">New Dashboard BS3</a>
+                          <br>
+                          <small>Created 27.11.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>87% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Creative Portfolio</a>
+                          <br>
+                          <small>Created 21.10.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>65% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="p-name">
+                          <a href="project_details.html">Directory & listing</a>
+                          <br>
+                          <small>Created 2.09.2014</small>
+                      </td>
+                      <td class="p-team">
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                          <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                      </td>
+                      <td class="p-progress">
+                          <div class="progress progress-xs">
+                              <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                          </div>
+                          <small>55% Complete </small>
+                      </td>
+                      <td>
+                          <span class="badge badge-primary">Active</span>
+                      </td>
+                      <td>
+                          <a href="project_details.html" class="btn btn-primary btn-sm"><i class="fa fa-folder"></i> View </a>
+                          <a href="#" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                          <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Delete </a>
+                      </td>
+                  </tr>
+                  </tbody>
+              </table>
+      </div>
+              </div>
+              
+              
+          </div>
+      </div>
+      
+      
+      
+      </section>
+      <!-- page end-->
+</section>
+
+
+<div class="modal fade" id="newSessionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form class="form-horizontal" data-parsley-validate="true">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Session</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="session">Session</label>
+                                <input type="text" class="form-control" id="session" placeholder="Session name">
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="semester">Semester</label>
+                                <select id="semester" class="form-control mb-2">
+                                    <option selected>Default select</option>
+                                    <option>One</option>
+                                    <option>Two</option>
+                                    <option>Three</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="startDate">Start Date</label>
+                                <input type="text" class="form-control" id="startDate" placeholder="Start date">
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="endDate">End Date</label>
+                                <input type="text" class="form-control" id="endDate" placeholder="End date">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="custom-control custom-checkbox mt-3">
+                                    <input type="checkbox" class="custom-control-input" id="current">
+                                    <label class="custom-control-label" for="current">Set as current</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
