@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                return _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var course = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var course = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
 
                 if (course == null) return false;
                 
@@ -80,7 +80,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
 
                 if (currentCourse == null) return false;
                 
@@ -89,7 +89,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentCourse.CreditUnit = course.CreditUnit;
                 currentCourse.Modified = DateTime.Now;
                     
-                _gradeCalculatorContext.Entry(course).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentCourse).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }

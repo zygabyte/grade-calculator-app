@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                return _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == lecturerId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var lecturer = _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var lecturer = _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == lecturerId);
 
                 if (lecturer == null) return false;
                 
@@ -80,7 +80,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentLecturer = _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var currentLecturer = _gradeCalculatorContext.Lecturers.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == lecturerId);
 
                 if (currentLecturer == null) return false;
                 
@@ -93,7 +93,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentLecturer.UserRole = lecturer.UserRole;
                 currentLecturer.Modified = DateTime.Now;
                     
-                _gradeCalculatorContext.Entry(lecturer).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentLecturer).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }

@@ -54,8 +54,8 @@ function initializeDataTable(table) {
     if (table.length > 0) {
         table.dataTable({ "ordering": [], "aaSorting": [] });
     }
-};
+}
 function resetDataTable(table) {
     table.dataTable().fnClearTable();
     table.dataTable().fnDestroy();
-};
+}

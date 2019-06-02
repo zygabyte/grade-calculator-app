@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                return _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == semesterId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var semester = _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var semester = _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == semesterId);
 
                 if (semester == null) return false;
                 
@@ -80,14 +80,14 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSemester = _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var currentSemester = _gradeCalculatorContext.Semesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == semesterId);
 
                 if (currentSemester == null) return false;
                 
                 currentSemester.Name = semester.Name;
                 currentSemester.Modified = DateTime.Now;
                     
-                _gradeCalculatorContext.Entry(semester).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentSemester).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }

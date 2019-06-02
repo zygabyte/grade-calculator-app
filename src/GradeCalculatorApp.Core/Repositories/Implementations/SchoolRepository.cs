@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                return _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == schoolId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var school = _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var school = _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == schoolId);
 
                 if (school == null) return false;
                 
@@ -80,7 +80,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSchool = _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var currentSchool = _gradeCalculatorContext.Schools.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == schoolId);
 
                 if (currentSchool == null) return false;
                 
@@ -88,7 +88,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentSchool.Departments = school.Departments;
                 currentSchool.Modified = DateTime.Now;
                     
-                _gradeCalculatorContext.Entry(school).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentSchool).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }

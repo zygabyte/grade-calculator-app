@@ -46,7 +46,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                return _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var session = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var session = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
 
                 if (session == null) return false;
                 
@@ -80,7 +80,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSession = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive);
+                var currentSession = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
 
                 if (currentSession == null) return false;
                 
@@ -92,7 +92,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentSession.SemesterEndDate = session.SemesterEndDate;
                 currentSession.Modified = DateTime.Now;
                     
-                _gradeCalculatorContext.Entry(session).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentSession).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }
