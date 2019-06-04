@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (department == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_departmentService.CreateDepartment(department) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _departmentService.CreateDepartment(department)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (department == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_departmentService.UpdateDepartment(departmentId, department) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, departmentId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, departmentId));
+                return _departmentService.UpdateDepartment(departmentId, department)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, departmentId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, departmentId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_departmentService.DeleteDepartment(departmentId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, departmentId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, departmentId));
+                return _departmentService.DeleteDepartment(departmentId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, departmentId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, departmentId));
             }
             catch (Exception e)
             {

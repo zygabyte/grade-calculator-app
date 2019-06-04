@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_sessionService.CreateSession(session) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _sessionService.CreateSession(session)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_sessionService.UpdateSession(sessionId, session) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
+                return _sessionService.UpdateSession(sessionId, session)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_sessionService.DeleteSession(sessionId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, sessionId));
+                return _sessionService.DeleteSession(sessionId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, sessionId));
             }
             catch (Exception e)
             {

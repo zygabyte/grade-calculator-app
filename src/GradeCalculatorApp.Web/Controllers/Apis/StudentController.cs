@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (student == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_studentService.CreateStudent(student) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _studentService.CreateStudent(student)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (student == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_studentService.UpdateStudent(studentId, student) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, studentId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, studentId));
+                return _studentService.UpdateStudent(studentId, student)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, studentId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, studentId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_studentService.DeleteStudent(studentId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, studentId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, studentId));
+                return _studentService.DeleteStudent(studentId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, studentId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, studentId));
             }
             catch (Exception e)
             {

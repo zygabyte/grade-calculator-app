@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (semester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_semesterService.CreateSemester(semester) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _semesterService.CreateSemester(semester) 
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (semester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_semesterService.UpdateSemester(semesterId, semester) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, semesterId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, semesterId));
+                return _semesterService.UpdateSemester(semesterId, semester)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, semesterId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, semesterId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_semesterService.DeleteSemester(semesterId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, semesterId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, semesterId));
+                return _semesterService.DeleteSemester(semesterId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, semesterId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, semesterId));
             }
             catch (Exception e)
             {

@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (lecturer == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_lecturerService.CreateLecturer(lecturer) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _lecturerService.CreateLecturer(lecturer)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendSuccessMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (lecturer == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_lecturerService.UpdateLecturer(lecturerId, lecturer) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, lecturerId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, lecturerId));
+                return _lecturerService.UpdateLecturer(lecturerId, lecturer)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, lecturerId))
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, lecturerId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_lecturerService.DeleteLecturer(lecturerId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, lecturerId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, lecturerId));
+                return _lecturerService.DeleteLecturer(lecturerId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, lecturerId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, lecturerId));
             }
             catch (Exception e)
             {

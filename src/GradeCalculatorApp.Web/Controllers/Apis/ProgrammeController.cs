@@ -27,9 +27,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (programme == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_programmeService.CreateProgramme(programme) 
-                    ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
-                    : string.Format(DefaultConstants.FailureCreate, ObjectName));
+                return _programmeService.CreateProgramme(programme)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
@@ -71,9 +71,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 if (programme == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_programmeService.UpdateProgramme(programmeId, programme) 
-                    ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, programmeId) 
-                    : string.Format(DefaultConstants.FailureUpdate, ObjectName, programmeId));
+                return _programmeService.UpdateProgramme(programmeId, programme)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, programmeId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, programmeId));
             }
             catch (Exception e)
             {
@@ -85,9 +85,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_programmeService.DeleteProgramme(programmeId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, programmeId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, programmeId));
+                return _programmeService.DeleteProgramme(programmeId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, programmeId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, programmeId));
             }
             catch (Exception e)
             {
