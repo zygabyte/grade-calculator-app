@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
+using GradeCalculatorApp.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers.Apis
@@ -41,7 +43,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(data: _sessionService.ReadSessions());
+                return ResponseData.SendSuccessMsg(data: _sessionService.ReadSessions().Select(x => new SessionVm
+                {
+                    Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
+                    Name = x.Name, SemesterId = x.SemesterId, 
+                    SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
+                    SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
+                }));
             }
             catch (Exception e)
             {
@@ -56,7 +64,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 var session = _sessionService.ReadSession(sessionId);
 
                 return session != null
-                    ? ResponseData.SendSuccessMsg(data: session)
+                    ? ResponseData.SendSuccessMsg(data: new SessionVm
+                    {
+                        Id = session.Id, Courses = session.Courses, Semester = session.Semester.Name,
+                        Name = session.Name, SemesterId = session.SemesterId,
+                        SemesterStartDate = session.SemesterStartDate.ToString("yyyy-MM-dd"),
+                        SemesterEndDate = session.SemesterEndDate.ToString("yyyy-MM-dd")
+                    })
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionId));
             }
             catch (Exception e)

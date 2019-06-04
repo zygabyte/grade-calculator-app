@@ -13,13 +13,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private readonly ISemesterService _semesterService;
         private const string ObjectName = "Semester"; 
         public SemesterController(ISemesterService semesterService) => _semesterService = semesterService;
-        
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
 
         public ActionResult<ResponseData> CreateSemester(Semester semester)
         {

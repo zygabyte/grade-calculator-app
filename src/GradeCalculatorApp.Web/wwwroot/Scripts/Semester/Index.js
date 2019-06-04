@@ -22,7 +22,7 @@ function readSemestersResponse(data){
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + semester.name + '</td>';
             row += '<td>' + semester.code + '</td>';
-            row += '<td><button type="button" class="btn btn-success btn-sm" onclick="editSemesterClick(\'' + semester.id + '\')">Edit</button> | <a href="#deleteSemesterModal" data-toggle="modal" class="btn btn-danger btn-sm" onclick="deleteSemesterClick(\'' + semester.id + '\')">Delete</a></td>';
+            row += '<td><button type="button" class="btn btn-success btn-xs" onclick="editSemesterClick(\'' + semester.id + '\')">Edit</button> | <a href="#deleteSemesterModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSemesterClick(\'' + semester.id + '\')">Delete</a></td>';
             row += '</tr>';
 
             $('#semesterTable tbody').append(row);
@@ -112,6 +112,10 @@ function deleteSemesterResponse(data) {
     if (data.status) onSuccessModalHide();
 }
 
+
+
+
+//______________________________________UTILITIES______________________________________
 function onSuccessModalHide() {
     pageLoad();
     resetField();

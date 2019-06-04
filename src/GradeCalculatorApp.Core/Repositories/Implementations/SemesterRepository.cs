@@ -85,6 +85,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentSemester == null) return false;
                 
                 currentSemester.Name = semester.Name;
+                currentSemester.Code = semester.Code;
                 currentSemester.Modified = DateTime.Now;
                     
                 _gradeCalculatorContext.Entry(currentSemester).State = EntityState.Modified;
