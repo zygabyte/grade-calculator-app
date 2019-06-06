@@ -16,13 +16,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "Session"; 
         public SessionSemesterController(ISessionSemesterService sessionSemesterService) => _sessionSemesterService = sessionSemesterService;
         
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
-
         public ActionResult<ResponseData> CreateSessionSemester(SessionSemester sessionSemester)
         {
             try
@@ -43,18 +36,10 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                var dd = _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionVm
+                return ResponseData.SendSuccessMsg(data: _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionSemesterVm
                 {
                     Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
-                     SemesterId = x.SemesterId,
-                    SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
-                    SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
-                });
-                
-                return ResponseData.SendSuccessMsg(data: _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionVm
-                {
-                    Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
-                     SemesterId = x.SemesterId, 
+                    Session = x.Session.Name, SessionId = x.SessionId, SemesterId = x.SemesterId, 
                     SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
                     SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
                 }));
@@ -72,10 +57,10 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 var sessionSemester = _sessionSemesterService.ReadSessionSemester(sessionId);
 
                 return sessionSemester != null
-                    ? ResponseData.SendSuccessMsg(data: new SessionVm
+                    ? ResponseData.SendSuccessMsg(data: new SessionSemesterVm
                     {
                         Id = sessionSemester.Id, Courses = sessionSemester.Courses, Semester = sessionSemester.Semester.Name,
-                         SemesterId = sessionSemester.SemesterId,
+                        Session = sessionSemester.Session.Name, SessionId = sessionSemester.SessionId, SemesterId = sessionSemester.SemesterId,
                         SemesterStartDate = sessionSemester.SemesterStartDate.ToString("yyyy-MM-dd"),
                         SemesterEndDate = sessionSemester.SemesterEndDate.ToString("yyyy-MM-dd")
                     })

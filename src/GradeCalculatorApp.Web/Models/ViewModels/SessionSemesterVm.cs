@@ -3,10 +3,11 @@ using GradeCalculatorApp.Data.Domains;
 
 namespace GradeCalculatorApp.Web.Models.ViewModels
 {
-    public class SessionVm
+    public class SessionSemesterVm
     {
         public long Id { get; set; }
-        public string Name { get; set; }
+        public string Session { get; set; }
+        public long SessionId { get; set; }
         public string Semester { get; set; }
         public long SemesterId { get; set; }
         public List<Course> Courses { get; set; }
