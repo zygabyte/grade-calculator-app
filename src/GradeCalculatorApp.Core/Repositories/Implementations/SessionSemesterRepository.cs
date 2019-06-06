@@ -33,8 +33,11 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return takeAll 
-                    ? _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester) 
-                    : _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester).Take(count);
+                    ? _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive)
+                        .Include(x => x.Semester).Include(x => x.Session) 
+                    : _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive)
+                        .Include(x => x.Semester).Include(x => x.Semester).Include(x => x.Session)
+                        .Take(count);
             }
             catch (Exception e)
             {
@@ -46,11 +49,25 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.SessionSemesters.Include(x => x.Semester).FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
+                return _gradeCalculatorContext.SessionSemesters
+                    .Include(x => x.Semester).Include(x => x.Session) 
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
             }
             catch (Exception e)
             {
                 return null;
+            }
+        }
+
+        public bool CurrentExists()
+        {
+            try
+            {
+                return _gradeCalculatorContext.SessionSemesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.IsCurrent) != null;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
 
@@ -89,6 +106,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentSession.SemesterId = sessionSemester.SemesterId;
                 currentSession.SemesterStartDate = sessionSemester.SemesterStartDate;
                 currentSession.SemesterEndDate = sessionSemester.SemesterEndDate;
+                currentSession.IsCurrent = sessionSemester.IsCurrent;
                 currentSession.Modified = DateTime.Now;
                     
                 _gradeCalculatorContext.Entry(currentSession).State = EntityState.Modified;

@@ -20,6 +20,7 @@ namespace GradeCalculatorApp.Core.Constants
         
         
         public static string InvalidObject { get; } = "Invalid {0} object";
+        public static string CurrentExists { get; } = "Sorry there already exist a current session semester. Kindly deactivate that first";
         
         
     }

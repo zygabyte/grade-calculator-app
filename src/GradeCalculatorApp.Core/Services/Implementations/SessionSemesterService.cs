@@ -36,6 +36,18 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return new List<SessionSemester>();
             }
         }
+        
+        public bool CurrentExists()
+        {
+            try
+            {
+                return _sessionSemesterRepository.CurrentExists();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         public SessionSemester ReadSessionSemester(long sessionId)
         {

@@ -13,5 +13,6 @@ namespace GradeCalculatorApp.Web.Models.ViewModels
         public List<Course> Courses { get; set; }
         public string SemesterStartDate { get; set; }
         public string SemesterEndDate { get; set; }   
+        public bool IsCurrent { get; set; }   
     }
 }

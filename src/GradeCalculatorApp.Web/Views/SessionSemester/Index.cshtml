@@ -1,7 +1,7 @@
 @model object
 
 @{
-    ViewBag.Title = "SessionSemesters";
+    ViewBag.Title = "Session - Semester";
     Layout = "_Layout";
 }
 
@@ -28,7 +28,7 @@
                           <thead>
                           <tr>
                               <th>#</th>
-                              <th>SessionSemester</th>
+                              <th>Session</th>
                               <th>Semester</th>
                               <th>Start Date</th>
                               <th>End Date</th>
@@ -62,8 +62,10 @@
                         <input type="hidden" class="form-control" id="id" required>
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
-                                <label for="sessionSemester">Session Semester</label>
-                                <input type="text" class="form-control" id="sessionSemester" placeholder="Session Semester name">
+                                <label for="session">Session</label>
+                                <select id="session" class="form-control mb-2">
+                                    <option selected>Select session</option>
+                                </select>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <label for="semester">Semester</label>
@@ -125,7 +127,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you really want to delete this sessionSemester?
+                Are you sure you really want to delete this Session Semester?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

@@ -9,27 +9,39 @@ function pageLoad() {
         true,
         readSessionSemestersResponse, true);
     
+    const semesterDropDownLength = $('#semester > option').length;
+    const sessionDropDownLength = $('#session > option').length;
+    
+    if(semesterDropDownLength === 1)
+        api("GET",
+            "/Semester/ReadSemesters",
+            null,
+            true,
+            readSemestersResponse, true);
+
+    if(sessionDropDownLength === 1)
     api("GET",
-        "/Semester/ReadSemesters",
+        "/Session/ReadSessions",
         null,
         true,
-        readSemestersResponse, true);
+        readSessionsResponse, true);
 }
 
 function readSessionSemestersResponse(data) {
-    console.log('sesion data');
-    console.log(data);
     resetDataTable($('#sessionSemesterTable'));
     
     if (data.status) {
         data.data.forEach((sessionSemester, i) => {
             let row = '<tr>';
             row += '<td>' + (i + 1) + '</td>';
-            row += '<td>' + sessionSemester.name + '</td>';
+            row += '<td>' + sessionSemester.session + '</td>';
             row += '<td>' + sessionSemester.semester + '</td>';
             row += '<td>' + new Date(sessionSemester.semesterStartDate).toDateString() + '</td>';
             row += '<td>' + new Date(sessionSemester.semesterEndDate).toDateString() + '</td>';
-            row += '<td> active </td>';
+            
+            if (sessionSemester.isCurrent) row += '<td><span class="badge badge-success">Active</span></td>';
+            else row += '<td><span class="badge badge-dark">Inactive</span></td>';
+            
             row += '<td><button type="button" class="btn btn-primary btn-xs" onclick="mapCourses(\'' + sessionSemester.id + '\')">Courses</button> | <button type="button" class="btn btn-success btn-xs" onclick="editSessionSemesterClick(\'' + sessionSemester.id + '\')">Edit</button> | <a href="#deleteSessionSemesterModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionSemesterClick(\'' + sessionSemester.id + '\')">Delete</a></td>';
             row += '</tr>';
 
@@ -48,6 +60,14 @@ function readSemestersResponse(data){
     }
 }
 
+function readSessionsResponse(data){
+    if (data.status) {
+        data.data.forEach((session) => {
+            $('#session').append(`<option value=${session.id}>${session.name}</option>`);
+        });
+    }
+}
+
 function showCreateSessionSemesterButton() {
     $('#createSessionSemesterBtn').show();
     $('#editSessionSemesterBtn').hide();
@@ -58,16 +78,18 @@ function showCreateSessionSemesterButton() {
 }
 
 function createSessionSemester(){
-    const sessionSemester = $('#sessionSemester').val();
+    const session = $('#session').val();
     const semester = $('#semester').val();
     const semesterStartDate = $('#startDate').val();
     const semesterEndDate = $('#endDate').val();
+    const isCurrent = $('#current').is(':checked');
 
     const sessionSemesterObject = {
-        Name: sessionSemester,
+        SessionId: session,
         SemesterId: semester,
         SemesterStartDate: semesterStartDate,
-        SemesterEndDate: semesterEndDate
+        SemesterEndDate: semesterEndDate,
+        IsCurrent: isCurrent
     };
 
     api('POST', '/SessionSemester/CreateSessionSemester',
@@ -95,30 +117,33 @@ function editSessionSemesterClickResponse(data){
         const sessionSemester = data.data;
 
         $('#id').val(sessionSemester.id);
-        $('#sessionSemester').val(sessionSemester.name);
+        $('#session').val(sessionSemester.sessionId);
         $('#semester').val(sessionSemester.semesterId);
         $('#startDate').val(sessionSemester.semesterStartDate);
         $('#endDate').val(sessionSemester.semesterEndDate);
+        $('#current').prop('checked', sessionSemester.isCurrent);
     }
 }
 
 function editSessionSemester(){
     const sessionSemesterId = $('#id').val();
 
-    const sessionSemester = $('#sessionSemester').val();
+    const session = $('#session').val();
     const semester = $('#semester').val();
     const semesterStartDate = $('#startDate').val();
     const semesterEndDate = $('#endDate').val();
-
+    const isCurrent = $('#current').is(':checked');
+    
     const sessionSemesterObject = {
-        Name: sessionSemester,
+        SessionId: session,
         SemesterId: semester,
         SemesterStartDate: semesterStartDate,
-        SemesterEndDate: semesterEndDate
+        SemesterEndDate: semesterEndDate,
+        IsCurrent: isCurrent
     };
 
     api('POST', '/SessionSemester/UpdateSessionSemester',
-        {sessionSemesterId: sessionSemesterId, sessionSemester: sessionSemesterObject}, true, editSessionSemesterResponse, true);
+        {sessionSemesterId: sessionSemesterId, sessionSemester: sessionSemesterObject}, true, editSessionSemesterResponse, true, true);
 }
 
 function editSessionSemesterResponse(data) {
@@ -151,7 +176,7 @@ function onSuccessModalHide() {
 
 function resetField() {
     $('#id').val('');
-    $('#sessionSemester').val('');
+    $('#session').val(0);
     $('#semester').val(0);
     $('#startDate').val('');
     $('#endDate').val('');

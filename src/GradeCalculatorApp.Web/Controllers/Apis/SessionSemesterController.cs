@@ -21,6 +21,8 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             try
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                
+                if (sessionSemester.IsCurrent && _sessionSemesterService.CurrentExists()) return ResponseData.SendFailMsg(string.Format(DefaultConstants.CurrentExists));
 
                 return _sessionSemesterService.CreateSessionSemester(sessionSemester)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
@@ -41,7 +43,8 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                     Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
                     Session = x.Session.Name, SessionId = x.SessionId, SemesterId = x.SemesterId, 
                     SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
-                    SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
+                    SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd"),
+                    IsCurrent = x.IsCurrent
                 }));
             }
             catch (Exception e)
@@ -50,11 +53,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> ReadSessionSemester(long sessionId)
+        public ActionResult<ResponseData> ReadSessionSemester(long sessionSemesterId)
         {
             try
             {
-                var sessionSemester = _sessionSemesterService.ReadSessionSemester(sessionId);
+                var sessionSemester = _sessionSemesterService.ReadSessionSemester(sessionSemesterId);
 
                 return sessionSemester != null
                     ? ResponseData.SendSuccessMsg(data: new SessionSemesterVm
@@ -62,9 +65,10 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                         Id = sessionSemester.Id, Courses = sessionSemester.Courses, Semester = sessionSemester.Semester.Name,
                         Session = sessionSemester.Session.Name, SessionId = sessionSemester.SessionId, SemesterId = sessionSemester.SemesterId,
                         SemesterStartDate = sessionSemester.SemesterStartDate.ToString("yyyy-MM-dd"),
-                        SemesterEndDate = sessionSemester.SemesterEndDate.ToString("yyyy-MM-dd")
+                        SemesterEndDate = sessionSemester.SemesterEndDate.ToString("yyyy-MM-dd"),
+                        IsCurrent = sessionSemester.IsCurrent
                     })
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionId));
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionSemesterId));
             }
             catch (Exception e)
             {
@@ -72,33 +76,35 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> UpdateSessionSemester(long sessionId, SessionSemester sessionSemester)
+        public ActionResult<ResponseData> UpdateSessionSemester(long sessionSemesterId, SessionSemester sessionSemester)
         {
             try
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+ 
+                if (sessionSemester.IsCurrent && _sessionSemesterService.CurrentExists()) return ResponseData.SendFailMsg(string.Format(DefaultConstants.CurrentExists));
                 
-                return _sessionSemesterService.UpdateSessionSemester(sessionId, sessionSemester)  
-                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId)) 
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
+                return _sessionSemesterService.UpdateSessionSemester(sessionSemesterId, sessionSemester)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionSemesterId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionSemesterId));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionUpdate, ObjectName, sessionId));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionUpdate, ObjectName, sessionSemesterId));
             }
         }
 
-        public ActionResult<ResponseData> DeleteSessionSemester(long sessionId)
+        public ActionResult<ResponseData> DeleteSessionSemester(long sessionSemesterId)
         {
             try
             {
-                return _sessionSemesterService.DeleteSessionSemester(sessionId)  
-                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionId)) 
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, sessionId));
+                return _sessionSemesterService.DeleteSessionSemester(sessionSemesterId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionSemesterId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, sessionSemesterId));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, sessionId));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, sessionSemesterId));
             }
         }
     }
