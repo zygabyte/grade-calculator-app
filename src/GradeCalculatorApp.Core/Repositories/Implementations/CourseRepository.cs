@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeCalculatorApp.Core.Repositories.Implementations
 {
-    public class CourseRepository : ICourseRepository
+    public class CourseRepository : ICourseRepository, IDisposable
     {
         private readonly GradeCalculatorContext _gradeCalculatorContext;
         
@@ -97,6 +97,11 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            _gradeCalculatorContext?.Dispose();
         }
     }
 }

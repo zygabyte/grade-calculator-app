@@ -10,9 +10,9 @@ namespace GradeCalculatorApp.Web.Controllers
     public class SessionController : Controller
     {
 
-        private readonly ISessionService _sessionService;
+        private readonly ISessionSemesterService _sessionSemesterService;
         private const string ObjectName = "Session"; 
-        public SessionController(ISessionService sessionService) => _sessionService = sessionService;
+        public SessionController(ISessionSemesterService sessionSemesterService) => _sessionSemesterService = sessionSemesterService;
         
         // GET
 //        public IActionResult Index()
@@ -27,7 +27,7 @@ namespace GradeCalculatorApp.Web.Controllers
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_sessionService.CreateSession(sessionSemester) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterService.CreateSessionSemester(sessionSemester) 
                     ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
                     : string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
@@ -41,7 +41,7 @@ namespace GradeCalculatorApp.Web.Controllers
         {
             try
             {
-                return ResponseData.SendSuccessMsg(data: _sessionService.ReadSessions());
+                return ResponseData.SendSuccessMsg(data: _sessionSemesterService.ReadSessionSemesters());
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace GradeCalculatorApp.Web.Controllers
         {
             try
             {
-                var session = _sessionService.ReadSession(sessionId);
+                var session = _sessionSemesterService.ReadSessionSemester(sessionId);
 
                 return session != null
                     ? ResponseData.SendSuccessMsg(data: session)
@@ -71,7 +71,7 @@ namespace GradeCalculatorApp.Web.Controllers
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_sessionService.UpdateSession(sessionId, sessionSemester) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterService.UpdateSessionSemester(sessionId, sessionSemester) 
                     ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId) 
                     : string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
             }
@@ -85,7 +85,7 @@ namespace GradeCalculatorApp.Web.Controllers
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_sessionService.DeleteSession(sessionId) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterService.DeleteSessionSemester(sessionId) 
                     ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionId) 
                     : string.Format(DefaultConstants.FailureDelete, ObjectName, sessionId));
             }

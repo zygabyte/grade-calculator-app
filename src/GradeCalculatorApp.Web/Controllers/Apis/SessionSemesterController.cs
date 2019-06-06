@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers.Apis
 {
-    public class SessionController : Controller
+    public class SessionSemesterController : Controller
     {
 
-        private readonly ISessionService _sessionService;
+        private readonly ISessionSemesterService _sessionSemesterService;
         private const string ObjectName = "Session"; 
-        public SessionController(ISessionService sessionService) => _sessionService = sessionService;
+        public SessionSemesterController(ISessionSemesterService sessionSemesterService) => _sessionSemesterService = sessionSemesterService;
         
         // GET
 //        public IActionResult Index()
@@ -23,13 +23,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 //            View();
 //        }
 
-        public ActionResult<ResponseData> CreateSession(SessionSemester sessionSemester)
+        public ActionResult<ResponseData> CreateSessionSemester(SessionSemester sessionSemester)
         {
             try
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return _sessionService.CreateSession(sessionSemester)  
+                return _sessionSemesterService.CreateSessionSemester(sessionSemester)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
@@ -39,11 +39,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> ReadSessions()
+        public ActionResult<ResponseData> ReadSessionSemesters()
         {
             try
             {
-                var dd = _sessionService.ReadSessions().Select(x => new SessionVm
+                var dd = _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionVm
                 {
                     Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
                      SemesterId = x.SemesterId,
@@ -51,7 +51,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                     SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
                 });
                 
-                return ResponseData.SendSuccessMsg(data: _sessionService.ReadSessions().Select(x => new SessionVm
+                return ResponseData.SendSuccessMsg(data: _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionVm
                 {
                     Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
                      SemesterId = x.SemesterId, 
@@ -65,19 +65,19 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> ReadSession(long sessionId)
+        public ActionResult<ResponseData> ReadSessionSemester(long sessionId)
         {
             try
             {
-                var session = _sessionService.ReadSession(sessionId);
+                var sessionSemester = _sessionSemesterService.ReadSessionSemester(sessionId);
 
-                return session != null
+                return sessionSemester != null
                     ? ResponseData.SendSuccessMsg(data: new SessionVm
                     {
-                        Id = session.Id, Courses = session.Courses, Semester = session.Semester.Name,
-                         SemesterId = session.SemesterId,
-                        SemesterStartDate = session.SemesterStartDate.ToString("yyyy-MM-dd"),
-                        SemesterEndDate = session.SemesterEndDate.ToString("yyyy-MM-dd")
+                        Id = sessionSemester.Id, Courses = sessionSemester.Courses, Semester = sessionSemester.Semester.Name,
+                         SemesterId = sessionSemester.SemesterId,
+                        SemesterStartDate = sessionSemester.SemesterStartDate.ToString("yyyy-MM-dd"),
+                        SemesterEndDate = sessionSemester.SemesterEndDate.ToString("yyyy-MM-dd")
                     })
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionId));
             }
@@ -87,13 +87,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> UpdateSession(long sessionId, SessionSemester sessionSemester)
+        public ActionResult<ResponseData> UpdateSessionSemester(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
                 if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return _sessionService.UpdateSession(sessionId, sessionSemester)  
+                return _sessionSemesterService.UpdateSessionSemester(sessionId, sessionSemester)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
             }
@@ -103,11 +103,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> DeleteSession(long sessionId)
+        public ActionResult<ResponseData> DeleteSessionSemester(long sessionId)
         {
             try
             {
-                return _sessionService.DeleteSession(sessionId)  
+                return _sessionSemesterService.DeleteSessionSemester(sessionId)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionId)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, sessionId));
             }

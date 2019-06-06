@@ -8,18 +8,8 @@ namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-
-        private readonly IConfiguration _configuration = new ConfigurationRoot(new List<IConfigurationProvider>());
-        private const string ConnectionString = "GradeCalculatorContext";
-
-//        public GradeCalculatorContext()
-//        {
-//            
-//        }
-//        public GradeCalculatorContext(IConfiguration configuration)
-//        {
-//            _configuration = configuration;
-//        }
+        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
+        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

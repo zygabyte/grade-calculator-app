@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
-    public class SessionController : Controller
+    public class SessionSemesterController : Controller
     {
         // GET
         public IActionResult Index()

@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeCalculatorApp.Core.Repositories.Implementations
 {
-    public class SessionRepository : ISessionRepository
+    public class SessionSemesterRepository : ISessionSemesterRepository, IDisposable
     {
         private readonly GradeCalculatorContext _gradeCalculatorContext;
         
-        public SessionRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
+        public SessionSemesterRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
         
-        public bool CreateSession(SessionSemester sessionSemester)
+        public bool CreateSessionSemester(SessionSemester sessionSemester)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public IEnumerable<SessionSemester> ReadSessions(bool takeAll = true, int count = 1000)
+        public IEnumerable<SessionSemester> ReadSessionSemesters(bool takeAll = true, int count = 1000)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool DeleteSession(long sessionId)
+        public bool DeleteSessionSemester(long sessionId)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool UpdateSession(long sessionId, SessionSemester sessionSemester)
+        public bool UpdateSessionSemester(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
@@ -99,6 +99,11 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            _gradeCalculatorContext?.Dispose();
         }
     }
 }

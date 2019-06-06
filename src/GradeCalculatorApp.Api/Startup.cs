@@ -47,7 +47,7 @@ namespace GradeCalculatorApp.Api
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<ISemesterRepository, SemesterRepository>();
             services.AddScoped<ISessionCourseRepository, SessionCourseRepository>();
-            services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped<ISessionSemesterRepository, SessionSemesterRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             
             //  configure services
@@ -60,7 +60,7 @@ namespace GradeCalculatorApp.Api
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<ISemesterService, SemesterService>();
             services.AddScoped<ISessionCourseService, SessionCourseService>();
-            services.AddScoped<ISessionService, SessionService>();
+            services.AddScoped<ISessionSemesterService, SessionSemesterService>();
             services.AddScoped<IStudentService, StudentService>();
         }
 
