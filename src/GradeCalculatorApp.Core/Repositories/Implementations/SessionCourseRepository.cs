@@ -85,7 +85,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentSessionCourse == null) return false;
                 
                 currentSessionCourse.Courses = sessionCourse.Courses;
-                currentSessionCourse.Session = sessionCourse.Session;
+                currentSessionCourse.SessionSemester = sessionCourse.SessionSemester;
                 currentSessionCourse.SessionId = sessionCourse.SessionId;
                 currentSessionCourse.Modified = DateTime.Now;
                     

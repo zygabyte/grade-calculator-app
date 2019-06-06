@@ -1,14 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Api", "GradeCalculatorApp.Api\GradeCalculatorApp.Api.csproj", "{E8CFE5A9-E554-49F6-86EC-459B3505A89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Data", "GradeCalculatorApp.Data\GradeCalculatorApp.Data.csproj", "{6095C6FF-596F-4121-ADA5-459C0D58344C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeCalculatorApp.Data", "GradeCalculatorApp.Data\GradeCalculatorApp.Data.csproj", "{6095C6FF-596F-4121-ADA5-459C0D58344C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.EnumLibrary", "GradeCalculatorApp.EnumLibrary\GradeCalculatorApp.EnumLibrary.csproj", "{9011BD1E-DC81-486C-BD2C-D77B4978AD51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeCalculatorApp.EnumLibrary", "GradeCalculatorApp.EnumLibrary\GradeCalculatorApp.EnumLibrary.csproj", "{9011BD1E-DC81-486C-BD2C-D77B4978AD51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Core", "GradeCalculatorApp.Core\GradeCalculatorApp.Core.csproj", "{BFE2990C-B4BC-4518-B17E-113F9291308E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeCalculatorApp.Core", "GradeCalculatorApp.Core\GradeCalculatorApp.Core.csproj", "{BFE2990C-B4BC-4518-B17E-113F9291308E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Web", "GradeCalculatorApp.Web\GradeCalculatorApp.Web.csproj", "{D75BADD1-D3E0-4773-BBA0-50B5093CF0B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeCalculatorApp.Web", "GradeCalculatorApp.Web\GradeCalculatorApp.Web.csproj", "{BCF7ADC4-FCD2-496C-8F3E-0226DD24130D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +35,15 @@ Global
 		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFE2990C-B4BC-4518-B17E-113F9291308E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D75BADD1-D3E0-4773-BBA0-50B5093CF0B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D75BADD1-D3E0-4773-BBA0-50B5093CF0B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D75BADD1-D3E0-4773-BBA0-50B5093CF0B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D75BADD1-D3E0-4773-BBA0-50B5093CF0B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCF7ADC4-FCD2-496C-8F3E-0226DD24130D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF7ADC4-FCD2-496C-8F3E-0226DD24130D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF7ADC4-FCD2-496C-8F3E-0226DD24130D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF7ADC4-FCD2-496C-8F3E-0226DD24130D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0823EE9-F4F8-42AC-BE85-51FDD2CF2B1C}
 	EndGlobalSection
 EndGlobal

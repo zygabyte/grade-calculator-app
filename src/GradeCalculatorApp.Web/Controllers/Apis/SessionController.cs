@@ -23,13 +23,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 //            View();
 //        }
 
-        public ActionResult<ResponseData> CreateSession(Session session)
+        public ActionResult<ResponseData> CreateSession(SessionSemester sessionSemester)
         {
             try
             {
-                if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return _sessionService.CreateSession(session)  
+                return _sessionService.CreateSession(sessionSemester)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
@@ -43,10 +43,18 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
+                var dd = _sessionService.ReadSessions().Select(x => new SessionVm
+                {
+                    Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
+                     SemesterId = x.SemesterId,
+                    SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
+                    SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
+                });
+                
                 return ResponseData.SendSuccessMsg(data: _sessionService.ReadSessions().Select(x => new SessionVm
                 {
                     Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
-                    Name = x.Name, SemesterId = x.SemesterId, 
+                     SemesterId = x.SemesterId, 
                     SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
                     SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd")
                 }));
@@ -67,7 +75,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                     ? ResponseData.SendSuccessMsg(data: new SessionVm
                     {
                         Id = session.Id, Courses = session.Courses, Semester = session.Semester.Name,
-                        Name = session.Name, SemesterId = session.SemesterId,
+                         SemesterId = session.SemesterId,
                         SemesterStartDate = session.SemesterStartDate.ToString("yyyy-MM-dd"),
                         SemesterEndDate = session.SemesterEndDate.ToString("yyyy-MM-dd")
                     })
@@ -79,13 +87,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> UpdateSession(long sessionId, Session session)
+        public ActionResult<ResponseData> UpdateSession(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
-                if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return _sessionService.UpdateSession(sessionId, session)  
+                return _sessionService.UpdateSession(sessionId, sessionSemester)  
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
             }

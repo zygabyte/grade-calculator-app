@@ -14,11 +14,11 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         
         public SessionRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
         
-        public bool CreateSession(Session session)
+        public bool CreateSession(SessionSemester sessionSemester)
         {
             try
             {
-                _gradeCalculatorContext.Sessions.Add(session);
+                _gradeCalculatorContext.SessionSemesters.Add(sessionSemester);
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }
@@ -28,25 +28,25 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public IEnumerable<Session> ReadSessions(bool takeAll = true, int count = 1000)
+        public IEnumerable<SessionSemester> ReadSessions(bool takeAll = true, int count = 1000)
         {
             try
             {
                 return takeAll 
-                    ? _gradeCalculatorContext.Sessions.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester) 
-                    : _gradeCalculatorContext.Sessions.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester).Take(count);
+                    ? _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester) 
+                    : _gradeCalculatorContext.SessionSemesters.Where(x => !x.IsDeleted && x.IsActive).Include(x => x.Semester).Take(count);
             }
             catch (Exception e)
             {
-                return new List<Session>();
+                return new List<SessionSemester>();
             }
         }
 
-        public Session ReadSession(long sessionId)
+        public SessionSemester ReadSession(long sessionId)
         {
             try
             {
-                return _gradeCalculatorContext.Sessions.Include(x => x.Semester).FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
+                return _gradeCalculatorContext.SessionSemesters.Include(x => x.Semester).FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var session = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
+                var session = _gradeCalculatorContext.SessionSemesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
 
                 if (session == null) return false;
                 
@@ -76,20 +76,19 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool UpdateSession(long sessionId, Session session)
+        public bool UpdateSession(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
-                var currentSession = _gradeCalculatorContext.Sessions.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
+                var currentSession = _gradeCalculatorContext.SessionSemesters.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionId);
 
                 if (currentSession == null) return false;
                 
-                currentSession.Courses = session.Courses;
-                currentSession.Semester = session.Semester;
-                currentSession.Name = session.Name;
-                currentSession.SemesterId = session.SemesterId;
-                currentSession.SemesterStartDate = session.SemesterStartDate;
-                currentSession.SemesterEndDate = session.SemesterEndDate;
+                currentSession.Courses = sessionSemester.Courses;
+                currentSession.Semester = sessionSemester.Semester;
+                currentSession.SemesterId = sessionSemester.SemesterId;
+                currentSession.SemesterStartDate = sessionSemester.SemesterStartDate;
+                currentSession.SemesterEndDate = sessionSemester.SemesterEndDate;
                 currentSession.Modified = DateTime.Now;
                     
                 _gradeCalculatorContext.Entry(currentSession).State = EntityState.Modified;

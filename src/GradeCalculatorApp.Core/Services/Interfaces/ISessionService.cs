@@ -5,10 +5,10 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
 {
     public interface ISessionService
     {
-        bool CreateSession(Session session);
-        IEnumerable<Session> ReadSessions(bool takeAll = true, int count = 1000);
-        Session ReadSession(long sessionId);
+        bool CreateSession(SessionSemester sessionSemester);
+        IEnumerable<SessionSemester> ReadSessions(bool takeAll = true, int count = 1000);
+        SessionSemester ReadSession(long sessionId);
         bool DeleteSession(long sessionId);
-        bool UpdateSession(long sessionId, Session session);
+        bool UpdateSession(long sessionId, SessionSemester sessionSemester);
     }
 }

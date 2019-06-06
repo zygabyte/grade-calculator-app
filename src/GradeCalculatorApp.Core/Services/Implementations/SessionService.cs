@@ -14,11 +14,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         
         public SessionService(ISessionRepository sessionRepository) => _sessionRepository = sessionRepository;
         
-        public bool CreateSession(Session session)
+        public bool CreateSession(SessionSemester sessionSemester)
         {
             try
             {
-                return session != null && _sessionRepository.CreateSession(session);
+                return sessionSemester != null && _sessionRepository.CreateSession(sessionSemester);
             }
             catch (Exception e)
             {
@@ -26,7 +26,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public IEnumerable<Session> ReadSessions(bool takeAll = true, int count = 1000)
+        public IEnumerable<SessionSemester> ReadSessions(bool takeAll = true, int count = 1000)
         {
             try
             {
@@ -34,11 +34,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
             catch (Exception e)
             {
-                return new List<Session>();
+                return new List<SessionSemester>();
             }
         }
 
-        public Session ReadSession(long sessionId)
+        public SessionSemester ReadSession(long sessionId)
         {
             try
             {
@@ -62,11 +62,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public bool UpdateSession(long sessionId, Session session)
+        public bool UpdateSession(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
-                return sessionId > 0 && session != null && _sessionRepository.UpdateSession(sessionId, session);
+                return sessionId > 0 && sessionSemester != null && _sessionRepository.UpdateSession(sessionId, sessionSemester);
             }
             catch (Exception e)
             {

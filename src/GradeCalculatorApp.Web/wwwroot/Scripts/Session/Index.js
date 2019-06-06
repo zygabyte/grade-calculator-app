@@ -17,6 +17,8 @@ function pageLoad() {
 }
 
 function readSessionsResponse(data) {
+    console.log('sesion data');
+    console.log(data);
     resetDataTable($('#sessionTable'));
     
     if (data.status) {

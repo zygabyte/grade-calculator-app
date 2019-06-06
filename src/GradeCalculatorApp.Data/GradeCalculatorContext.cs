@@ -1,12 +1,25 @@
+using System;
+using System.Collections.Generic;
 using GradeCalculatorApp.Data.Domains;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
-        {}
+
+        private readonly IConfiguration _configuration = new ConfigurationRoot(new List<IConfigurationProvider>());
+        private const string ConnectionString = "GradeCalculatorContext";
+
+//        public GradeCalculatorContext()
+//        {
+//            
+//        }
+//        public GradeCalculatorContext(IConfiguration configuration)
+//        {
+//            _configuration = configuration;
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +33,13 @@ namespace GradeCalculatorApp.Data
                 .HasOne(l => l.Department)
                 .WithMany(d => d.Lecturers);
         }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=.;Database=GradeCalculator;Trusted_Connection=True;MultipleActiveResultSets=true");
+        }
 
+        public DbSet<SessionSemester> SessionSemesters { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<School> Schools { get; set; }

@@ -4,14 +4,16 @@ using GradeCalculatorApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GradeCalculatorApp.Data.Migrations
 {
     [DbContext(typeof(GradeCalculatorContext))]
-    partial class GradeCalculatorContextModelSnapshot : ModelSnapshot
+    [Migration("20190606154133_ChangeSessionToSessions")]
+    partial class ChangeSessionToSessions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,29 +243,6 @@ namespace GradeCalculatorApp.Data.Migrations
                     b.ToTable("Semesters");
                 });
 
-            modelBuilder.Entity("GradeCalculatorApp.Data.Domains.Session", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code");
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("Modified");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sessions");
-                });
-
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.SessionCourse", b =>
                 {
                     b.Property<long>("Id")
@@ -305,19 +284,17 @@ namespace GradeCalculatorApp.Data.Migrations
 
                     b.Property<DateTime?>("Modified");
 
+                    b.Property<string>("Name");
+
                     b.Property<DateTime>("SemesterEndDate");
 
                     b.Property<long>("SemesterId");
 
                     b.Property<DateTime>("SemesterStartDate");
 
-                    b.Property<long>("SessionId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SemesterId");
-
-                    b.HasIndex("SessionId");
 
                     b.ToTable("SessionSemesters");
                 });
@@ -436,11 +413,6 @@ namespace GradeCalculatorApp.Data.Migrations
                     b.HasOne("GradeCalculatorApp.Data.Domains.Semester", "Semester")
                         .WithMany()
                         .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GradeCalculatorApp.Data.Domains.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

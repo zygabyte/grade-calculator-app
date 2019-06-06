@@ -21,13 +21,13 @@ namespace GradeCalculatorApp.Web.Controllers
 //            View();
 //        }
 
-        public ActionResult<ResponseData> CreateSession(Session session)
+        public ActionResult<ResponseData> CreateSession(SessionSemester sessionSemester)
         {
             try
             {
-                if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_sessionService.CreateSession(session) 
+                return ResponseData.SendSuccessMsg(_sessionService.CreateSession(sessionSemester) 
                     ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
                     : string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
@@ -65,13 +65,13 @@ namespace GradeCalculatorApp.Web.Controllers
             }
         }
 
-        public ActionResult<ResponseData> UpdateSession(long sessionId, Session session)
+        public ActionResult<ResponseData> UpdateSession(long sessionId, SessionSemester sessionSemester)
         {
             try
             {
-                if (session == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemester == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_sessionService.UpdateSession(sessionId, session) 
+                return ResponseData.SendSuccessMsg(_sessionService.UpdateSession(sessionId, sessionSemester) 
                     ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionId) 
                     : string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionId));
             }
