@@ -42,7 +42,7 @@ function readSessionSemestersResponse(data) {
             if (sessionSemester.isCurrent) row += '<td><span class="badge badge-success">Active</span></td>';
             else row += '<td><span class="badge badge-dark">Inactive</span></td>';
             
-            row += '<td><button type="button" class="btn btn-primary btn-xs" onclick="mapCourses(\'' + sessionSemester.id + '\')">Courses</button> | <button type="button" class="btn btn-success btn-xs" onclick="editSessionSemesterClick(\'' + sessionSemester.id + '\')">Edit</button> | <a href="#deleteSessionSemesterModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionSemesterClick(\'' + sessionSemester.id + '\')">Delete</a></td>';
+            row += '<td><button type="button" title="Courses" class="btn btn-primary btn-xs" onclick="mapCourses(\'' + sessionSemester.id + '\')"><i class="fa fa-book"></i></button> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editSessionSemesterClick(\'' + sessionSemester.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteSessionSemesterModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionSemesterClick(\'' + sessionSemester.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#sessionSemesterTable tbody').append(row);

@@ -22,7 +22,7 @@ function readSemestersResponse(data){
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + semester.name + '</td>';
             row += '<td>' + semester.code + '</td>';
-            row += '<td><button type="button" class="btn btn-success btn-xs" onclick="editSemesterClick(\'' + semester.id + '\')">Edit</button> | <a href="#deleteSemesterModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSemesterClick(\'' + semester.id + '\')">Delete</a></td>';
+            row += '<td><button title="Edit" type="button" class="btn btn-success btn-xs" onclick="editSemesterClick(\'' + semester.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteSemesterModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSemesterClick(\'' + semester.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#semesterTable tbody').append(row);

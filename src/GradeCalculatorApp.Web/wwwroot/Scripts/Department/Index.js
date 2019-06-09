@@ -40,7 +40,7 @@ function readDepartmentsResponse(data){
             row += '<td>' + department.school + '</td>';
             row += '<td>' + department.name + '</td>';
             row += '<td>' + department.code + '</td>';
-            row += '<td><a href="#" class="btn btn-primary btn-xs" onclick="viewDepartmentClick(\'\' + department.id + \'\')">View</a> | <button type="button" class="btn btn-success btn-xs" onclick="editDepartmentClick(\'' + department.id + '\')">Edit</button> | <a href="#deleteDepartmentModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteDepartmentClick(\'' + department.id + '\')">Delete</a></td>';
+            row += '<td><button title="View" class="btn btn-primary btn-xs" onclick="viewDepartmentClick(\'\' + department.id + \'\')"><i class="fa fa-eye"></i></button> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editDepartmentClick(\'' + department.id + '\')"><i class="fa fa-pencil"></i></button> | <a title="Delete" href="#deleteDepartmentModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteDepartmentClick(\'' + department.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#departmentTable tbody').append(row);

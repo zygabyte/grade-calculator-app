@@ -22,7 +22,7 @@ function readSessionsResponse(data){
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + session.name + '</td>';
             row += '<td>' + session.code + '</td>';
-            row += '<td><button type="button" class="btn btn-success btn-xs" onclick="editSessionClick(\'' + session.id + '\')">Edit</button> | <a href="#deleteSessionModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionClick(\'' + session.id + '\')">Delete</a></td>';
+            row += '<td><button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editSessionClick(\'' + session.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteSessionModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionClick(\'' + session.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#sessionTable tbody').append(row);
