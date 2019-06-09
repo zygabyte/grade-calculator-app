@@ -33,11 +33,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return takeAll 
-                    ? _gradeCalculatorContext.Departments
-                        .Where(x => !x.IsDeleted && x.IsActive)
+                    ? _gradeCalculatorContext.Departments.Where(x => !x.IsDeleted && x.IsActive)
                         .Include(x => x.School)
-                    : _gradeCalculatorContext.Departments
-                        .Where(x => !x.IsDeleted && x.IsActive)
+                    : _gradeCalculatorContext.Departments.Where(x => !x.IsDeleted && x.IsActive)
                         .Include(x => x.School)
                         .Take(count);
             }
