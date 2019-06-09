@@ -1,8 +1,108 @@
 @model object
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Courses";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<section class="wrapper">
+      <!-- page start-->
+      <section class="card">
+          <header class="card-header">
+              All Courses
+              <span class="pull-right">
+                  <a href="#newCourseModal" data-toggle="modal" onclick="showCreateCourseButton()" class="btn btn-success btn-sm">New Course</a>
+              </span>
+          </header>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="adv-table">
+                        <table class="table table-hover p-table" id="courseTable">
+                          <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Course Name</th>
+                              <th>Course Code</th>
+                              <th>Course Credit</th>
+                              <th>Action</th>
+                          </tr>
+                          </thead>
+                          <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+</section>
+
+
+<div class="modal fade" id="newCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form class="form-horizontal" data-parsley-validate="true">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createCourseTitle">New Course</h5>
+                    <h5 class="modal-title" id="editCourseTitle">Edit Course</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="id" required>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label for="name">Name</label>
+                                <input type="text" required class="form-control" id="name" placeholder="Course name">
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label for="code">Code</label>
+                                <input type="text" required class="form-control" id="code" placeholder="Course code">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="credit_unit">Credit Unit</label>
+                                <input type="number" min="0" max="6" required class="form-control" id="credit_unit" placeholder="Course credit unit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="createCourseBtn" onclick="createCourse()">Create</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="editCourseBtn" onclick="editCourse()">Edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModal">Delete Course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you really want to delete this course?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="deleteCourse()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="Scripts/Course/Index.js"></script>
+}
+
+
