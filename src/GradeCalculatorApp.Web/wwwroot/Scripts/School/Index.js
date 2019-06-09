@@ -22,7 +22,7 @@ function readSchoolsResponse(data){
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + school.name + '</td>';
             row += '<td>' + school.code + '</td>';
-            row += '<td><button type="button" class="btn btn-success btn-xs" onclick="editSchoolClick(\'' + school.id + '\')">Edit</button> | <a href="#deleteSchoolModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSchoolClick(\'' + school.id + '\')">Delete</a></td>';
+            row += '<td><a href="#" class="btn btn-primary btn-xs" onclick="viewSchoolClick(\'\' + school.id + \'\')">View</a> | <button type="button" class="btn btn-success btn-xs" onclick="editSchoolClick(\'' + school.id + '\')">Edit</button> | <a href="#deleteSchoolModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSchoolClick(\'' + school.id + '\')">Delete</a></td>';
             row += '</tr>';
 
             $('#schoolTable tbody').append(row);
