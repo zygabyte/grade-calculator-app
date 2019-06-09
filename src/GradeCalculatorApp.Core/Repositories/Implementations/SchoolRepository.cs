@@ -85,6 +85,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentSchool == null) return false;
                 
                 currentSchool.Name = school.Name;
+                currentSchool.Code = school.Code;
                 currentSchool.Departments = school.Departments;
                 currentSchool.Modified = DateTime.Now;
                     

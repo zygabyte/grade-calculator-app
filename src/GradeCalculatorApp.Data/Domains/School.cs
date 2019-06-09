@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace GradeCalculatorApp.Data.Domains
 {
-    public class School : BaseEntity
+    public class School : Unit
     {
-        public string Name { get; set; }
         public List<Department> Departments { get; set; }
     }
 }

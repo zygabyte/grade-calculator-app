@@ -85,7 +85,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentCourse == null) return false;
                 
                 currentCourse.Code = course.Code;
-                currentCourse.Title = course.Title;
+                currentCourse.Name = course.Name;
                 currentCourse.CreditUnit = course.CreditUnit;
                 currentCourse.Modified = DateTime.Now;
                     

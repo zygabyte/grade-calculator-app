@@ -1,8 +1,6 @@
 namespace GradeCalculatorApp.Data.Domains
 {
-    public class Semester : BaseEntity
+    public class Semester : Unit
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
     }
 }

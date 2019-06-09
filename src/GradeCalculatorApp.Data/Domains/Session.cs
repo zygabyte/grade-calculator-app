@@ -1,8 +1,6 @@
 namespace GradeCalculatorApp.Data.Domains
 {
-    public class Session : BaseEntity
+    public class Session : Unit
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
     }
 }

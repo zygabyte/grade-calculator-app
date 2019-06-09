@@ -85,6 +85,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentDepartment == null) return false;
                 
                 currentDepartment.Name = department.Name;
+                currentDepartment.Code = department.Code;
                 currentDepartment.School = department.School;
                 currentDepartment.Lecturers = department.Lecturers;
                 currentDepartment.Programmes = department.Programmes;

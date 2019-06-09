@@ -1,8 +1,7 @@
 namespace GradeCalculatorApp.Data.Domains
 {
-    public class Programme : BaseEntity
+    public class Programme : Unit
     {
-        public string Name { get; set; }
         public Department Department { get; set; }
         public long DepartmentId { get; set; }
     }
