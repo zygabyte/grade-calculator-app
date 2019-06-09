@@ -84,7 +84,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
 
                 if (currentLecturer == null) return false;
                 
-                currentLecturer.Courses = lecturer.Courses;
                 currentLecturer.Department = lecturer.Department;
                 currentLecturer.DepartmentId = lecturer.DepartmentId;
                 currentLecturer.Email = lecturer.Email;

@@ -40,7 +40,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             {
                 return ResponseData.SendSuccessMsg(data: _sessionSemesterService.ReadSessionSemesters().Select(x => new SessionSemesterVm
                 {
-                    Id = x.Id, Courses = x.Courses, Semester = x.Semester.Name,
+                    Id = x.Id, Semester = x.Semester.Name,
                     Session = x.Session.Name, SessionId = x.SessionId, SemesterId = x.SemesterId, 
                     SemesterStartDate = x.SemesterStartDate.ToString("yyyy-MM-dd"),
                     SemesterEndDate = x.SemesterEndDate.ToString("yyyy-MM-dd"),
@@ -62,7 +62,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 return sessionSemester != null
                     ? ResponseData.SendSuccessMsg(data: new SessionSemesterVm
                     {
-                        Id = sessionSemester.Id, Courses = sessionSemester.Courses, Semester = sessionSemester.Semester.Name,
+                        Id = sessionSemester.Id, Semester = sessionSemester.Semester.Name,
                         Session = sessionSemester.Session.Name, SessionId = sessionSemester.SessionId, SemesterId = sessionSemester.SemesterId,
                         SemesterStartDate = sessionSemester.SemesterStartDate.ToString("yyyy-MM-dd"),
                         SemesterEndDate = sessionSemester.SemesterEndDate.ToString("yyyy-MM-dd"),

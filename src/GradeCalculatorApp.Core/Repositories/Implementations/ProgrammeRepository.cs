@@ -85,7 +85,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 if (currentProgramme == null) return false;
                 
                 currentProgramme.Name = programme.Name;
-                currentProgramme.Courses = programme.Courses;
                 currentProgramme.Department = programme.Department;
                 currentProgramme.DepartmentId = programme.DepartmentId;
                 currentProgramme.Modified = DateTime.Now;

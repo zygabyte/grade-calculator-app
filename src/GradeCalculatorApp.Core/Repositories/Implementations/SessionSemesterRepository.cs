@@ -101,7 +101,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
 
                 if (currentSession == null) return false;
                 
-                currentSession.Courses = sessionSemester.Courses;
                 currentSession.Semester = sessionSemester.Semester;
                 currentSession.SemesterId = sessionSemester.SemesterId;
                 currentSession.SemesterStartDate = sessionSemester.SemesterStartDate;
