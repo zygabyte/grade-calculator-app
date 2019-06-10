@@ -53,7 +53,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<ISemesterRepository, SemesterRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
-            services.AddScoped<ISessionCourseRepository, SessionCourseRepository>();
+            services.AddScoped<ISessionSemesterCourseRepository, SessionSemesterCourseRepository>();
             services.AddScoped<ISessionSemesterRepository, SessionSemesterRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             
@@ -67,7 +67,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<ISemesterService, SemesterService>();
             services.AddScoped<ISessionService, SessionService>();
-            services.AddScoped<ISessionCourseService, SessionCourseService>();
+            services.AddScoped<ISessionSemesterCourseService, SessionSemesterCourseService>();
             services.AddScoped<ISessionSemesterService, SessionSemesterService>();
             services.AddScoped<IStudentService, StudentService>();
         }

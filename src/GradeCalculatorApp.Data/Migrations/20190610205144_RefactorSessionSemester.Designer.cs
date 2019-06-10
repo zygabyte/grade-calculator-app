@@ -4,14 +4,16 @@ using GradeCalculatorApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GradeCalculatorApp.Data.Migrations
 {
     [DbContext(typeof(GradeCalculatorContext))]
-    partial class GradeCalculatorContextModelSnapshot : ModelSnapshot
+    [Migration("20190610205144_RefactorSessionSemester")]
+    partial class RefactorSessionSemester
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,7 +313,7 @@ namespace GradeCalculatorApp.Data.Migrations
 
                     b.HasIndex("SessionSemesterId");
 
-                    b.ToTable("SessionSemesterCourses");
+                    b.ToTable("SessionCourses");
                 });
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.Student", b =>

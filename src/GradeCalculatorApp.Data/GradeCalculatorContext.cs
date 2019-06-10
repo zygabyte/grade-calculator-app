@@ -8,8 +8,8 @@ namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
-        {}
+//        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
+//        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,6 @@ namespace GradeCalculatorApp.Data
         
         public DbSet<LecturerCourse> LecturerCourses { get; set; }
         public DbSet<ProgrammeCourse> ProgrammeCourses { get; set; }
-        public DbSet<SessionCourse> SessionCourses { get; set; }
+        public DbSet<SessionSemesterCourse> SessionSemesterCourses { get; set; }
     }
 }

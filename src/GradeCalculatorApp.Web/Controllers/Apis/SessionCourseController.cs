@@ -10,9 +10,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
     public class SessionCourseController : Controller
     {
 
-        private readonly ISessionCourseService _sessionCourseService;
+        private readonly ISessionSemesterCourseService _sessionSemesterCourseService;
         private const string ObjectName = "SessionCourse"; 
-        public SessionCourseController(ISessionCourseService sessionCourseService) => _sessionCourseService = sessionCourseService;
+        public SessionCourseController(ISessionSemesterCourseService sessionSemesterCourseService) => _sessionSemesterCourseService = sessionSemesterCourseService;
         
         // GET
 //        public IActionResult Index()
@@ -21,13 +21,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 //            View();
 //        }
 
-        public ActionResult<ResponseData> CreateSessionCourse(SessionCourse sessionCourse)
+        public ActionResult<ResponseData> CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse)
         {
             try
             {
-                if (sessionCourse == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemesterCourse == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return ResponseData.SendSuccessMsg(_sessionCourseService.CreateSessionCourse(sessionCourse) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterCourseService.CreateSessionCourse(sessionSemesterCourse) 
                     ? string.Format(DefaultConstants.SuccessfulCreate, ObjectName) 
                     : string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
@@ -41,7 +41,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(data: _sessionCourseService.ReadSessionCourses());
+                return ResponseData.SendSuccessMsg(data: _sessionSemesterCourseService.ReadSessionCourses());
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                var sessionCourse = _sessionCourseService.ReadSessionCourse(sessionCourseId);
+                var sessionCourse = _sessionSemesterCourseService.ReadSessionCourse(sessionCourseId);
 
                 return sessionCourse != null
                     ? ResponseData.SendSuccessMsg(data: sessionCourse)
@@ -65,13 +65,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> UpdateSessionCourse(long sessionCourseId, SessionCourse sessionCourse)
+        public ActionResult<ResponseData> UpdateSessionCourse(long sessionCourseId, SessionSemesterCourse sessionSemesterCourse)
         {
             try
             {
-                if (sessionCourse == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (sessionSemesterCourse == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
                 
-                return ResponseData.SendSuccessMsg(_sessionCourseService.UpdateSessionCourse(sessionCourseId, sessionCourse) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterCourseService.UpdateSessionCourse(sessionCourseId, sessionSemesterCourse) 
                     ? string.Format(DefaultConstants.SuccessfulUpdate, ObjectName, sessionCourseId) 
                     : string.Format(DefaultConstants.FailureUpdate, ObjectName, sessionCourseId));
             }
@@ -85,7 +85,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_sessionCourseService.DeleteSessionCourse(sessionCourseId) 
+                return ResponseData.SendSuccessMsg(_sessionSemesterCourseService.DeleteSessionCourse(sessionCourseId) 
                     ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionCourseId) 
                     : string.Format(DefaultConstants.FailureDelete, ObjectName, sessionCourseId));
             }
