@@ -1,3 +1,5 @@
+using GradeCalculatorApp.EnumLibrary;
+
 namespace GradeCalculatorApp.Data.Domains
 {
     public class Student : User
@@ -5,5 +7,10 @@ namespace GradeCalculatorApp.Data.Domains
         public string MatricNumber { get; set; }
         public Programme Programme { get; set; }
         public long ProgrammeId { get; set; }
+
+        public Student()
+        {
+            UserRole = UserRole.Student;
+        }
     }
 }

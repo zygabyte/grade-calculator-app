@@ -33,8 +33,12 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return takeAll 
-                    ? _gradeCalculatorContext.Students.Where(x => !x.IsDeleted && x.IsActive) 
-                    : _gradeCalculatorContext.Students.Where(x => !x.IsDeleted && x.IsActive).Take(count);
+                    ? _gradeCalculatorContext.Students
+                        .Include(x => x.Programme)
+                        .Where(x => !x.IsDeleted && x.IsActive) 
+                    : _gradeCalculatorContext.Students
+                        .Include(x => x.Programme)
+                        .Where(x => !x.IsDeleted && x.IsActive).Take(count);
             }
             catch (Exception e)
             {
@@ -46,7 +50,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.Students.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == studentId);
+                return _gradeCalculatorContext.Students
+                    .Include(x => x.Programme)
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == studentId);
             }
             catch (Exception e)
             {
