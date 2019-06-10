@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
+using GradeCalculatorApp.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers.Apis
@@ -41,7 +43,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         {
             try
             {
-                return ResponseData.SendSuccessMsg(data: _lecturerService.ReadLecturers());
+                return ResponseData.SendSuccessMsg(data: _lecturerService.ReadLecturers().Select(x => new LecturerVm
+                {
+                    Id = x.Id, Department = x.Department.Name, DepartmentId = x.DepartmentId,
+                    Email = x.Email, LastName = x.LastName, FirstName = x.FirstName
+                }));
             }
             catch (Exception e)
             {
@@ -56,7 +62,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 var lecturer = _lecturerService.ReadLecturer(lecturerId);
 
                 return lecturer != null
-                    ? ResponseData.SendSuccessMsg(data: lecturer)
+                    ? ResponseData.SendSuccessMsg(data: new LecturerVm
+                    {
+                        Id = lecturer.Id, Department = lecturer.Department.Name, DepartmentId = lecturer.DepartmentId,
+                        Email = lecturer.Email, LastName = lecturer.LastName, FirstName = lecturer.FirstName
+                    })
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, lecturerId));
             }
             catch (Exception e)
