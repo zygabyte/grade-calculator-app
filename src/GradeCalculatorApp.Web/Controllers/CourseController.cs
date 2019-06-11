@@ -10,5 +10,10 @@ namespace GradeCalculatorApp.Web.Controllers
             return
             View();
         }
+        
+        public IActionResult AddCourse()
+        {
+            return View();
+        }
     }
 }

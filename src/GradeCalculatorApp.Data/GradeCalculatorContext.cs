@@ -8,8 +8,8 @@ namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-//        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
-//        {}
+        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
+        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -94,5 +94,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, courseId));
             }
         }
+
+        
     }
 }

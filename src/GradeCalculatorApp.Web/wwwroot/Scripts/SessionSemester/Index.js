@@ -165,6 +165,16 @@ function deleteSessionSemesterResponse(data) {
 
 
 
+function mapCourses(sessionSemesterId) {
+    api('GET', '/SessionSemester/SetSessionSemesterId',
+        {sessionSemesterId: sessionSemesterId}, true, mapCourseResponse, true);
+}
+
+function mapCourseResponse(data) {
+    if (data.status) window.location = "/SessionSemester/Courses"
+}
+
+
 //______________________________________UTILITIES______________________________________
 function onSuccessModalHide() {
     pageLoad();

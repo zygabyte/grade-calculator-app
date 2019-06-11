@@ -10,7 +10,6 @@ function pageLoad() {
         null,
         true,
         readCoursesResponse, true);
-
 }
 
 function readCoursesResponse(data){
