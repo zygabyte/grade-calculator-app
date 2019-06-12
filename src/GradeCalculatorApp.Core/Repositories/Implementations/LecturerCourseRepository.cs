@@ -33,8 +33,13 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return takeAll 
-                    ? _gradeCalculatorContext.LecturerCourses.Where(x => !x.IsDeleted && x.IsActive) 
-                    : _gradeCalculatorContext.LecturerCourses.Where(x => !x.IsDeleted && x.IsActive).Take(count);
+                    ? _gradeCalculatorContext.LecturerCourses.Where(x => !x.IsDeleted && x.IsActive)
+                        .Include(x =>  x.Lecturer)
+                        .Include(x => x.Courses)
+                    : _gradeCalculatorContext.LecturerCourses.Where(x => !x.IsDeleted && x.IsActive)
+                        .Include(x =>  x.Lecturer)
+                        .Include(x => x.Courses)
+                        .Take(count);
             }
             catch (Exception e)
             {
@@ -46,7 +51,10 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == lecturerCourseId);
+                return _gradeCalculatorContext.LecturerCourses
+                    .Include(x =>  x.Lecturer)
+                    .Include(x => x.Courses)
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == lecturerCourseId);
             }
             catch (Exception e)
             {
@@ -115,7 +123,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                     return _gradeCalculatorContext.SaveChanges() > 0;
                 }
 
-                currentSessionCourse.Courses = courses;
+                currentSessionCourse.Courses.AddRange(courses);
                     
                 _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
 

@@ -7,7 +7,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
     {
         bool CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse);
         IEnumerable<SessionSemesterCourse> ReadSessionCourses(bool takeAll = true, int count = 1000);
-        SessionSemesterCourse ReadSessionCourse(long sessionCourseId);
+        SessionSemesterCourse ReadSessionCourse(long sessionSemesterId);
         bool DeleteSessionCourse(long sessionCourseId);
         bool UpdateSessionCourse(long sessionCourseId, SessionSemesterCourse sessionSemesterCourse);
         bool MapCourses(long sessionCourseId, List<Course> courses);

@@ -1,6 +1,4 @@
 let courseIds = [];
-let objectName = '';
-let objectId = 0;
 
 $(document).ready(function () {
     pageLoad();
@@ -8,13 +6,10 @@ $(document).ready(function () {
 
 function pageLoad() {
     api("GET",
-        "/Course/ReadCourses",
-        null,
+        "/SessionCourse/ReadUniqueSessionCourses",
+        {sessionSemesterId: sessionSemesterId},
         true,
         readCoursesResponse, true);
-    
-    console.log('semester id in add course');
-    console.log(sessionSemesterId);
 }
 
 function readCoursesResponse(data){
@@ -51,11 +46,6 @@ function addCourses(){
         }
     });
 
-    console.log('course ids');
-    console.log(courseIds);
-    console.log('sessionSemesterId');
-    console.log(sessionSemesterId);
-
     api("POST",
         "/SessionCourse/MapCourses",
         {sessionSemesterId: sessionSemesterId, courseIds: courseIds},
@@ -64,6 +54,5 @@ function addCourses(){
 }
 
 function mapSessionSemesterCoursesResponse(data) {
-    console.log('data after map');
-    console.log(data);
+    if (data.status) window.location = "/SessionSemester/SessionSemesterCourses";
 }

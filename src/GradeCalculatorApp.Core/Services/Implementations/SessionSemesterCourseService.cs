@@ -1,8 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using GradeCalculatorApp.Core.Repositories.Implementations;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
+using GradeCalculatorApp.Data;
 using GradeCalculatorApp.Data.Domains;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +17,13 @@ namespace GradeCalculatorApp.Core.Services.Implementations
 
         private readonly ISessionSemesterCourseRepository _sessionSemesterCourseRepository;
         private readonly ICourseRepository _courseRepository;
+        private readonly ICourseService _courseService;
         
-        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository, ICourseRepository courseRepository)
+        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository, ICourseRepository courseRepository, ICourseService courseService)
         {
             _sessionSemesterCourseRepository = sessionSemesterCourseRepository;
             _courseRepository = courseRepository;
+            _courseService = courseService;
         }
 
         public bool CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse)
@@ -44,11 +50,33 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public SessionSemesterCourse ReadSessionCourse(long sessionCourseId)
+        public IEnumerable<Course> ReadUniqueSessionCourses(long sessionSemesterId)
         {
             try
             {
-                return sessionCourseId > 0 ? _sessionSemesterCourseRepository.ReadSessionCourse(sessionCourseId) : null;
+                var sessionCourses = _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId).Courses;
+                var allCourses = _courseRepository.ReadCourses();
+
+                var uniqueCourses = new List<Course>();
+
+                Parallel.ForEach(allCourses, course =>
+                {
+                    if (!sessionCourses.Contains(course)) uniqueCourses.Add(course); 
+                });
+
+                return uniqueCourses;
+            }
+            catch (Exception e)
+            {
+                return new List<Course>();
+            }
+        }
+
+        public SessionSemesterCourse ReadSessionCourse(long sessionSemesterId)
+        {
+            try
+            {
+                return sessionSemesterId > 0 ? _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId) : null;
             }
             catch (Exception e)
             {
@@ -84,9 +112,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                var courses = new List<Course>();
-                
-                Parallel.ForEach(courseIds, courseId => courses.Add(_courseRepository.ReadCourse(courseId)));
+                var courses = courseIds.Select(courseId => _courseRepository.ReadCourse(courseId)).ToList();
 
                 return _sessionSemesterCourseRepository.MapCourses(lecturerCourseId, courses);
             }

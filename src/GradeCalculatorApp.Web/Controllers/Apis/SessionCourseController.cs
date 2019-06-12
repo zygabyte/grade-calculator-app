@@ -45,15 +45,28 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> ReadSessionCourse(long sessionCourseId)
+
+        public ActionResult<ResponseData> ReadUniqueSessionCourses(long sessionSemesterId)
         {
             try
             {
-                var sessionCourse = _sessionSemesterCourseService.ReadSessionCourse(sessionCourseId);
+                return ResponseData.SendSuccessMsg(data: _sessionSemesterCourseService.ReadUniqueSessionCourses(sessionSemesterId));
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
+            }
+        }
+
+        public ActionResult<ResponseData> ReadSessionCourse(long sessionSemesterId)
+        {
+            try
+            {
+                var sessionCourse = _sessionSemesterCourseService.ReadSessionCourse(sessionSemesterId);
 
                 return sessionCourse != null
                     ? ResponseData.SendSuccessMsg(data: sessionCourse)
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionCourseId));
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, sessionSemesterId));
             }
             catch (Exception e)
             {

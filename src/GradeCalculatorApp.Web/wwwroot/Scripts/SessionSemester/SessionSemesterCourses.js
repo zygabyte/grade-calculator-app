@@ -4,20 +4,17 @@ $(document).ready(function () {
 
 function pageLoad() {
     api("GET",
-        "/Course/ReadCourses",
-        null,
+        "/SessionCourse/ReadSessionCourse",
+        {sessionSemesterId: sessionSemesterId},
         true,
-        readCoursesResponse, true);
-    
-    console.log('session semster  id');
-    console.log(sessionSemesterId);
+        readSessionCourseResponse, true);
 }
 
-function readCoursesResponse(data){
+function readSessionCourseResponse(data){
     resetDataTable($('#courseTable'));
-
+    
     if (data.status) {
-        data.data.forEach((course, i) => {
+        data.data.courses.forEach((course, i) => {
             let row = '<tr>';
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + course.name + '</td>';

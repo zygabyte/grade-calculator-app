@@ -14,7 +14,7 @@ namespace GradeCalculatorApp.Web.Controllers
             View();
         }
         // GET
-        public IActionResult Courses()
+        public IActionResult SessionSemesterCourses()
         {
             if (_sessionSemesterId > 0)
             {
@@ -35,7 +35,7 @@ namespace GradeCalculatorApp.Web.Controllers
             return ResponseData.SendFailMsg(DefaultConstants.InvalidId);
         }
 
-        public IActionResult AddCourse()
+        public IActionResult AddSessionSemesterCourse()
         {
             if (_sessionSemesterId > 0)
             {

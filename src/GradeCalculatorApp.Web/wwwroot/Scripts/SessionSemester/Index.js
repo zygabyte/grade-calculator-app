@@ -171,7 +171,7 @@ function mapCourses(sessionSemesterId) {
 }
 
 function mapCourseResponse(data) {
-    if (data.status) window.location = "/SessionSemester/Courses"
+    if (data.status) window.location = "/SessionSemester/SessionSemesterCourses"
 }
 
 
