@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -11,9 +12,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
     {
 
         private readonly ISessionSemesterCourseRepository _sessionSemesterCourseRepository;
+        private readonly ICourseRepository _courseRepository;
         
-        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository) => _sessionSemesterCourseRepository = sessionSemesterCourseRepository;
-        
+        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository, ICourseRepository courseRepository)
+        {
+            _sessionSemesterCourseRepository = sessionSemesterCourseRepository;
+            _courseRepository = courseRepository;
+        }
+
         public bool CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse)
         {
             try
@@ -67,6 +73,22 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             try
             {
                 return sessionCourseId > 0 && sessionSemesterCourse != null && _sessionSemesterCourseRepository.UpdateSessionCourse(sessionCourseId, sessionSemesterCourse);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public bool MapCourses(long lecturerCourseId, IEnumerable<long> courseIds)
+        {
+            try
+            {
+                var courses = new List<Course>();
+                
+                Parallel.ForEach(courseIds, courseId => courses.Add(_courseRepository.ReadCourse(courseId)));
+
+                return _sessionSemesterCourseRepository.MapCourses(lecturerCourseId, courses);
             }
             catch (Exception e)
             {

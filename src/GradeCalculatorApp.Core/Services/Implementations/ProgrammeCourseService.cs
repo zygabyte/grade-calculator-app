@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -11,9 +12,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
     {
 
         private readonly IProgrammeCourseRepository _programmeCourseRepository;
+        private readonly ICourseRepository _courseRepository;
         
-        public ProgrammeCourseService(IProgrammeCourseRepository programmeCourseRepository) => _programmeCourseRepository = programmeCourseRepository;
-        
+        public ProgrammeCourseService(IProgrammeCourseRepository programmeCourseRepository, ICourseRepository courseRepository)
+        {
+            _programmeCourseRepository = programmeCourseRepository;
+            _courseRepository = courseRepository;
+        }
+
         public bool CreateProgrammeCourse(ProgrammeCourse programmeCourse)
         {
             try
@@ -67,6 +73,22 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             try
             {
                 return programmeCourseId > 0 && programmeCourse != null && _programmeCourseRepository.UpdateProgrammeCourse(programmeCourseId, programmeCourse);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public bool MapCourses(long programmeCourseId, IEnumerable<long> courseIds)
+        {
+            try
+            {
+                var courses = new List<Course>();
+                
+                Parallel.ForEach(courseIds, courseId => courses.Add(_courseRepository.ReadCourse(courseId)));
+
+                return _programmeCourseRepository.MapCourses(programmeCourseId, courses);
             }
             catch (Exception e)
             {

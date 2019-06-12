@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Session - Semester Courses";
     Layout = "_Layout";
-    long id = ViewBag.SessionSemesterId;
+    long sessionSemesterId = ViewBag.SessionSemesterId;
 }
 
 <section class="wrapper">
@@ -12,7 +12,7 @@
           <header class="card-header">
               All Courses in Session Semester 
               <span class="pull-right">
-                  <a href="@Url.Action("AddCourse", "Course")" class="btn btn-success btn-sm">Add Courses</a>
+                  <a href="@Url.Action("AddCourse", "SessionSemester")" class="btn btn-success btn-sm">Add Courses</a>
               </span>
           </header>
       <div class="card-body">
@@ -41,7 +41,7 @@
 @section scripts
 {
     <script>
-        let sessionSemesterId = @id;
+        let sessionSemesterId = @sessionSemesterId;
     </script>
     
     <script src="/Scripts/SessionSemester/Courses.js"></script>

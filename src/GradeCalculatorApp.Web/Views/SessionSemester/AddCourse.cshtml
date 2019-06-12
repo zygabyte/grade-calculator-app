@@ -1,0 +1,47 @@
+@model object
+
+@{
+    ViewBag.Title = "Add Courses";
+    Layout = "_Layout";
+    
+    long sessionSemesterId = ViewBag.SessionSemesterId;
+}
+
+<section class="wrapper">
+    <!-- page start-->
+    <section class="card">
+        <header class="card-header">
+            All Courses
+        </header>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="adv-table">
+                        <table class="table table-hover p-table" id="courseTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Course Credit</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <span class="pull-right"><button type="button" onclick="addCourses()" class="btn btn-success btn-sm">Add Courses</button></span>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+@section scripts
+{
+    <script>
+        let sessionSemesterId = @sessionSemesterId;
+    </script>
+    
+    <script src="/Scripts/SessionSemester/AddCourse.js"></script>
+}

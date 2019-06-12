@@ -10,5 +10,6 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         LecturerCourse ReadLecturerCourse(long lecturerCourseId);
         bool DeleteLecturerCourse(long lecturerCourseId);
         bool UpdateLecturerCourse(long lecturerCourseId, LecturerCourse lecturerCourse);
+        bool MapCourses(long lecturerCourseId, List<Course> courses);
     }
 }

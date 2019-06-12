@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -12,6 +13,9 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 
         private readonly IProgrammeCourseService _programmeCourseService;
         private const string ObjectName = "ProgrammeCourse"; 
+        private const string Courses = "Courses"; 
+        private const string Programme = "Programme"; 
+        
         public ProgrammeCourseController(IProgrammeCourseService programmeCourseService) => _programmeCourseService = programmeCourseService;
         
         // GET
@@ -92,6 +96,21 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             catch (Exception e)
             {
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, programmeCourseId));
+            }
+        }
+        
+        public ActionResult<ResponseData> MapCourses(long programmeCourseId, IEnumerable<long> courseIds)
+        {
+            try
+            {
+                return _programmeCourseService.MapCourses(programmeCourseId, courseIds)
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Programme))
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Programme));
+
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionMap, Courses, Programme));
             }
         }
     }

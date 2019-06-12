@@ -10,5 +10,6 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         SessionSemesterCourse ReadSessionCourse(long sessionCourseId);
         bool DeleteSessionCourse(long sessionCourseId);
         bool UpdateSessionCourse(long sessionCourseId, SessionSemesterCourse sessionSemesterCourse);
+        bool MapCourses(long sessionCourseId, List<Course> courses);
     }
 }

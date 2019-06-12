@@ -84,10 +84,39 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
 
                 if (currentSessionCourse == null) return false;
                 
-                currentSessionCourse.Courses = sessionSemesterCourse.Courses;
                 currentSessionCourse.SessionSemester = sessionSemesterCourse.SessionSemester;
                 currentSessionCourse.SessionSemesterId = sessionSemesterCourse.SessionSemesterId;
                 currentSessionCourse.Modified = DateTime.Now;
+                    
+                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
+
+                return _gradeCalculatorContext.SaveChanges() > 0;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
+        public bool MapCourses(long sessionCourseId, List<Course> courses)
+        {
+            try
+            {
+                var currentSessionCourse = _gradeCalculatorContext.SessionSemesterCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.SessionSemesterId == sessionCourseId);
+
+                if (currentSessionCourse == null)
+                {
+                    _gradeCalculatorContext.SessionSemesterCourses.Add(new SessionSemesterCourse
+                    {
+                        SessionSemesterId = sessionCourseId,
+                        Courses = courses
+                    });
+                    
+                    return _gradeCalculatorContext.SaveChanges() > 0;
+                }
+
+                currentSessionCourse.Courses = courses;
                     
                 _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
 

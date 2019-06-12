@@ -97,6 +97,35 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return false;
             }
         }
+        
+        public bool MapCourses(long lecturerCourseId, List<Course> courses)
+        {
+            try
+            {
+                var currentSessionCourse = _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.LecturerId == lecturerCourseId);
+
+                if (currentSessionCourse == null)
+                {
+                    _gradeCalculatorContext.LecturerCourses.Add(new LecturerCourse
+                    {
+                        LecturerId = lecturerCourseId,
+                        Courses = courses
+                    });
+                    
+                    return _gradeCalculatorContext.SaveChanges() > 0;
+                }
+
+                currentSessionCourse.Courses = courses;
+                    
+                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
+
+                return _gradeCalculatorContext.SaveChanges() > 0;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         public void Dispose()
         {

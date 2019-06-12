@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -73,5 +74,47 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return false;
             }
         }
+        
+//        public bool MapCourseToSessionSemesterCourse(long sessionSemesterCourseId, List<long> courseIds)
+//        {
+//            try
+//            {
+//                Parallel.ForEach(courseIds, courseId => _courseRepository.MapCourseToSessionSemesterCourse(sessionSemesterCourseId, courseId));
+//
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
+//
+//        public bool MapCourseToProgrammeCourse(long programmeCourseId, List<long> courseIds)
+//        {
+//            try
+//            {
+//                Parallel.ForEach(courseIds, courseId => _courseRepository.MapCourseToProgrammeCourse(programmeCourseId, courseId));
+//
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
+//
+//        public bool MapCourseToLecturerCourse(long lecturerCourseId, List<long> courseIds)
+//        {
+//            try
+//            {
+//                Parallel.ForEach(courseIds, courseId => _courseRepository.MapCourseToLecturerCourse(lecturerCourseId, courseId));
+//
+//                return true;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
     }
 }

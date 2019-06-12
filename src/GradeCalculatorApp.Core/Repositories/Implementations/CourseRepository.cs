@@ -99,6 +99,66 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+//        public bool MapCourseToSessionSemesterCourse(long sessionSemesterCourseId, long courseId)
+//        {
+//            try
+//            {
+//                var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
+//
+//                if (currentCourse == null) return false;
+//
+//                currentCourse.SessionSemesterCourseId = sessionSemesterCourseId;
+//                    
+//                _gradeCalculatorContext.Entry(currentCourse).State = EntityState.Modified;
+//
+//                return _gradeCalculatorContext.SaveChanges() > 0;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
+//
+//        public bool MapCourseToProgrammeCourse(long programmeCourseId, long courseId)
+//        {
+//            try
+//            {
+//                var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
+//
+//                if (currentCourse == null) return false;
+//
+//                currentCourse.ProgrammeCourseId = programmeCourseId;
+//                    
+//                _gradeCalculatorContext.Entry(currentCourse).State = EntityState.Modified;
+//
+//                return _gradeCalculatorContext.SaveChanges() > 0;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
+//
+//        public bool MapCourseToLecturerCourse(long lecturerCourseId, long courseId)
+//        {
+//            try
+//            {
+//                var currentCourse = _gradeCalculatorContext.Courses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == courseId);
+//
+//                if (currentCourse == null) return false;
+//
+//                currentCourse.LecturerCourseId = lecturerCourseId;
+//                    
+//                _gradeCalculatorContext.Entry(currentCourse).State = EntityState.Modified;
+//
+//                return _gradeCalculatorContext.SaveChanges() > 0;
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
+
         public void Dispose()
         {
             _gradeCalculatorContext?.Dispose();

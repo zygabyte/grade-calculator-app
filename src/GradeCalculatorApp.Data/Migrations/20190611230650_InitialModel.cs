@@ -18,7 +18,8 @@ namespace GradeCalculatorApp.Data.Migrations
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,6 +45,24 @@ namespace GradeCalculatorApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sessions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sessions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
@@ -54,6 +73,7 @@ namespace GradeCalculatorApp.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
                     SchoolId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
@@ -68,7 +88,7 @@ namespace GradeCalculatorApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sessions",
+                name: "SessionSemesters",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -77,18 +97,25 @@ namespace GradeCalculatorApp.Data.Migrations
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
                     SemesterId = table.Column<long>(nullable: false),
+                    SessionId = table.Column<long>(nullable: false),
                     SemesterStartDate = table.Column<DateTime>(nullable: false),
-                    SemesterEndDate = table.Column<DateTime>(nullable: false)
+                    SemesterEndDate = table.Column<DateTime>(nullable: false),
+                    IsCurrent = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
+                    table.PrimaryKey("PK_SessionSemesters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sessions_Semesters_SemesterId",
+                        name: "FK_SessionSemesters_Semesters_SemesterId",
                         column: x => x.SemesterId,
                         principalTable: "Semesters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SessionSemesters_Sessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -132,6 +159,7 @@ namespace GradeCalculatorApp.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
                     DepartmentId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
@@ -146,7 +174,7 @@ namespace GradeCalculatorApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SessionCourses",
+                name: "SessionSemesterCourses",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -155,15 +183,15 @@ namespace GradeCalculatorApp.Data.Migrations
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    SessionId = table.Column<long>(nullable: false)
+                    SessionSemesterId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SessionCourses", x => x.Id);
+                    table.PrimaryKey("PK_SessionSemesterCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SessionCourses_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
+                        name: "FK_SessionSemesterCourses_SessionSemesters_SessionSemesterId",
+                        column: x => x.SessionSemesterId,
+                        principalTable: "SessionSemesters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -253,15 +281,12 @@ namespace GradeCalculatorApp.Data.Migrations
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
                     CreditUnit = table.Column<int>(nullable: false),
                     LecturerCourseId = table.Column<long>(nullable: true),
-                    LecturerId = table.Column<long>(nullable: true),
                     ProgrammeCourseId = table.Column<long>(nullable: true),
-                    ProgrammeId = table.Column<long>(nullable: true),
-                    SessionCourseId = table.Column<long>(nullable: true),
-                    SessionId = table.Column<long>(nullable: true)
+                    SessionSemesterCourseId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,33 +298,15 @@ namespace GradeCalculatorApp.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Courses_Lecturers_LecturerId",
-                        column: x => x.LecturerId,
-                        principalTable: "Lecturers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Courses_ProgrammeCourses_ProgrammeCourseId",
                         column: x => x.ProgrammeCourseId,
                         principalTable: "ProgrammeCourses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Courses_Programmes_ProgrammeId",
-                        column: x => x.ProgrammeId,
-                        principalTable: "Programmes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Courses_SessionCourses_SessionCourseId",
-                        column: x => x.SessionCourseId,
-                        principalTable: "SessionCourses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Courses_Sessions_SessionId",
-                        column: x => x.SessionId,
-                        principalTable: "Sessions",
+                        name: "FK_Courses_SessionSemesterCourses_SessionSemesterCourseId",
+                        column: x => x.SessionSemesterCourseId,
+                        principalTable: "SessionSemesterCourses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -310,29 +317,14 @@ namespace GradeCalculatorApp.Data.Migrations
                 column: "LecturerCourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_LecturerId",
-                table: "Courses",
-                column: "LecturerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Courses_ProgrammeCourseId",
                 table: "Courses",
                 column: "ProgrammeCourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_ProgrammeId",
+                name: "IX_Courses_SessionSemesterCourseId",
                 table: "Courses",
-                column: "ProgrammeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_SessionCourseId",
-                table: "Courses",
-                column: "SessionCourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_SessionId",
-                table: "Courses",
-                column: "SessionId");
+                column: "SessionSemesterCourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_SchoolId",
@@ -360,14 +352,19 @@ namespace GradeCalculatorApp.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SessionCourses_SessionId",
-                table: "SessionCourses",
-                column: "SessionId");
+                name: "IX_SessionSemesterCourses_SessionSemesterId",
+                table: "SessionSemesterCourses",
+                column: "SessionSemesterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sessions_SemesterId",
-                table: "Sessions",
+                name: "IX_SessionSemesters_SemesterId",
+                table: "SessionSemesters",
                 column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionSemesters_SessionId",
+                table: "SessionSemesters",
+                column: "SessionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_ProgrammeId",
@@ -390,7 +387,7 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "ProgrammeCourses");
 
             migrationBuilder.DropTable(
-                name: "SessionCourses");
+                name: "SessionSemesterCourses");
 
             migrationBuilder.DropTable(
                 name: "Lecturers");
@@ -399,13 +396,16 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "Programmes");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "SessionSemesters");
 
             migrationBuilder.DropTable(
                 name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Semesters");
+
+            migrationBuilder.DropTable(
+                name: "Sessions");
 
             migrationBuilder.DropTable(
                 name: "Schools");

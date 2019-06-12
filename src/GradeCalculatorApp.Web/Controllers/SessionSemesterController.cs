@@ -34,5 +34,15 @@ namespace GradeCalculatorApp.Web.Controllers
 
             return ResponseData.SendFailMsg(DefaultConstants.InvalidId);
         }
+
+        public IActionResult AddCourse()
+        {
+            if (_sessionSemesterId > 0)
+            {
+                ViewBag.SessionSemesterId = _sessionSemesterId;
+                return View();
+            } 
+            return Unauthorized();
+        }
     }
 }

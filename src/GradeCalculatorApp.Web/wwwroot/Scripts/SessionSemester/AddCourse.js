@@ -12,6 +12,9 @@ function pageLoad() {
         null,
         true,
         readCoursesResponse, true);
+    
+    console.log('semester id in add course');
+    console.log(sessionSemesterId);
 }
 
 function readCoursesResponse(data){
@@ -39,7 +42,7 @@ function readCoursesResponse(data){
 
 function addCourses(){
     courseIds = [];
-    
+
     $("input:checkbox").each(function(){
         let $this = $(this);
 
@@ -47,7 +50,20 @@ function addCourses(){
             courseIds.push($this.attr("id"));
         }
     });
-    
+
     console.log('course ids');
     console.log(courseIds);
+    console.log('sessionSemesterId');
+    console.log(sessionSemesterId);
+
+    api("POST",
+        "/SessionCourse/MapCourses",
+        {sessionSemesterId: sessionSemesterId, courseIds: courseIds},
+        true,
+        mapSessionSemesterCoursesResponse, true);
+}
+
+function mapSessionSemesterCoursesResponse(data) {
+    console.log('data after map');
+    console.log(data);
 }

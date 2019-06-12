@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -9,17 +10,12 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 {
     public class SessionCourseController : Controller
     {
-
         private readonly ISessionSemesterCourseService _sessionSemesterCourseService;
         private const string ObjectName = "SessionCourse"; 
-        public SessionCourseController(ISessionSemesterCourseService sessionSemesterCourseService) => _sessionSemesterCourseService = sessionSemesterCourseService;
+        private const string Courses = "Courses"; 
+        private const string SessionSemester = "Session Semester"; 
         
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
+        public SessionCourseController(ISessionSemesterCourseService sessionSemesterCourseService) => _sessionSemesterCourseService = sessionSemesterCourseService;
 
         public ActionResult<ResponseData> CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse)
         {
@@ -92,6 +88,21 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             catch (Exception e)
             {
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, sessionCourseId));
+            }
+        }
+        
+        public ActionResult<ResponseData> MapCourses(long sessionSemesterId, IEnumerable<long> courseIds)
+        {
+            try
+            {
+                return _sessionSemesterCourseService.MapCourses(sessionSemesterId, courseIds)
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, SessionSemester))
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, SessionSemester));
+
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionMap, Courses, SessionSemester));
             }
         }
     }

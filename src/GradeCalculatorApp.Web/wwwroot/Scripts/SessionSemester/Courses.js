@@ -8,6 +8,9 @@ function pageLoad() {
         null,
         true,
         readCoursesResponse, true);
+    
+    console.log('session semster  id');
+    console.log(sessionSemesterId);
 }
 
 function readCoursesResponse(data){
@@ -30,3 +33,12 @@ function readCoursesResponse(data){
         initializeDataTable($('#courseTable'));
     }
 }
+
+// function setSessionSemesterId(sessionSemesterId) {
+//     api('GET', '/SessionCourse/SetSessionSemesterId',
+//         {sessionSemesterId: sessionSemesterId}, true, setSessionSemesterIdResponse, true);
+// }
+//
+// function setSessionSemesterIdResponse(data) {
+//     if (data.status) window.location = "/SessionSemester/AddCourse";
+// }
