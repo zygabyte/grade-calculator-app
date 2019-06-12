@@ -43,9 +43,6 @@ function deleteSessionSemesterCourse() {
 }
 
 function deleteSessionSemesterCourseResponse(data) {
-    console.log('after remove');
-    console.log(data);
-    
     if (data.status) onSuccess();
 }
 

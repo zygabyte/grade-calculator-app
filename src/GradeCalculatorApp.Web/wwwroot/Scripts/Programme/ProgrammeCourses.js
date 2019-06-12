@@ -42,9 +42,6 @@ function deleteProgrammeCourse() {
 }
 
 function deleteProgrammeCourseResponse(data) {
-    console.log('after remove');
-    console.log(data);
-
     if (data.status) onSuccess();
 }
 
