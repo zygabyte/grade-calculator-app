@@ -17,13 +17,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
 
         private readonly ISessionSemesterCourseRepository _sessionSemesterCourseRepository;
         private readonly ICourseRepository _courseRepository;
-        private readonly ICourseService _courseService;
         
-        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository, ICourseRepository courseRepository, ICourseService courseService)
+        public SessionSemesterCourseService(ISessionSemesterCourseRepository sessionSemesterCourseRepository, ICourseRepository courseRepository)
         {
             _sessionSemesterCourseRepository = sessionSemesterCourseRepository;
             _courseRepository = courseRepository;
-            _courseService = courseService;
         }
 
         public bool CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse)
@@ -84,11 +82,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public bool DeleteSessionCourse(long sessionCourseId)
+        public bool DeleteSessionCourse(long sessionCourseId, long courseId)
         {
             try
             {
-                return sessionCourseId > 0 && _sessionSemesterCourseRepository.DeleteSessionCourse(sessionCourseId);
+                return sessionCourseId > 0 && _sessionSemesterCourseRepository.DeleteSessionCourse(sessionCourseId, courseId);
             }
             catch (Exception e)
             {

@@ -1,3 +1,5 @@
+let sessionSemesterCourseId;
+
 $(document).ready(function () {
     pageLoad();
 });
@@ -21,7 +23,7 @@ function readSessionCourseResponse(data){
             
             row += '<td>' + course.code + '</td>';
             row += '<td>' + course.creditUnit + '</td>';
-            row += '<td><a href="#" title="View" class="btn btn-primary btn-xs" onclick="viewCourseClick(\'\' + course.id + \'\')"><i class="fa fa-eye"></i></a> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editCourseClick(\'' + course.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteCourseModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteCourseClick(\'' + course.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
+            row += `<td><a href="#deleteSessionSemesterCourseModal" title="Remove" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteSessionSemesterCourseClick('${course.id}')"><i class="fa fa-trash-o"></i></a></td>`;
             row += '</tr>';
 
             $('#courseTable tbody').append(row);
@@ -29,6 +31,30 @@ function readSessionCourseResponse(data){
 
         initializeDataTable($('#courseTable'));
     }
+}
+
+function deleteSessionSemesterCourseClick(courseId) {
+    sessionSemesterCourseId = courseId;
+}
+
+function deleteSessionSemesterCourse() {
+    api('GET', '/SessionCourse/DeleteSessionCourse',
+        {sessionSemesterId: sessionSemesterId, courseId: sessionSemesterCourseId}, true, deleteSessionSemesterCourseResponse, true);
+}
+
+function deleteSessionSemesterCourseResponse(data) {
+    console.log('after remove');
+    console.log(data);
+    
+    if (data.status) onSuccess();
+}
+
+
+//______________________________________UTILITIES______________________________________
+function onSuccess() {
+    pageLoad();
+
+    $('#deleteSessionSemesterCourseModal').modal('hide');
 }
 
 // function setSessionSemesterId(sessionSemesterId) {

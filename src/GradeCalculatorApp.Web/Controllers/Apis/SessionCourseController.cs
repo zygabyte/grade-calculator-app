@@ -90,17 +90,17 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> DeleteSessionCourse(long sessionCourseId)
+        public ActionResult<ResponseData> DeleteSessionCourse(long sessionSemesterId, long courseId)
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_sessionSemesterCourseService.DeleteSessionCourse(sessionCourseId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionCourseId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, sessionCourseId));
+                return _sessionSemesterCourseService.DeleteSessionCourse(sessionSemesterId, courseId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, sessionSemesterId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, sessionSemesterId));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, sessionCourseId));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, sessionSemesterId));
             }
         }
         

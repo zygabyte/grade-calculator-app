@@ -15,27 +15,47 @@
                   <a href="@Url.Action("AddSessionSemesterCourse", "SessionSemester")" class="btn btn-success btn-sm">Add Courses</a>
               </span>
           </header>
-      <div class="card-body">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="adv-table">
-                      <table class="table table-hover p-table" id="courseTable">
-                          <thead>
-                          <tr>
-                              <th>#</th>
-                              <th>Course Name</th>
-                              <th>Course Code</th>
-                              <th>Course Credit</th>
-                              <th>Action</th>
-                          </tr>
-                          </thead>
-                          <tbody></tbody>
-                      </table>
-                </div>
-            </div>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="adv-table">
+                          <table class="table table-hover p-table" id="courseTable">
+                              <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Course Name</th>
+                                  <th>Course Code</th>
+                                  <th>Course Credit</th>
+                                  <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      
+      <div class="modal fade" id="deleteSessionSemesterCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="myModal">Remove Course</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      Are you sure you really want to remove this course from this session?
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                      <button type="button" class="btn btn-danger" onclick="deleteSessionSemesterCourse()">Yes</button>
+                  </div>
+              </div>
           </div>
       </div>
-      </section>
 </section>
 
 @section scripts

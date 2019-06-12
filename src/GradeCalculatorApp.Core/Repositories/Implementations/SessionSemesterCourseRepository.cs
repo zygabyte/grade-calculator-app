@@ -51,10 +51,15 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.SessionSemesterCourses
+                var sessionCourses = _gradeCalculatorContext.SessionSemesterCourses
                     .Include(x =>  x.SessionSemester)
                     .Include(x => x.Courses)
                     .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.SessionSemesterId == sessionSemesterId);
+
+                if (sessionCourses != null)
+                    sessionCourses.Courses = sessionCourses.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
+                
+                return sessionCourses;
             }
             catch (Exception e)
             {
@@ -62,15 +67,17 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool DeleteSessionCourse(long sessionCourseId)
+        public bool DeleteSessionCourse(long sessionCourseId, long courseId)
         {
             try
             {
-                var sessionCourse = _gradeCalculatorContext.SessionSemesterCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionCourseId);
+                var sessionCourse = ReadSessionCourse(sessionCourseId); 
 
                 if (sessionCourse == null) return false;
+
+                sessionCourse.Courses.Remove(
+                    sessionCourse.Courses.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
                 
-                sessionCourse.IsDeleted = true;
                 sessionCourse.Modified = DateTime.Now;
 
                 _gradeCalculatorContext.Entry(sessionCourse).State = EntityState.Modified;
