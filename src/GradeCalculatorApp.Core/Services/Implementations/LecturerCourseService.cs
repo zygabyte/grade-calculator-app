@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
@@ -43,6 +44,28 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return new List<LecturerCourse>();
             }
         }
+        
+        public IEnumerable<Course> ReadUniqueLecturerCourses(long lecturerId)
+        {
+            try
+            {
+                var lecturerCourses = _lecturerCourseRepository.ReadLecturerCourse(lecturerId).Courses;
+                var allCourses = _courseRepository.ReadCourses();
+
+                var uniqueCourses = new List<Course>();
+
+                Parallel.ForEach(allCourses, course =>
+                {
+                    if (!lecturerCourses.Contains(course)) uniqueCourses.Add(course); 
+                });
+
+                return uniqueCourses;
+            }
+            catch (Exception e)
+            {
+                return new List<Course>();
+            }
+        }
 
         public LecturerCourse ReadLecturerCourse(long lecturerCourseId)
         {
@@ -56,11 +79,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public bool DeleteLecturerCourse(long lecturerCourseId)
+        public bool DeleteLecturerCourse(long lecturerCourseId, long courseId)
         {
             try
             {
-                return lecturerCourseId > 0 && _lecturerCourseRepository.DeleteLecturerCourse(lecturerCourseId);
+                return lecturerCourseId > 0 && _lecturerCourseRepository.DeleteLecturerCourse(lecturerCourseId, courseId);
             }
             catch (Exception e)
             {
@@ -84,9 +107,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                var courses = new List<Course>();
-                
-                Parallel.ForEach(courseIds, courseId => courses.Add(_courseRepository.ReadCourse(courseId)));
+                var courses = courseIds.Select(courseId => _courseRepository.ReadCourse(courseId)).ToList();
 
                 return _lecturerCourseRepository.MapCourses(lecturerCourseId, courses);
             }

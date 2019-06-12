@@ -106,13 +106,13 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
         
-        public bool MapCourses(long lecturerCourseId, IEnumerable<long> courseIds)
+        public bool MapCourses(long sessionSemesterCourseId, IEnumerable<long> courseIds)
         {
             try
             {
                 var courses = courseIds.Select(courseId => _courseRepository.ReadCourse(courseId)).ToList();
 
-                return _sessionSemesterCourseRepository.MapCourses(lecturerCourseId, courses);
+                return _sessionSemesterCourseRepository.MapCourses(sessionSemesterCourseId, courses);
             }
             catch (Exception e)
             {

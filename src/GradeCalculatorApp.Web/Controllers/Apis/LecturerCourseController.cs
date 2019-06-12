@@ -53,16 +53,28 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
             }
         }
-
-        public ActionResult<ResponseData> ReadLecturerCourse(long lecturerCourseId)
+        
+        public ActionResult<ResponseData> ReadUniqueLecturerCourses(long lecturerId)
         {
             try
             {
-                var lecturerCourse = _lecturerCourseService.ReadLecturerCourse(lecturerCourseId);
+                return ResponseData.SendSuccessMsg(data: _lecturerCourseService.ReadUniqueLecturerCourses(lecturerId));
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
+            }
+        }
+
+        public ActionResult<ResponseData> ReadLecturerCourse(long lecturerId)
+        {
+            try
+            {
+                var lecturerCourse = _lecturerCourseService.ReadLecturerCourse(lecturerId);
 
                 return lecturerCourse != null
                     ? ResponseData.SendSuccessMsg(data: lecturerCourse)
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, lecturerCourseId));
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, lecturerId));
             }
             catch (Exception e)
             {
@@ -86,25 +98,25 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> DeleteLecturerCourse(long lecturerCourseId)
+        public ActionResult<ResponseData> DeleteLecturerCourse(long lecturerId, long courseId)
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_lecturerCourseService.DeleteLecturerCourse(lecturerCourseId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, lecturerCourseId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, lecturerCourseId));
+                return _lecturerCourseService.DeleteLecturerCourse(lecturerId, courseId)  
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulDelete, ObjectName, lecturerId)) 
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureDelete, ObjectName, lecturerId));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, lecturerCourseId));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, lecturerId));
             }
         }
 
-        public ActionResult<ResponseData> MapCourses(long lecturerCourseId, IEnumerable<long> courseIds)
+        public ActionResult<ResponseData> MapCourses(long lecturerId, IEnumerable<long> courseIds)
         {
             try
             {
-                return _lecturerCourseService.MapCourses(lecturerCourseId, courseIds)
+                return _lecturerCourseService.MapCourses(lecturerId, courseIds)
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Lecturer))
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Lecturer));
 

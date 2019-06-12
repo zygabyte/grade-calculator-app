@@ -41,7 +41,7 @@ function readLecturersResponse(data){
             row += '<td>' + lecturer.lastName + '</td>';
             row += '<td>' + lecturer.email + '</td>';
             row += '<td>' + lecturer.department + '</td>';
-            row += '<td><a href="#" title="View" class="btn btn-primary btn-xs" onclick="viewLecturerClick(\'\' + lecturer.id + \'\')"><i class="fa fa-eye"></i></a> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editLecturerClick(\'' + lecturer.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteLecturerModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteLecturerClick(\'' + lecturer.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
+            row += '<td><button type="button" title="Courses" class="btn btn-primary btn-xs" onclick="mapCourses(\'' + lecturer.id + '\')"><i class="fa fa-book"></i></button> | <a href="#" title="View" class="btn btn-primary btn-xs" onclick="viewLecturerClick(\'\' + lecturer.id + \'\')"><i class="fa fa-eye"></i></a> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editLecturerClick(\'' + lecturer.id + '\')"><i class="fa fa-pencil"></i></button> | <a href="#deleteLecturerModal" title="Delete" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteLecturerClick(\'' + lecturer.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#lecturerTable tbody').append(row);
@@ -141,7 +141,14 @@ function deleteLecturerResponse(data) {
     if (data.status) onSuccessModalHide();
 }
 
+function mapCourses(lecturerId) {
+    api('GET', '/Lecturer/SetLecturerId',
+        {lecturerId: lecturerId}, true, mapCourseResponse, true);
+}
 
+function mapCourseResponse(data) {
+    if (data.status) window.location = "/Lecturer/LecturerCourses"
+}
 
 
 //______________________________________UTILITIES______________________________________

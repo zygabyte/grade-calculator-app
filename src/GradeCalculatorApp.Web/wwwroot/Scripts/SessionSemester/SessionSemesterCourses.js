@@ -56,12 +56,3 @@ function onSuccess() {
 
     $('#deleteSessionSemesterCourseModal').modal('hide');
 }
-
-// function setSessionSemesterId(sessionSemesterId) {
-//     api('GET', '/SessionCourse/SetSessionSemesterId',
-//         {sessionSemesterId: sessionSemesterId}, true, setSessionSemesterIdResponse, true);
-// }
-//
-// function setSessionSemesterIdResponse(data) {
-//     if (data.status) window.location = "/SessionSemester/AddCourse";
-// }

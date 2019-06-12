@@ -16,13 +16,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "Lecturer"; 
         public LecturerController(ILecturerService lecturerService) => _lecturerService = lecturerService;
         
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
-
         public ActionResult<ResponseData> CreateLecturer(Lecturer lecturer)
         {
             try

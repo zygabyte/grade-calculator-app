@@ -57,9 +57,12 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                     .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.SessionSemesterId == sessionSemesterId);
 
                 if (sessionCourses != null)
+                {
                     sessionCourses.Courses = sessionCourses.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
+                    return sessionCourses;
+                }
                 
-                return sessionCourses;
+                return new SessionSemesterCourse{ Courses = new List<Course>() };
             }
             catch (Exception e)
             {
@@ -118,11 +121,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSessionCourse = _gradeCalculatorContext.SessionSemesterCourses
-                    .Include(x => x.Courses)
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.SessionSemesterId == sessionCourseId);
+                var currentSessionCourse = ReadSessionCourse(sessionCourseId);
 
-                if (currentSessionCourse == null)
+                if (currentSessionCourse == null || currentSessionCourse.Id == 0)
                 {
                     _gradeCalculatorContext.SessionSemesterCourses.Add(new SessionSemesterCourse
                     {
