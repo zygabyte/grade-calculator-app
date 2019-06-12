@@ -40,7 +40,7 @@ function readProgrammesResponse(data){
             row += '<td>' + programme.department + '</td>';
             row += '<td>' + programme.name + '</td>';
             row += '<td>' + programme.code + '</td>';
-            row += '<td><button title="View" class="btn btn-primary btn-xs" onclick="viewProgrammeClick(\'\' + programme.id + \'\')"><i class="fa fa-eye"></i></button> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editProgrammeClick(\'' + programme.id + '\')"><i class="fa fa-pencil"></i></button> | <a title="Delete" href="#deleteProgrammeModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteProgrammeClick(\'' + programme.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
+            row += '<td><button type="button" title="Courses" class="btn btn-primary btn-xs" onclick="mapCourses(\'' + programme.id + '\')"><i class="fa fa-book"></i></button> | <button title="View" class="btn btn-primary btn-xs" onclick="viewProgrammeClick(\'\' + programme.id + \'\')"><i class="fa fa-eye"></i></button> | <button type="button" title="Edit" class="btn btn-success btn-xs" onclick="editProgrammeClick(\'' + programme.id + '\')"><i class="fa fa-pencil"></i></button> | <a title="Delete" href="#deleteProgrammeModal" data-toggle="modal" class="btn btn-danger btn-xs" onclick="deleteProgrammeClick(\'' + programme.id + '\')"><i class="fa fa-trash-o"></i></a></td>';
             row += '</tr>';
 
             $('#programmeTable tbody').append(row);
@@ -135,6 +135,14 @@ function deleteProgrammeResponse(data) {
     if (data.status) onSuccessModalHide();
 }
 
+function mapCourses(programmeId) {
+    api('GET', '/Programme/SetProgrammeId',
+        {programmeId: programmeId}, true, mapCourseResponse, true);
+}
+
+function mapCourseResponse(data) {
+    if (data.status) window.location = "/Programme/ProgrammeCourses"
+}
 
 
 

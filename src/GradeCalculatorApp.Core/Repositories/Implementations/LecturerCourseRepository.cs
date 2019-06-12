@@ -51,15 +51,15 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var lecturerCourses = _gradeCalculatorContext.LecturerCourses
+                var lecturerCourse = _gradeCalculatorContext.LecturerCourses
                     .Include(x =>  x.Lecturer)
                     .Include(x => x.Courses)
                     .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.LecturerId == lecturerId);
 
-                if (lecturerCourses != null)
+                if (lecturerCourse != null)
                 {
-                    lecturerCourses.Courses = lecturerCourses.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
-                    return lecturerCourses;
+                    lecturerCourse.Courses = lecturerCourse.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
+                    return lecturerCourse;
                 }
                 
                 return new LecturerCourse{Courses = new List<Course>()};

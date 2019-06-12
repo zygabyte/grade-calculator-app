@@ -8,7 +8,7 @@ namespace GradeCalculatorApp.Web.Controllers
     public class LecturerController : Controller
     {
         private static long _lecturerId;
-        private ILecturerService _lecturerService;
+        private readonly ILecturerService _lecturerService;
 
         public LecturerController(ILecturerService lecturerService) => _lecturerService = lecturerService;
         // GET

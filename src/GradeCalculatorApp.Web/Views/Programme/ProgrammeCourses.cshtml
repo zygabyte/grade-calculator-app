@@ -1,0 +1,69 @@
+@model object
+
+@{
+    ViewBag.Title = "Programme Courses";
+    Layout = "_Layout";
+    long programmeId = ViewBag.ProgrammeId;
+    string programmeFullName = ViewBag.ProgrammeFullName;
+}
+
+<section class="wrapper">
+      <!-- page start-->
+      <section class="card">
+          <header class="card-header">
+              All courses assigned to programme @programmeFullName
+              <span class="pull-right">
+                  <a href="@Url.Action("AddProgrammeCourse", "Programme")" class="btn btn-success btn-sm">Add Courses</a>
+              </span>
+          </header>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="adv-table">
+                          <table class="table table-hover p-table" id="courseTable">
+                              <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Course Name</th>
+                                  <th>Course Code</th>
+                                  <th>Course Credit</th>
+                                  <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      
+      <div class="modal fade" id="deleteProgrammeCourseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="myModal">Remove Course</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      Are you sure you really want to remove this course from this programme?
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                      <button type="button" class="btn btn-danger" onclick="deleteProgrammeCourse()">Yes</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+</section>
+
+@section scripts
+{
+    <script>
+        let programmeId = @programmeId;
+    </script>
+    
+    <script src="/Scripts/Programme/ProgrammeCourses.js"></script>
+}

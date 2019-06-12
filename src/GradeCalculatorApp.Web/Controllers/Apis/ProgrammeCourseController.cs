@@ -18,13 +18,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         
         public ProgrammeCourseController(IProgrammeCourseService programmeCourseService) => _programmeCourseService = programmeCourseService;
         
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
-
         public ActionResult<ResponseData> CreateProgrammeCourse(ProgrammeCourse programmeCourse)
         {
             try
@@ -52,16 +45,28 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
             }
         }
-
-        public ActionResult<ResponseData> ReadProgrammeCourse(long programmeCourseId)
+        
+        public ActionResult<ResponseData> ReadUniqueProgrammeCourses(long programmeId)
         {
             try
             {
-                var programmeCourse = _programmeCourseService.ReadProgrammeCourse(programmeCourseId);
+                return ResponseData.SendSuccessMsg(data: _programmeCourseService.ReadUniqueProgrammeCourses(programmeId));
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
+            }
+        }
+
+        public ActionResult<ResponseData> ReadProgrammeCourse(long programmeId)
+        {
+            try
+            {
+                var programmeCourse = _programmeCourseService.ReadProgrammeCourse(programmeId);
 
                 return programmeCourse != null
                     ? ResponseData.SendSuccessMsg(data: programmeCourse)
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, programmeCourseId));
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRead, ObjectName, programmeId));
             }
             catch (Exception e)
             {
@@ -85,25 +90,25 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> DeleteProgrammeCourse(long programmeCourseId)
+        public ActionResult<ResponseData> DeleteProgrammeCourse(long programmeId, long courseId)
         {
             try
             {
-                return ResponseData.SendSuccessMsg(_programmeCourseService.DeleteProgrammeCourse(programmeCourseId) 
-                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, programmeCourseId) 
-                    : string.Format(DefaultConstants.FailureDelete, ObjectName, programmeCourseId));
+                return ResponseData.SendSuccessMsg(_programmeCourseService.DeleteProgrammeCourse(programmeId, courseId) 
+                    ? string.Format(DefaultConstants.SuccessfulDelete, ObjectName, programmeId) 
+                    : string.Format(DefaultConstants.FailureDelete, ObjectName, programmeId));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, programmeCourseId));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, programmeId));
             }
         }
         
-        public ActionResult<ResponseData> MapCourses(long programmeCourseId, IEnumerable<long> courseIds)
+        public ActionResult<ResponseData> MapCourses(long programmeId, IEnumerable<long> courseIds)
         {
             try
             {
-                return _programmeCourseService.MapCourses(programmeCourseId, courseIds)
+                return _programmeCourseService.MapCourses(programmeId, courseIds)
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Programme))
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.SuccessfulMap, Courses, Programme));
 

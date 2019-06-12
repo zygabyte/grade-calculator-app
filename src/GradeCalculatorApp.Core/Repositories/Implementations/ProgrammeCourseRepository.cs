@@ -51,10 +51,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                return _gradeCalculatorContext.ProgrammeCourses
+                var programmeCourse = _gradeCalculatorContext.ProgrammeCourses
                     .Include(x =>  x.Programme)
                     .Include(x => x.Courses)
                     .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == programmeCourseId);
+                
+                if (programmeCourse != null)
+                {
+                    programmeCourse.Courses = programmeCourse.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
+                    return programmeCourse;
+                }
+                
+                return new ProgrammeCourse{ Courses = new List<Course>() };
             }
             catch (Exception e)
             {
@@ -62,15 +70,17 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool DeleteProgrammeCourse(long programmeCourseId)
+        public bool DeleteProgrammeCourse(long programmeCourseId, long courseId)
         {
             try
             {
-                var programmeCourse = _gradeCalculatorContext.ProgrammeCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == programmeCourseId);
+                var programmeCourse = ReadProgrammeCourse(programmeCourseId);
 
                 if (programmeCourse == null) return false;
+
+                programmeCourse.Courses.Remove(
+                    programmeCourse.Courses.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
                 
-                programmeCourse.IsDeleted = true;
                 programmeCourse.Modified = DateTime.Now;
 
                 _gradeCalculatorContext.Entry(programmeCourse).State = EntityState.Modified;
@@ -111,9 +121,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSessionCourse = _gradeCalculatorContext.ProgrammeCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.ProgrammeId == programmeCourseId);
+                var currentProgrammeCourse = ReadProgrammeCourse(programmeCourseId);
 
-                if (currentSessionCourse == null)
+                if (currentProgrammeCourse == null || currentProgrammeCourse.Id == 0)
                 {
                     _gradeCalculatorContext.ProgrammeCourses.Add(new ProgrammeCourse
                     {
@@ -124,9 +134,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                     return _gradeCalculatorContext.SaveChanges() > 0;
                 }
 
-                currentSessionCourse.Courses.AddRange(courses);
+                currentProgrammeCourse.Courses.AddRange(courses);
                     
-                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
+                _gradeCalculatorContext.Entry(currentProgrammeCourse).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }
