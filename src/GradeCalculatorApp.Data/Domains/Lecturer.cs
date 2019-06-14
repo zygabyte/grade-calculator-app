@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using GradeCalculatorApp.EnumLibrary;
 
 namespace GradeCalculatorApp.Data.Domains
@@ -6,6 +7,7 @@ namespace GradeCalculatorApp.Data.Domains
     {
         public Department Department { get; set; }
         public long DepartmentId { get; set; }
+        public List<RegisteredCourse> RegisteredCourses { get; set; }
 
         public Lecturer()
         {

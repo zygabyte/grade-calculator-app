@@ -35,15 +35,15 @@ namespace GradeCalculatorApp.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<long?>("LecturerCourseId");
+                    b.Property<long>("LecturerCourseId");
 
                     b.Property<DateTime?>("Modified");
 
                     b.Property<string>("Name");
 
-                    b.Property<long?>("ProgrammeCourseId");
+                    b.Property<long>("ProgrammeCourseId");
 
-                    b.Property<long?>("SessionSemesterCourseId");
+                    b.Property<long>("SessionSemesterCourseId");
 
                     b.HasKey("Id");
 
@@ -187,6 +187,33 @@ namespace GradeCalculatorApp.Data.Migrations
                     b.HasIndex("ProgrammeId");
 
                     b.ToTable("ProgrammeCourses");
+                });
+
+            modelBuilder.Entity("GradeCalculatorApp.Data.Domains.RegisteredCourse", b =>
+                {
+                    b.Property<long>("CourseId");
+
+                    b.Property<long>("StudentId");
+
+                    b.Property<long>("LecturerId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<long>("Id");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("Modified");
+
+                    b.HasKey("CourseId", "StudentId", "LecturerId");
+
+                    b.HasIndex("LecturerId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("RegisteredCourses");
                 });
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.School", b =>
@@ -351,17 +378,20 @@ namespace GradeCalculatorApp.Data.Migrations
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.Course", b =>
                 {
-                    b.HasOne("GradeCalculatorApp.Data.Domains.LecturerCourse")
+                    b.HasOne("GradeCalculatorApp.Data.Domains.LecturerCourse", "LecturerCourse")
                         .WithMany("Courses")
-                        .HasForeignKey("LecturerCourseId");
+                        .HasForeignKey("LecturerCourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("GradeCalculatorApp.Data.Domains.ProgrammeCourse")
+                    b.HasOne("GradeCalculatorApp.Data.Domains.ProgrammeCourse", "ProgrammeCourse")
                         .WithMany("Courses")
-                        .HasForeignKey("ProgrammeCourseId");
+                        .HasForeignKey("ProgrammeCourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("GradeCalculatorApp.Data.Domains.SessionSemesterCourse")
+                    b.HasOne("GradeCalculatorApp.Data.Domains.SessionSemesterCourse", "SessionSemesterCourse")
                         .WithMany("Courses")
-                        .HasForeignKey("SessionSemesterCourseId");
+                        .HasForeignKey("SessionSemesterCourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.Department", b =>
@@ -402,6 +432,24 @@ namespace GradeCalculatorApp.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ProgrammeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GradeCalculatorApp.Data.Domains.RegisteredCourse", b =>
+                {
+                    b.HasOne("GradeCalculatorApp.Data.Domains.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GradeCalculatorApp.Data.Domains.Lecturer", "Lecturer")
+                        .WithMany("RegisteredCourses")
+                        .HasForeignKey("LecturerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GradeCalculatorApp.Data.Domains.Student", "Student")
+                        .WithMany("RegisteredCourses")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.SessionSemester", b =>

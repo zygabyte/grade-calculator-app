@@ -16,6 +16,7 @@ CREATE TABLE [Schools] (
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
     [Name] nvarchar(max) NULL,
+    [Code] nvarchar(max) NULL,
     CONSTRAINT [PK_Schools] PRIMARY KEY ([Id])
 );
 
@@ -34,20 +35,6 @@ CREATE TABLE [Semesters] (
 
 GO
 
-CREATE TABLE [Departments] (
-    [Id] bigint NOT NULL IDENTITY,
-    [Created] datetime2 NOT NULL,
-    [Modified] datetime2 NULL,
-    [IsDeleted] bit NOT NULL,
-    [IsActive] bit NOT NULL,
-    [Name] nvarchar(max) NULL,
-    [SchoolId] bigint NOT NULL,
-    CONSTRAINT [PK_Departments] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Departments_Schools_SchoolId] FOREIGN KEY ([SchoolId]) REFERENCES [Schools] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
 CREATE TABLE [Sessions] (
     [Id] bigint NOT NULL IDENTITY,
     [Created] datetime2 NOT NULL,
@@ -55,11 +42,41 @@ CREATE TABLE [Sessions] (
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
     [Name] nvarchar(max) NULL,
+    [Code] nvarchar(max) NULL,
+    CONSTRAINT [PK_Sessions] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Departments] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Created] datetime2 NOT NULL,
+    [Modified] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    [IsActive] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Code] nvarchar(max) NULL,
+    [SchoolId] bigint NOT NULL,
+    CONSTRAINT [PK_Departments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Departments_Schools_SchoolId] FOREIGN KEY ([SchoolId]) REFERENCES [Schools] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [SessionSemesters] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Created] datetime2 NOT NULL,
+    [Modified] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    [IsActive] bit NOT NULL,
     [SemesterId] bigint NOT NULL,
+    [SessionId] bigint NOT NULL,
     [SemesterStartDate] datetime2 NOT NULL,
     [SemesterEndDate] datetime2 NOT NULL,
-    CONSTRAINT [PK_Sessions] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Sessions_Semesters_SemesterId] FOREIGN KEY ([SemesterId]) REFERENCES [Semesters] ([Id]) ON DELETE CASCADE
+    [IsCurrent] bit NOT NULL,
+    CONSTRAINT [PK_SessionSemesters] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_SessionSemesters_Semesters_SemesterId] FOREIGN KEY ([SemesterId]) REFERENCES [Semesters] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_SessionSemesters_Sessions_SessionId] FOREIGN KEY ([SessionId]) REFERENCES [Sessions] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -89,6 +106,7 @@ CREATE TABLE [Programmes] (
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
     [Name] nvarchar(max) NULL,
+    [Code] nvarchar(max) NULL,
     [DepartmentId] bigint NOT NULL,
     CONSTRAINT [PK_Programmes] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Programmes_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([Id]) ON DELETE CASCADE
@@ -96,15 +114,15 @@ CREATE TABLE [Programmes] (
 
 GO
 
-CREATE TABLE [SessionCourses] (
+CREATE TABLE [SessionSemesterCourses] (
     [Id] bigint NOT NULL IDENTITY,
     [Created] datetime2 NOT NULL,
     [Modified] datetime2 NULL,
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
-    [SessionId] bigint NOT NULL,
-    CONSTRAINT [PK_SessionCourses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_SessionCourses_Sessions_SessionId] FOREIGN KEY ([SessionId]) REFERENCES [Sessions] ([Id]) ON DELETE CASCADE
+    [SessionSemesterId] bigint NOT NULL,
+    CONSTRAINT [PK_SessionSemesterCourses] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_SessionSemesterCourses_SessionSemesters_SessionSemesterId] FOREIGN KEY ([SessionSemesterId]) REFERENCES [SessionSemesters] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -160,22 +178,33 @@ CREATE TABLE [Courses] (
     [Modified] datetime2 NULL,
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
-    [Title] nvarchar(max) NULL,
+    [Name] nvarchar(max) NULL,
     [Code] nvarchar(max) NULL,
     [CreditUnit] int NOT NULL,
-    [LecturerCourseId] bigint NULL,
-    [LecturerId] bigint NULL,
-    [ProgrammeCourseId] bigint NULL,
-    [ProgrammeId] bigint NULL,
-    [SessionCourseId] bigint NULL,
-    [SessionId] bigint NULL,
+    [LecturerCourseId] bigint NOT NULL,
+    [SessionSemesterCourseId] bigint NOT NULL,
+    [ProgrammeCourseId] bigint NOT NULL,
     CONSTRAINT [PK_Courses] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_Courses_LecturerCourses_LecturerCourseId] FOREIGN KEY ([LecturerCourseId]) REFERENCES [LecturerCourses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_Lecturers_LecturerId] FOREIGN KEY ([LecturerId]) REFERENCES [Lecturers] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_Courses_ProgrammeCourses_ProgrammeCourseId] FOREIGN KEY ([ProgrammeCourseId]) REFERENCES [ProgrammeCourses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_Programmes_ProgrammeId] FOREIGN KEY ([ProgrammeId]) REFERENCES [Programmes] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_SessionCourses_SessionCourseId] FOREIGN KEY ([SessionCourseId]) REFERENCES [SessionCourses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_Sessions_SessionId] FOREIGN KEY ([SessionId]) REFERENCES [Sessions] ([Id]) ON DELETE NO ACTION
+    CONSTRAINT [FK_Courses_SessionSemesterCourses_SessionSemesterCourseId] FOREIGN KEY ([SessionSemesterCourseId]) REFERENCES [SessionSemesterCourses] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [RegisteredCourses] (
+    [StudentId] bigint NOT NULL,
+    [LecturerId] bigint NOT NULL,
+    [CourseId] bigint NOT NULL,
+    [Id] bigint NOT NULL,
+    [Created] datetime2 NOT NULL,
+    [Modified] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    [IsActive] bit NOT NULL,
+    CONSTRAINT [PK_RegisteredCourses] PRIMARY KEY ([CourseId], [StudentId], [LecturerId]),
+    CONSTRAINT [FK_RegisteredCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_RegisteredCourses_Lecturers_LecturerId] FOREIGN KEY ([LecturerId]) REFERENCES [Lecturers] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_RegisteredCourses_Students_StudentId] FOREIGN KEY ([StudentId]) REFERENCES [Students] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -184,23 +213,11 @@ CREATE INDEX [IX_Courses_LecturerCourseId] ON [Courses] ([LecturerCourseId]);
 
 GO
 
-CREATE INDEX [IX_Courses_LecturerId] ON [Courses] ([LecturerId]);
-
-GO
-
 CREATE INDEX [IX_Courses_ProgrammeCourseId] ON [Courses] ([ProgrammeCourseId]);
 
 GO
 
-CREATE INDEX [IX_Courses_ProgrammeId] ON [Courses] ([ProgrammeId]);
-
-GO
-
-CREATE INDEX [IX_Courses_SessionCourseId] ON [Courses] ([SessionCourseId]);
-
-GO
-
-CREATE INDEX [IX_Courses_SessionId] ON [Courses] ([SessionId]);
+CREATE INDEX [IX_Courses_SessionSemesterCourseId] ON [Courses] ([SessionSemesterCourseId]);
 
 GO
 
@@ -224,11 +241,23 @@ CREATE INDEX [IX_Programmes_DepartmentId] ON [Programmes] ([DepartmentId]);
 
 GO
 
-CREATE INDEX [IX_SessionCourses_SessionId] ON [SessionCourses] ([SessionId]);
+CREATE INDEX [IX_RegisteredCourses_LecturerId] ON [RegisteredCourses] ([LecturerId]);
 
 GO
 
-CREATE INDEX [IX_Sessions_SemesterId] ON [Sessions] ([SemesterId]);
+CREATE INDEX [IX_RegisteredCourses_StudentId] ON [RegisteredCourses] ([StudentId]);
+
+GO
+
+CREATE INDEX [IX_SessionSemesterCourses_SessionSemesterId] ON [SessionSemesterCourses] ([SessionSemesterId]);
+
+GO
+
+CREATE INDEX [IX_SessionSemesters_SemesterId] ON [SessionSemesters] ([SemesterId]);
+
+GO
+
+CREATE INDEX [IX_SessionSemesters_SessionId] ON [SessionSemesters] ([SessionId]);
 
 GO
 
@@ -237,7 +266,6 @@ CREATE INDEX [IX_Students_ProgrammeId] ON [Students] ([ProgrammeId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190529160944_InitialModel', N'2.2.4-servicing-10062');
+VALUES (N'20190614201329_InitialModel', N'2.2.4-servicing-10062');
 
 GO
-

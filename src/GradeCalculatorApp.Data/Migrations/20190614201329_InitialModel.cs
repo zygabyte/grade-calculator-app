@@ -284,9 +284,9 @@ namespace GradeCalculatorApp.Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
                     CreditUnit = table.Column<int>(nullable: false),
-                    LecturerCourseId = table.Column<long>(nullable: true),
-                    ProgrammeCourseId = table.Column<long>(nullable: true),
-                    SessionSemesterCourseId = table.Column<long>(nullable: true)
+                    LecturerCourseId = table.Column<long>(nullable: false),
+                    SessionSemesterCourseId = table.Column<long>(nullable: false),
+                    ProgrammeCourseId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -307,6 +307,42 @@ namespace GradeCalculatorApp.Data.Migrations
                         name: "FK_Courses_SessionSemesterCourses_SessionSemesterCourseId",
                         column: x => x.SessionSemesterCourseId,
                         principalTable: "SessionSemesterCourses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RegisteredCourses",
+                columns: table => new
+                {
+                    StudentId = table.Column<long>(nullable: false),
+                    LecturerId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegisteredCourses", x => new { x.CourseId, x.StudentId, x.LecturerId });
+                    table.ForeignKey(
+                        name: "FK_RegisteredCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RegisteredCourses_Lecturers_LecturerId",
+                        column: x => x.LecturerId,
+                        principalTable: "Lecturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RegisteredCourses_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -352,6 +388,16 @@ namespace GradeCalculatorApp.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RegisteredCourses_LecturerId",
+                table: "RegisteredCourses",
+                column: "LecturerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegisteredCourses_StudentId",
+                table: "RegisteredCourses",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SessionSemesterCourses_SessionSemesterId",
                 table: "SessionSemesterCourses",
                 column: "SessionSemesterId");
@@ -374,6 +420,9 @@ namespace GradeCalculatorApp.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "RegisteredCourses");
+
             migrationBuilder.DropTable(
                 name: "Courses");
 

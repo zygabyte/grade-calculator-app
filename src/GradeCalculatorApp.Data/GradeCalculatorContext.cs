@@ -8,8 +8,8 @@ namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
-        {}
+//        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
+//        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,34 @@ namespace GradeCalculatorApp.Data
             modelBuilder.Entity<Lecturer>()
                 .HasOne(l => l.Department)
                 .WithMany(d => d.Lecturers);
+            
+            modelBuilder.Entity<Course>()
+                .HasOne(l => l.SessionSemesterCourse)
+                .WithMany(d => d.Courses)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Course>()
+                .HasOne(l => l.LecturerCourse)
+                .WithMany(d => d.Courses)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            modelBuilder.Entity<Course>()
+                .HasOne(l => l.ProgrammeCourse)
+                .WithMany(d => d.Courses)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RegisteredCourse>()
+                .HasKey(rc => new {rc.CourseId, rc.StudentId, rc.LecturerId});
+
+            modelBuilder.Entity<RegisteredCourse>()
+                .HasOne(rc => rc.Student)
+                .WithMany(s => s.RegisteredCourses)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RegisteredCourse>()
+                .HasOne(rc => rc.Lecturer)
+                .WithMany(l => l.RegisteredCourses)
+                .OnDelete(DeleteBehavior.Restrict);
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,5 +70,7 @@ namespace GradeCalculatorApp.Data
         public DbSet<LecturerCourse> LecturerCourses { get; set; }
         public DbSet<ProgrammeCourse> ProgrammeCourses { get; set; }
         public DbSet<SessionSemesterCourse> SessionSemesterCourses { get; set; }
+        
+        public DbSet<RegisteredCourse> RegisteredCourses { get; set; }
     }
 }
