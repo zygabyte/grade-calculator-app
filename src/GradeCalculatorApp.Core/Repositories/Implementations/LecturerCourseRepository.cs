@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
@@ -47,48 +48,38 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public LecturerCourse ReadLecturerCourse(long lecturerId)
+        public IEnumerable<Course> ReadLecturerCourse(long lecturerId)
         {
             try
             {
-                var lecturerCourse = _gradeCalculatorContext.LecturerCourses
-                    .Include(x =>  x.Lecturer)
+                var lecturerCourses = _gradeCalculatorContext.LecturerCourses
                     .Include(x => x.Course)
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.LecturerId == lecturerId);
+                    .Where(x => !x.IsDeleted && x.LecturerId == lecturerId 
+                                             && !x.Course.IsDeleted)
+                    .Select(x => x.Course)
+                    .ToList();
 
-                if (lecturerCourse != null)
-                {
-//                    lecturerCourse.Course = lecturerCourse.Course.Where(x => !x.IsDeleted && x.IsActive).ToList();
-                    return lecturerCourse;
-                }
-                
-//                return new LecturerCourse{Course = new List<Course>()};
-                return new LecturerCourse{};
+                return lecturerCourses;
             }
             catch (Exception e)
             {
-                return null;
+                return new List<Course>();
             }
         }
 
-        public bool DeleteLecturerCourse(long lecturerCourseId, long courseId)
+        public bool DeleteLecturerCourse(long lecturerId, long courseId)
         {
             try
             {
-                var lecturerCourse = ReadLecturerCourse(lecturerCourseId); 
+                var lecturerCourse = _gradeCalculatorContext.LecturerCourses.FirstOrDefault(x => !x.IsDeleted && x.LecturerId == lecturerId && x.CourseId == courseId); 
 
                 if (lecturerCourse == null) return false;
 
-//                lecturerCourse.Course.Remove(
-//                    lecturerCourse.Course.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
+                lecturerCourse.IsDeleted = true;
                 
-                lecturerCourse.Modified = DateTime.Now;
-
                 _gradeCalculatorContext.Entry(lecturerCourse).State = EntityState.Modified;
 
-                return _gradeCalculatorContext.SaveChanges() > 0;
-
-            }
+                return _gradeCalculatorContext.SaveChanges() > 0;            }
             catch (Exception e)
             {
                 return false;
@@ -122,7 +113,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-//                var currentLecturerCourse = ReadLecturerCourse(lecturerId);
                 courseIds.ForEach(courseId =>
                 {
                     _gradeCalculatorContext.LecturerCourses.Add(new LecturerCourse
@@ -133,17 +123,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 });
                     
                 return _gradeCalculatorContext.SaveChanges() > 0;
-//                
-//                if (currentLecturerCourse == null || currentLecturerCourse.Id == 0)
-//                {
-//                    
-//                }
-//
-////                currentLecturerCourse.Course.AddRange(courses);
-//                    
-//                _gradeCalculatorContext.Entry(currentLecturerCourse).State = EntityState.Modified;
-//
-//                return _gradeCalculatorContext.SaveChanges() > 0;
             }
             catch (Exception e)
             {

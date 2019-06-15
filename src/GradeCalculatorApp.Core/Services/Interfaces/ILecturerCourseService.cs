@@ -8,7 +8,7 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
         bool CreateLecturerCourse(LecturerCourse lecturerCourse);
         IEnumerable<LecturerCourse> ReadLecturerCourses(bool takeAll = true, int count = 1000);
         IEnumerable<Course> ReadUniqueLecturerCourses(long lecturerId);
-        LecturerCourse ReadLecturerCourse(long lecturerCourseId);
+        IEnumerable<Course> ReadLecturerCourse(long lecturerId);
         bool DeleteLecturerCourse(long lecturerCourseId, long courseId);
         bool UpdateLecturerCourse(long lecturerCourseId, LecturerCourse lecturerCourse);
         bool MapCourses(long lecturerId, List<long> courseIds);

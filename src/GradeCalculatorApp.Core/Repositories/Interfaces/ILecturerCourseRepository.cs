@@ -7,8 +7,8 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
     {
         bool CreateLecturerCourse(LecturerCourse lecturerCourse);
         IEnumerable<LecturerCourse> ReadLecturerCourses(bool takeAll = true, int count = 1000);
-        LecturerCourse ReadLecturerCourse(long lecturerCourseId);
-        bool DeleteLecturerCourse(long lecturerCourseId, long courseId);
+        IEnumerable<Course> ReadLecturerCourse(long lecturerCourseId);
+        bool DeleteLecturerCourse(long lecturerId, long courseId);
         bool UpdateLecturerCourse(long lecturerCourseId, LecturerCourse lecturerCourse);
         bool MapCourses(long lecturerId, List<long> courseIds);
     }

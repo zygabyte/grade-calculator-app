@@ -66,23 +66,19 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public bool DeleteSessionCourse(long sessionCourseId, long courseId)
+        public bool DeleteSessionCourse(long sessionId, long courseId)
         {
             try
             {
-                var sessionCourse = ReadSessionCourse(sessionCourseId); 
+                var sessionCourse = _gradeCalculatorContext.SessionSemesterCourses.FirstOrDefault(x => !x.IsDeleted && x.SessionSemesterId == sessionId && x.CourseId == courseId); 
 
                 if (sessionCourse == null) return false;
 
-//                sessionCourse.Course.Remove(
-//                    sessionCourse.Course.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
+                sessionCourse.IsDeleted = true;
                 
-//                sessionCourse.Modified = DateTime.Now;
-
                 _gradeCalculatorContext.Entry(sessionCourse).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
-
             }
             catch (Exception e)
             {
@@ -127,24 +123,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 });
                 
                 return _gradeCalculatorContext.SaveChanges() > 0;
-//                var currentSessionCourse = ReadSessionCourse(sessionSemesterId);
-//
-//                if (currentSessionCourse == null || currentSessionCourse.Id == 0)
-//                {
-//                    _gradeCalculatorContext.SessionSemesterCourses.Add(new SessionSemesterCourse
-//                    {
-//                        SessionSemesterId = sessionSemesterId,
-////                        Course = courses
-//                    });
-//                    
-//                    return _gradeCalculatorContext.SaveChanges() > 0;
-//                }
-//
-////                currentSessionCourse.Course.AddRange(courses);
-//                    
-//                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
-//
-//                return _gradeCalculatorContext.SaveChanges() > 0;
             }
             catch (Exception e)
             {

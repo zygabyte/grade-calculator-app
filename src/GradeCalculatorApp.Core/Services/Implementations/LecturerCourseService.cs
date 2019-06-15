@@ -49,14 +49,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                var lecturerCourses = _lecturerCourseRepository.ReadLecturerCourse(lecturerId).Course;
+                var lecturerCourses = _lecturerCourseRepository.ReadLecturerCourse(lecturerId);
                 var allCourses = _courseRepository.ReadCourses();
 
                 var uniqueCourses = new List<Course>();
 
                 Parallel.ForEach(allCourses, course =>
                 {
-//                    if (!lecturerCourses.Contains(course)) uniqueCourses.Add(course); 
+                    if (!lecturerCourses.Contains(course)) uniqueCourses.Add(course); 
                 });
 
                 return uniqueCourses;
@@ -67,15 +67,15 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public LecturerCourse ReadLecturerCourse(long lecturerCourseId)
+        public IEnumerable<Course> ReadLecturerCourse(long lecturerId)
         {
             try
             {
-                return lecturerCourseId > 0 ? _lecturerCourseRepository.ReadLecturerCourse(lecturerCourseId) : null;
+                return _lecturerCourseRepository.ReadLecturerCourse(lecturerId);
             }
             catch (Exception e)
             {
-                return null;
+                return new List<Course>();
             }
         }
 

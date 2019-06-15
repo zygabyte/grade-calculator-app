@@ -9,6 +9,20 @@ END;
 
 GO
 
+CREATE TABLE [Courses] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Created] datetime2 NOT NULL,
+    [Modified] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    [IsActive] bit NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Code] nvarchar(max) NULL,
+    [CreditUnit] int NOT NULL,
+    CONSTRAINT [PK_Courses] PRIMARY KEY ([Id])
+);
+
+GO
+
 CREATE TABLE [Schools] (
     [Id] bigint NOT NULL IDENTITY,
     [Created] datetime2 NOT NULL,
@@ -94,7 +108,7 @@ CREATE TABLE [Lecturers] (
     [UserRole] int NOT NULL,
     [DepartmentId] bigint NOT NULL,
     CONSTRAINT [PK_Lecturers] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Lecturers_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_Lecturers_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -109,46 +123,52 @@ CREATE TABLE [Programmes] (
     [Code] nvarchar(max) NULL,
     [DepartmentId] bigint NOT NULL,
     CONSTRAINT [PK_Programmes] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Programmes_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_Programmes_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([Id]) ON DELETE NO ACTION
 );
 
 GO
 
 CREATE TABLE [SessionSemesterCourses] (
-    [Id] bigint NOT NULL IDENTITY,
+    [SessionSemesterId] bigint NOT NULL,
+    [CourseId] bigint NOT NULL,
+    [Id] bigint NOT NULL,
     [Created] datetime2 NOT NULL,
     [Modified] datetime2 NULL,
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
-    [SessionSemesterId] bigint NOT NULL,
-    CONSTRAINT [PK_SessionSemesterCourses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_SessionSemesterCourses_SessionSemesters_SessionSemesterId] FOREIGN KEY ([SessionSemesterId]) REFERENCES [SessionSemesters] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [PK_SessionSemesterCourses] PRIMARY KEY ([CourseId], [SessionSemesterId]),
+    CONSTRAINT [FK_SessionSemesterCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_SessionSemesterCourses_SessionSemesters_SessionSemesterId] FOREIGN KEY ([SessionSemesterId]) REFERENCES [SessionSemesters] ([Id]) ON DELETE NO ACTION
 );
 
 GO
 
 CREATE TABLE [LecturerCourses] (
-    [Id] bigint NOT NULL IDENTITY,
+    [LecturerId] bigint NOT NULL,
+    [CourseId] bigint NOT NULL,
+    [Id] bigint NOT NULL,
     [Created] datetime2 NOT NULL,
     [Modified] datetime2 NULL,
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
-    [LecturerId] bigint NOT NULL,
-    CONSTRAINT [PK_LecturerCourses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_LecturerCourses_Lecturers_LecturerId] FOREIGN KEY ([LecturerId]) REFERENCES [Lecturers] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [PK_LecturerCourses] PRIMARY KEY ([CourseId], [LecturerId]),
+    CONSTRAINT [FK_LecturerCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_LecturerCourses_Lecturers_LecturerId] FOREIGN KEY ([LecturerId]) REFERENCES [Lecturers] ([Id]) ON DELETE NO ACTION
 );
 
 GO
 
 CREATE TABLE [ProgrammeCourses] (
-    [Id] bigint NOT NULL IDENTITY,
+    [ProgrammeId] bigint NOT NULL,
+    [CourseId] bigint NOT NULL,
+    [Id] bigint NOT NULL,
     [Created] datetime2 NOT NULL,
     [Modified] datetime2 NULL,
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
-    [ProgrammeId] bigint NOT NULL,
-    CONSTRAINT [PK_ProgrammeCourses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_ProgrammeCourses_Programmes_ProgrammeId] FOREIGN KEY ([ProgrammeId]) REFERENCES [Programmes] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [PK_ProgrammeCourses] PRIMARY KEY ([CourseId], [ProgrammeId]),
+    CONSTRAINT [FK_ProgrammeCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_ProgrammeCourses_Programmes_ProgrammeId] FOREIGN KEY ([ProgrammeId]) REFERENCES [Programmes] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -167,27 +187,7 @@ CREATE TABLE [Students] (
     [MatricNumber] nvarchar(max) NULL,
     [ProgrammeId] bigint NOT NULL,
     CONSTRAINT [PK_Students] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Students_Programmes_ProgrammeId] FOREIGN KEY ([ProgrammeId]) REFERENCES [Programmes] ([Id]) ON DELETE CASCADE
-);
-
-GO
-
-CREATE TABLE [Courses] (
-    [Id] bigint NOT NULL IDENTITY,
-    [Created] datetime2 NOT NULL,
-    [Modified] datetime2 NULL,
-    [IsDeleted] bit NOT NULL,
-    [IsActive] bit NOT NULL,
-    [Name] nvarchar(max) NULL,
-    [Code] nvarchar(max) NULL,
-    [CreditUnit] int NOT NULL,
-    [LecturerCourseId] bigint NOT NULL,
-    [SessionSemesterCourseId] bigint NOT NULL,
-    [ProgrammeCourseId] bigint NOT NULL,
-    CONSTRAINT [PK_Courses] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Courses_LecturerCourses_LecturerCourseId] FOREIGN KEY ([LecturerCourseId]) REFERENCES [LecturerCourses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_ProgrammeCourses_ProgrammeCourseId] FOREIGN KEY ([ProgrammeCourseId]) REFERENCES [ProgrammeCourses] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Courses_SessionSemesterCourses_SessionSemesterCourseId] FOREIGN KEY ([SessionSemesterCourseId]) REFERENCES [SessionSemesterCourses] ([Id]) ON DELETE NO ACTION
+    CONSTRAINT [FK_Students_Programmes_ProgrammeId] FOREIGN KEY ([ProgrammeId]) REFERENCES [Programmes] ([Id]) ON DELETE NO ACTION
 );
 
 GO
@@ -202,22 +202,10 @@ CREATE TABLE [RegisteredCourses] (
     [IsDeleted] bit NOT NULL,
     [IsActive] bit NOT NULL,
     CONSTRAINT [PK_RegisteredCourses] PRIMARY KEY ([CourseId], [StudentId], [LecturerId]),
-    CONSTRAINT [FK_RegisteredCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_RegisteredCourses_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_RegisteredCourses_Lecturers_LecturerId] FOREIGN KEY ([LecturerId]) REFERENCES [Lecturers] ([Id]) ON DELETE NO ACTION,
     CONSTRAINT [FK_RegisteredCourses_Students_StudentId] FOREIGN KEY ([StudentId]) REFERENCES [Students] ([Id]) ON DELETE NO ACTION
 );
-
-GO
-
-CREATE INDEX [IX_Courses_LecturerCourseId] ON [Courses] ([LecturerCourseId]);
-
-GO
-
-CREATE INDEX [IX_Courses_ProgrammeCourseId] ON [Courses] ([ProgrammeCourseId]);
-
-GO
-
-CREATE INDEX [IX_Courses_SessionSemesterCourseId] ON [Courses] ([SessionSemesterCourseId]);
 
 GO
 
@@ -266,6 +254,6 @@ CREATE INDEX [IX_Students_ProgrammeId] ON [Students] ([ProgrammeId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190614201329_InitialModel', N'2.2.4-servicing-10062');
+VALUES (N'20190615200633_InitialModel', N'2.2.4-servicing-10062');
 
 GO

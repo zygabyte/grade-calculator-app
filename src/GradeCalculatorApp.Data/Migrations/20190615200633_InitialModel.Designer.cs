@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeCalculatorApp.Data.Migrations
 {
     [DbContext(typeof(GradeCalculatorContext))]
-    [Migration("20190615044850_InitialModel")]
+    [Migration("20190615200633_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

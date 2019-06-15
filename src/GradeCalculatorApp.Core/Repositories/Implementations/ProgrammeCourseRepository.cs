@@ -47,47 +47,38 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public ProgrammeCourse ReadProgrammeCourse(long programmeCourseId)
+        public IEnumerable<Course> ReadProgrammeCourse(long programmeId)
         {
             try
             {
-                var programmeCourse = _gradeCalculatorContext.ProgrammeCourses
-                    .Include(x =>  x.Programme)
+                var programmeCourses = _gradeCalculatorContext.ProgrammeCourses
                     .Include(x => x.Course)
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == programmeCourseId);
-                
-                if (programmeCourse != null)
-                {
-//                    programmeCourse.Course = programmeCourse.Course.Where(x => !x.IsDeleted && x.IsActive).ToList();
-                    return programmeCourse;
-                }
-                
-//                return new ProgrammeCourse{ Course = new List<Course>() };
-                return new ProgrammeCourse{ };
+                    .Where(x => !x.IsDeleted && x.ProgrammeId == programmeId 
+                                             && !x.Course.IsDeleted)
+                    .Select(x => x.Course)
+                    .ToList();
+
+                return programmeCourses;
             }
             catch (Exception e)
             {
-                return null;
+                return new List<Course>();
             }
         }
 
-        public bool DeleteProgrammeCourse(long programmeCourseId, long courseId)
+        public bool DeleteProgrammeCourse(long programmeId, long courseId)
         {
             try
             {
-                var programmeCourse = ReadProgrammeCourse(programmeCourseId);
+                var programmeCourse = _gradeCalculatorContext.ProgrammeCourses.FirstOrDefault(x => !x.IsDeleted && x.ProgrammeId == programmeId && x.CourseId == courseId); 
 
                 if (programmeCourse == null) return false;
 
-//                programmeCourse.Course.Remove(
-//                    programmeCourse.Course.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
+                programmeCourse.IsDeleted = true;
                 
-                programmeCourse.Modified = DateTime.Now;
-
                 _gradeCalculatorContext.Entry(programmeCourse).State = EntityState.Modified;
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
-
             }
             catch (Exception e)
             {
@@ -132,24 +123,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 });
                
                 return _gradeCalculatorContext.SaveChanges() > 0;
-//
-//                
-//                if (currentProgrammeCourse == null || currentProgrammeCourse.Id == 0)
-//                {
-//                    _gradeCalculatorContext.ProgrammeCourses.Add(new ProgrammeCourse
-//                    {
-//                        ProgrammeId = programmeCourseId,
-////                        Course = courses
-//                    });
-//                    
-//                    return _gradeCalculatorContext.SaveChanges() > 0;
-//                }
-//
-////                currentProgrammeCourse.Course.AddRange(courses);
-//                    
-//                _gradeCalculatorContext.Entry(currentProgrammeCourse).State = EntityState.Modified;
-//
-//                return _gradeCalculatorContext.SaveChanges() > 0;
             }
             catch (Exception e)
             {
