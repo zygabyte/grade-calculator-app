@@ -52,7 +52,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                var sessionCourses = _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId).Courses;
+                var sessionCourses = _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId);
                 var allCourses = _courseRepository.ReadCourses();
 
                 var uniqueCourses = new List<Course>();
@@ -70,15 +70,15 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public SessionSemesterCourse ReadSessionCourse(long sessionSemesterId)
+        public IEnumerable<Course> ReadSessionCourse(long sessionSemesterId)
         {
             try
             {
-                return sessionSemesterId > 0 ? _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId) : null;
+                return _sessionSemesterCourseRepository.ReadSessionCourse(sessionSemesterId);
             }
             catch (Exception e)
             {
-                return null;
+                return new List<Course>();
             }
         }
 
@@ -106,13 +106,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
         
-        public bool MapCourses(long sessionSemesterCourseId, IEnumerable<long> courseIds)
+        public bool MapCourses(long sessionSemesterCourseId, List<long> courseIds)
         {
             try
             {
-                var courses = courseIds.Select(courseId => _courseRepository.ReadCourse(courseId)).ToList();
-
-                return _sessionSemesterCourseRepository.MapCourses(sessionSemesterCourseId, courses);
+                return _sessionSemesterCourseRepository.MapCourses(sessionSemesterCourseId, courseIds);
             }
             catch (Exception e)
             {

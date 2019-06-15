@@ -35,10 +35,10 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return takeAll 
                     ? _gradeCalculatorContext.SessionSemesterCourses.Where(x => !x.IsDeleted && x.IsActive)
                         .Include(x =>  x.SessionSemester)
-                        .Include(x => x.Courses)
+                        .Include(x => x.Course)
                     : _gradeCalculatorContext.SessionSemesterCourses.Where(x => !x.IsDeleted && x.IsActive)
                         .Include(x =>  x.SessionSemester)
-                        .Include(x => x.Courses)
+                        .Include(x => x.Course)
                         .Take(count);
             }
             catch (Exception e)
@@ -47,26 +47,22 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public SessionSemesterCourse ReadSessionCourse(long sessionSemesterId)
+        public IEnumerable<Course> ReadSessionCourse(long sessionSemesterId)
         {
             try
             {
-                var sessionCourses = _gradeCalculatorContext.SessionSemesterCourses
-                    .Include(x =>  x.SessionSemester)
-                    .Include(x => x.Courses)
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.SessionSemesterId == sessionSemesterId);
+                var sessionSemesterCourses = _gradeCalculatorContext.SessionSemesterCourses
+                    .Include(x => x.Course)
+                    .Where(x => !x.IsDeleted && x.SessionSemesterId == sessionSemesterId 
+                                && !x.Course.IsDeleted)
+                    .Select(x => x.Course)
+                    .ToList();
 
-                if (sessionCourses != null)
-                {
-                    sessionCourses.Courses = sessionCourses.Courses.Where(x => !x.IsDeleted && x.IsActive).ToList();
-                    return sessionCourses;
-                }
-                
-                return new SessionSemesterCourse{ Courses = new List<Course>() };
+                return sessionSemesterCourses;
             }
             catch (Exception e)
             {
-                return null;
+                return new List<Course>();
             }
         }
 
@@ -78,10 +74,10 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
 
                 if (sessionCourse == null) return false;
 
-                sessionCourse.Courses.Remove(
-                    sessionCourse.Courses.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
+//                sessionCourse.Course.Remove(
+//                    sessionCourse.Course.FirstOrDefault(x => x.IsActive && !x.IsDeleted && x.Id == courseId));
                 
-                sessionCourse.Modified = DateTime.Now;
+//                sessionCourse.Modified = DateTime.Now;
 
                 _gradeCalculatorContext.Entry(sessionCourse).State = EntityState.Modified;
 
@@ -98,7 +94,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         {
             try
             {
-                var currentSessionCourse = _gradeCalculatorContext.SessionSemesterCourses.FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == sessionCourseId);
+                var currentSessionCourse = _gradeCalculatorContext.SessionSemesterCourses.FirstOrDefault(x => !x.IsDeleted && x.Id == sessionCourseId);
 
                 if (currentSessionCourse == null) return false;
                 
@@ -117,28 +113,38 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         }
 
 
-        public bool MapCourses(long sessionCourseId, List<Course> courses)
+        public bool MapCourses(long sessionSemesterId, List<long> courseIds)
         {
             try
             {
-                var currentSessionCourse = ReadSessionCourse(sessionCourseId);
-
-                if (currentSessionCourse == null || currentSessionCourse.Id == 0)
+                courseIds.ForEach(courseId =>
                 {
                     _gradeCalculatorContext.SessionSemesterCourses.Add(new SessionSemesterCourse
                     {
-                        SessionSemesterId = sessionCourseId,
-                        Courses = courses
+                        SessionSemesterId = sessionSemesterId,
+                        CourseId = courseId
                     });
-                    
-                    return _gradeCalculatorContext.SaveChanges() > 0;
-                }
-
-                currentSessionCourse.Courses.AddRange(courses);
-                    
-                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
-
+                });
+                
                 return _gradeCalculatorContext.SaveChanges() > 0;
+//                var currentSessionCourse = ReadSessionCourse(sessionSemesterId);
+//
+//                if (currentSessionCourse == null || currentSessionCourse.Id == 0)
+//                {
+//                    _gradeCalculatorContext.SessionSemesterCourses.Add(new SessionSemesterCourse
+//                    {
+//                        SessionSemesterId = sessionSemesterId,
+////                        Course = courses
+//                    });
+//                    
+//                    return _gradeCalculatorContext.SaveChanges() > 0;
+//                }
+//
+////                currentSessionCourse.Course.AddRange(courses);
+//                    
+//                _gradeCalculatorContext.Entry(currentSessionCourse).State = EntityState.Modified;
+//
+//                return _gradeCalculatorContext.SaveChanges() > 0;
             }
             catch (Exception e)
             {

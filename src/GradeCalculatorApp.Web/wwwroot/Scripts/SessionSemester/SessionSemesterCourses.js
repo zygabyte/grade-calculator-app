@@ -16,7 +16,7 @@ function readSessionCourseResponse(data){
     resetDataTable($('#courseTable'));
     
     if (data.status) {
-        data.data.courses.forEach((course, i) => {
+        data.data.forEach((course, i) => {
             let row = '<tr>';
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + course.name + '</td>';

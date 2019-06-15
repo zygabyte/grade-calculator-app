@@ -8,9 +8,9 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
         bool CreateSessionCourse(SessionSemesterCourse sessionSemesterCourse);
         IEnumerable<SessionSemesterCourse> ReadSessionCourses(bool takeAll = true, int count = 1000);
         IEnumerable<Course> ReadUniqueSessionCourses(long sessionSemesterId);
-        SessionSemesterCourse ReadSessionCourse(long sessionSemesterId);
+        IEnumerable<Course> ReadSessionCourse(long sessionSemesterId);
         bool DeleteSessionCourse(long sessionCourseId, long courseId);
         bool UpdateSessionCourse(long sessionCourseId, SessionSemesterCourse sessionSemesterCourse);
-        bool MapCourses(long sessionSemesterCourseId, IEnumerable<long> courseIds);
+        bool MapCourses(long sessionSemesterCourseId, List<long> courseIds);
     }
 }

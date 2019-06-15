@@ -10,7 +10,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         ProgrammeCourse ReadProgrammeCourse(long programmeCourseId);
         bool DeleteProgrammeCourse(long programmeCourseId, long courseId);
         bool UpdateProgrammeCourse(long programmeCourseId, ProgrammeCourse programmeCourse);
-        bool MapCourses(long programmeCourseId, List<Course> courses);
+        bool MapCourses(long programmeId, List<long> courseIds);
 
     }
 }

@@ -61,6 +61,18 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
+        public SessionSemester ReadCurrentSessionSemester()
+        {
+            try
+            {
+                return CurrentExists() ? _sessionSemesterRepository.ReadCurrentSessionSemester() : null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public bool DeleteSessionSemester(long sessionId)
         {
             try

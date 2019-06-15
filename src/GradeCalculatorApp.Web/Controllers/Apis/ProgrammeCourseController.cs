@@ -104,7 +104,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
         
-        public ActionResult<ResponseData> MapCourses(long programmeId, IEnumerable<long> courseIds)
+        public ActionResult<ResponseData> MapCourses(long programmeId, List<long> courseIds)
         {
             try
             {

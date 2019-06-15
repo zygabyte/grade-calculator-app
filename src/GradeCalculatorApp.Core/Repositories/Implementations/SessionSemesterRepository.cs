@@ -59,6 +59,20 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public SessionSemester ReadCurrentSessionSemester()
+        {
+            try
+            {
+                return _gradeCalculatorContext.SessionSemesters
+                    .Include(x => x.Semester).Include(x => x.Session) 
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.IsCurrent);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public bool CurrentExists()
         {
             try

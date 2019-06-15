@@ -49,14 +49,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                var programmeCourses = _programmeCourseRepository.ReadProgrammeCourse(programmeId).Courses;
+                var programmeCourses = _programmeCourseRepository.ReadProgrammeCourse(programmeId).Course;
                 var allCourses = _courseRepository.ReadCourses();
 
                 var uniqueCourses = new List<Course>();
 
                 Parallel.ForEach(allCourses, course =>
                 {
-                    if (!programmeCourses.Contains(course)) uniqueCourses.Add(course); 
+//                    if (!programmeCourses.Contains(course)) uniqueCourses.Add(course); 
                 });
 
                 return uniqueCourses;
@@ -103,13 +103,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
         
-        public bool MapCourses(long programmeCourseId, IEnumerable<long> courseIds)
+        public bool MapCourses(long programmeCourseId, List<long> courseIds)
         {
             try
             {
-                var courses = courseIds.Select(courseId => _courseRepository.ReadCourse(courseId)).ToList();
-
-                return _programmeCourseRepository.MapCourses(programmeCourseId, courses);
+                return _programmeCourseRepository.MapCourses(programmeCourseId, courseIds);
             }
             catch (Exception e)
             {
