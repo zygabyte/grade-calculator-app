@@ -13,5 +13,6 @@ namespace GradeCalculatorApp.Data.Domains
         public DateTime SemesterEndDate { get; set; }
         public bool IsCurrent { get; set; }
         public List<SessionSemesterCourse> SessionSemesterCourses { get; set; }
+        public List<RegisteredCourse> RegisteredCourses { get; set; }
     }
 }

@@ -25,11 +25,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(bool takeAll = true, int count = 1000)
+        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
         {
             try
             {
-                return _registeredCourseRepository.ReadRegisteredCourses(takeAll, count);
+                return _registeredCourseRepository.ReadRegisteredCourses(sessionSemesterId, lecturerId);
             }
             catch (Exception e)
             {

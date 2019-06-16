@@ -8,8 +8,8 @@ namespace GradeCalculatorApp.Data
 {
     public class GradeCalculatorContext : DbContext
     {
-        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
-        {}
+//        public GradeCalculatorContext(DbContextOptions contextOptions) : base(contextOptions)
+//        {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,11 @@ namespace GradeCalculatorApp.Data
                 .HasOne(rc => rc.Course)
                 .WithMany(c => c.RegisteredCourses)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RegisteredCourse>()
+                .HasOne(rc => rc.SessionSemester)
+                .WithMany(s => s.RegisteredCourses)
+                .OnDelete(DeleteBehavior.Restrict);
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -122,5 +127,6 @@ namespace GradeCalculatorApp.Data
         public DbSet<SessionSemesterCourse> SessionSemesterCourses { get; set; }
         
         public DbSet<RegisteredCourse> RegisteredCourses { get; set; }
+        public DbSet<RegisteredCourseGrade> RegisteredCourseGrades { get; set; }
     }
 }

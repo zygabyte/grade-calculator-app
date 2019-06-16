@@ -27,7 +27,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 var registrationCourseIds = new List<long>();
                 var registrationCourses = new List<RegistrationCourse>();
                 
-                programmeCourseIds.ForEach(programmeCourseId =>
+                Parallel.ForEach(programmeCourseIds,programmeCourseId =>
                 {
                     if (sessionSemesterCourseIds.Contains(programmeCourseId)) registrationCourseIds.Add(programmeCourseId);
                 });

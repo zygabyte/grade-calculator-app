@@ -8,5 +8,7 @@ namespace GradeCalculatorApp.Data.Domains
         public long LecturerId { get; set; }
         public Course Course { get; set; }
         public long CourseId { get; set; }
+        public SessionSemester SessionSemester { get; set; }
+        public long SessionSemesterId { get; set; }
     }
 }

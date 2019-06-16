@@ -28,18 +28,14 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(bool takeAll = true, int count = 1000)
+        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
         {
             try
             {
-                return takeAll 
-                    ? _gradeCalculatorContext.RegisteredCourses.Where(x => !x.IsDeleted && x.IsActive)
+                return _gradeCalculatorContext.RegisteredCourses
                         .Include(x => x.Course)
                         .Include(x => x.Student).Include(x => x.Lecturer)
-                    : _gradeCalculatorContext.RegisteredCourses.Where(x => !x.IsDeleted && x.IsActive)
-                        .Include(x => x.Course)
-                        .Include(x => x.Student).Include(x => x.Lecturer)
-                        .Take(count);
+                        .Where(x => !x.IsDeleted && !x.Course.IsDeleted && !x.Lecturer.IsDeleted && x.SessionSemesterId == sessionSemesterId && x.LecturerId == lecturerId);
             }
             catch (Exception e)
             {

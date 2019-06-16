@@ -10,23 +10,35 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 {
     public class RegisterCourseController : Controller
     {
-        private readonly IRegisteredCourseService _semesterService;
-        private const string ObjectName = "RegisteredCourse"; 
-        public RegisterCourseController(IRegisteredCourseService semesterService) => _semesterService = semesterService;
+        private readonly IRegisteredCourseService _registeredCourseService;
+        private const string ObjectName = "RegisterCourse"; 
+        public RegisterCourseController(IRegisteredCourseService registeredCourseService) => _registeredCourseService = registeredCourseService;
 
-        public ActionResult<ResponseData> CreateRegisterCourse(List<RegisteredCourse> registeredCourses)
+        public ActionResult<ResponseData> CreateRegisterCourse(List<RegisteredCourse> registeredCourses, long sessionSemesterId)
         {
             try
             {
                 if (registeredCourses == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return _semesterService.CreateRegisteredCourses(registeredCourses) 
+                return _registeredCourseService.CreateRegisteredCourses(registeredCourses) 
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }
             catch (Exception e)
             {
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionCreate, ObjectName));
+            }
+        }
+        
+        public ActionResult<ResponseData> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
+        {
+            try
+            {
+                return ResponseData.SendSuccessMsg(data: _registeredCourseService.ReadRegisteredCourses(sessionSemesterId, lecturerId));
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
             }
         }
     }
