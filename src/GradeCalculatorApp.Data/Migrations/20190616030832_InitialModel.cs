@@ -196,17 +196,18 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "SessionSemesterCourses",
                 columns: table => new
                 {
-                    SessionSemesterId = table.Column<long>(nullable: false),
-                    CourseId = table.Column<long>(nullable: false),
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    SessionSemesterId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SessionSemesterCourses", x => new { x.CourseId, x.SessionSemesterId });
+                    table.PrimaryKey("PK_SessionSemesterCourses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SessionSemesterCourses_Courses_CourseId",
                         column: x => x.CourseId,
@@ -225,17 +226,18 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "LecturerCourses",
                 columns: table => new
                 {
-                    LecturerId = table.Column<long>(nullable: false),
-                    CourseId = table.Column<long>(nullable: false),
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    LecturerId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LecturerCourses", x => new { x.CourseId, x.LecturerId });
+                    table.PrimaryKey("PK_LecturerCourses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_LecturerCourses_Courses_CourseId",
                         column: x => x.CourseId,
@@ -254,17 +256,18 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "ProgrammeCourses",
                 columns: table => new
                 {
-                    ProgrammeId = table.Column<long>(nullable: false),
-                    CourseId = table.Column<long>(nullable: false),
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    ProgrammeId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProgrammeCourses", x => new { x.CourseId, x.ProgrammeId });
+                    table.PrimaryKey("PK_ProgrammeCourses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProgrammeCourses_Courses_CourseId",
                         column: x => x.CourseId,
@@ -312,18 +315,19 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "RegisteredCourses",
                 columns: table => new
                 {
-                    StudentId = table.Column<long>(nullable: false),
-                    LecturerId = table.Column<long>(nullable: false),
-                    CourseId = table.Column<long>(nullable: false),
-                    Id = table.Column<long>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
+                    IsActive = table.Column<bool>(nullable: false),
+                    StudentId = table.Column<long>(nullable: false),
+                    LecturerId = table.Column<long>(nullable: false),
+                    CourseId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RegisteredCourses", x => new { x.CourseId, x.StudentId, x.LecturerId });
+                    table.PrimaryKey("PK_RegisteredCourses", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RegisteredCourses_Courses_CourseId",
                         column: x => x.CourseId,
@@ -350,6 +354,11 @@ namespace GradeCalculatorApp.Data.Migrations
                 column: "SchoolId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LecturerCourses_CourseId",
+                table: "LecturerCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LecturerCourses_LecturerId",
                 table: "LecturerCourses",
                 column: "LecturerId");
@@ -358,6 +367,11 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "IX_Lecturers_DepartmentId",
                 table: "Lecturers",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgrammeCourses_CourseId",
+                table: "ProgrammeCourses",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProgrammeCourses_ProgrammeId",
@@ -370,6 +384,11 @@ namespace GradeCalculatorApp.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RegisteredCourses_CourseId",
+                table: "RegisteredCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RegisteredCourses_LecturerId",
                 table: "RegisteredCourses",
                 column: "LecturerId");
@@ -378,6 +397,11 @@ namespace GradeCalculatorApp.Data.Migrations
                 name: "IX_RegisteredCourses_StudentId",
                 table: "RegisteredCourses",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SessionSemesterCourses_CourseId",
+                table: "SessionSemesterCourses",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SessionSemesterCourses_SessionSemesterId",

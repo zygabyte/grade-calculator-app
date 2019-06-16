@@ -46,9 +46,9 @@ namespace GradeCalculatorApp.Data
 //                .OnDelete(DeleteBehavior.Restrict);
 
 
-            // session semester course
-            modelBuilder.Entity<SessionSemesterCourse>()
-                .HasKey(sc => new {sc.CourseId, sc.SessionSemesterId});
+//            // session semester course
+//            modelBuilder.Entity<SessionSemesterCourse>()
+//                .HasKey(sc => new {sc.CourseId, sc.SessionSemesterId});
 
             modelBuilder.Entity<SessionSemesterCourse>()
                 .HasOne(sc => sc.SessionSemester)
@@ -63,9 +63,6 @@ namespace GradeCalculatorApp.Data
             
             //lecturer course
             modelBuilder.Entity<LecturerCourse>()
-                .HasKey(lc => new {lc.CourseId, lc.LecturerId});
-
-            modelBuilder.Entity<LecturerCourse>()
                 .HasOne(lc => lc.Lecturer)
                 .WithMany(l => l.LecturerCourses)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -78,9 +75,6 @@ namespace GradeCalculatorApp.Data
             
             // programme course
             modelBuilder.Entity<ProgrammeCourse>()
-                .HasKey(pc => new {pc.CourseId, pc.ProgrammeId});
-
-            modelBuilder.Entity<ProgrammeCourse>()
                 .HasOne(pc => pc.Programme)
                 .WithMany(p => p.ProgrammeCourses)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -92,9 +86,6 @@ namespace GradeCalculatorApp.Data
 
 
             // registered courses
-            modelBuilder.Entity<RegisteredCourse>()
-                .HasKey(rc => new {rc.CourseId, rc.StudentId, rc.LecturerId});
-
             modelBuilder.Entity<RegisteredCourse>()
                 .HasOne(rc => rc.Student)
                 .WithMany(s => s.RegisteredCourses)

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeCalculatorApp.Data.Migrations
 {
     [DbContext(typeof(GradeCalculatorContext))]
-    [Migration("20190615200633_InitialModel")]
+    [Migration("20190616030832_InitialModel")]
     partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,21 +108,25 @@ namespace GradeCalculatorApp.Data.Migrations
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.LecturerCourse", b =>
                 {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<long>("CourseId");
 
-                    b.Property<long>("LecturerId");
-
                     b.Property<DateTime>("Created");
-
-                    b.Property<long>("Id");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<long>("LecturerId");
+
                     b.Property<DateTime?>("Modified");
 
-                    b.HasKey("CourseId", "LecturerId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("LecturerId");
 
@@ -158,13 +162,13 @@ namespace GradeCalculatorApp.Data.Migrations
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.ProgrammeCourse", b =>
                 {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<long>("CourseId");
 
-                    b.Property<long>("ProgrammeId");
-
                     b.Property<DateTime>("Created");
-
-                    b.Property<long>("Id");
 
                     b.Property<bool>("IsActive");
 
@@ -172,7 +176,11 @@ namespace GradeCalculatorApp.Data.Migrations
 
                     b.Property<DateTime?>("Modified");
 
-                    b.HasKey("CourseId", "ProgrammeId");
+                    b.Property<long>("ProgrammeId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("ProgrammeId");
 
@@ -181,23 +189,27 @@ namespace GradeCalculatorApp.Data.Migrations
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.RegisteredCourse", b =>
                 {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<long>("CourseId");
 
-                    b.Property<long>("StudentId");
-
-                    b.Property<long>("LecturerId");
-
                     b.Property<DateTime>("Created");
-
-                    b.Property<long>("Id");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<long>("LecturerId");
+
                     b.Property<DateTime?>("Modified");
 
-                    b.HasKey("CourseId", "StudentId", "LecturerId");
+                    b.Property<long>("StudentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("LecturerId");
 
@@ -310,13 +322,13 @@ namespace GradeCalculatorApp.Data.Migrations
 
             modelBuilder.Entity("GradeCalculatorApp.Data.Domains.SessionSemesterCourse", b =>
                 {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<long>("CourseId");
 
-                    b.Property<long>("SessionSemesterId");
-
                     b.Property<DateTime>("Created");
-
-                    b.Property<long>("Id");
 
                     b.Property<bool>("IsActive");
 
@@ -324,7 +336,11 @@ namespace GradeCalculatorApp.Data.Migrations
 
                     b.Property<DateTime?>("Modified");
 
-                    b.HasKey("CourseId", "SessionSemesterId");
+                    b.Property<long>("SessionSemesterId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SessionSemesterId");
 

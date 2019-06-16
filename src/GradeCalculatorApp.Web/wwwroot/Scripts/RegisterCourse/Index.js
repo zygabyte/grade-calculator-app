@@ -59,13 +59,13 @@ function registerCourses(){
     console.log('registered courses');
     console.log(registeredCourses);
 
-    // api("POST",
-    //     "/LecturerCourse/MapCourses",
-    //     {lecturerId: lecturerId, courseIds: courseIds},
-    //     true,
-    //     mapLecturerCoursesResponse, true);
+    api("POST",
+        "/RegisterCourse/CreateRegisterCourse",
+        {registeredCourses: registeredCourses},
+        true,
+        registeredCoursesResponse, true);
 }
 
-function mapLecturerCoursesResponse(data) {
-    if (data.status) window.location = "/Lecturer/LecturerCourses";
+function registeredCoursesResponse(data) {
+    if (data.status) window.location = "/";
 }
