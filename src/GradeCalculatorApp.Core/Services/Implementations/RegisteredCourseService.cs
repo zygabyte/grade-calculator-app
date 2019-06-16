@@ -25,7 +25,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
+        public IEnumerable<RegisteredCourseModel> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
             catch (Exception e)
             {
-                return new List<RegisteredCourse>();
+                return new List<RegisteredCourseModel>();
             }
         }
     }

@@ -14,7 +14,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "RegisterCourse"; 
         public RegisterCourseController(IRegisteredCourseService registeredCourseService) => _registeredCourseService = registeredCourseService;
 
-        public ActionResult<ResponseData> CreateRegisterCourse(List<RegisteredCourse> registeredCourses, long sessionSemesterId)
+        public ActionResult<ResponseData> CreateRegisterCourse(List<RegisteredCourse> registeredCourses)
         {
             try
             {

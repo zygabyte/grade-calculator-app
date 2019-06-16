@@ -4,6 +4,7 @@ using System.Linq;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Data;
 using GradeCalculatorApp.Data.Domains;
+using GradeCalculatorApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GradeCalculatorApp.Core.Repositories.Implementations
@@ -28,18 +29,24 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
-        public IEnumerable<RegisteredCourse> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
+        public IEnumerable<RegisteredCourseModel> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
         {
             try
             {
                 return _gradeCalculatorContext.RegisteredCourses
-                        .Include(x => x.Course)
-                        .Include(x => x.Student).Include(x => x.Lecturer)
-                        .Where(x => !x.IsDeleted && !x.Course.IsDeleted && !x.Lecturer.IsDeleted && x.SessionSemesterId == sessionSemesterId && x.LecturerId == lecturerId);
+                    .Include(x => x.Course)
+                    .Include(x => x.Student).Include(x => x.Lecturer)
+                    .Where(x => !x.IsDeleted && !x.Course.IsDeleted && !x.Lecturer.IsDeleted && x.SessionSemesterId == sessionSemesterId && x.LecturerId == lecturerId)
+                    .Select(x => new RegisteredCourseModel
+                    {
+                        Id = x.Id, Course = x.Course.Name, Student = $"{x.Student.FirstName} {x.Student.LastName}",
+                        Lecturer = $"{x.Lecturer.FirstName} {x.Lecturer.LastName}", CourseId = x.CourseId, StudentId = x.StudentId,
+                        LecturerId = x.LecturerId, SessionSemesterId = x.SessionSemesterId, CourseCode = x.Course.Code, CourseCredit = x.Course.CreditUnit
+                    });
             }
             catch (Exception e)
             {
-                return new List<RegisteredCourse>();
+                return new List<RegisteredCourseModel>();
             }
         }
 

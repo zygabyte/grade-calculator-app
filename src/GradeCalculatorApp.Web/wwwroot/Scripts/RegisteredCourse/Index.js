@@ -1,3 +1,5 @@
+let registeredCourseId;
+
 $(document).ready(function () {
     pageLoad();
 });
@@ -12,19 +14,23 @@ function pageLoad() {
 
 function readRegisterCoursesResponse(data){
     resetDataTable($('#registeredCourseTable'));
+    
+    console.log('data ');
+    console.log(data);
 
     if (data.status) {
         courses = data.data;
-        data.data.forEach((course, i) => {
+        data.data.forEach((registeredCourse, i) => {
             let row = '<tr>';
             row += '<td>' + (i + 1) + '</td>';
-            row += '<td>' + course.course + '</td>';
-            row += '<td>' + course.courseUnit + '</td>';
-            row += '<td>' + course.lecturer + '</td>';
-            row += `<td><div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id=${course.id}>
-                <label class="custom-control-label" for=${course.id}></label>
-                </div></td>`;
+            row += '<td>' + registeredCourse.course + '</td>';
+            row += '<td>' + registeredCourse.courseCode + '</td>';
+            row += '<td>' + registeredCourse.courseCredit + '</td>';
+            row += '<td>' + registeredCourse.student + '</td>';
+            row += `<td>
+                        <a href="#" title="View" class="btn btn-primary btn-xs" onclick="viewLecturerClick(\'\' + lecturer.id + \'\')"><i class="fa fa-eye"></i></a> | 
+                        <a data-toggle="modal" href="#gradeModal"  title="Grade" class="btn btn-success btn-xs" onclick="gradeStudentClick(\'' + registeredCourse.id + '\')"><i class="fa fa-building-o"></i></a>
+                    </td>`;
             row += '</tr>';
 
             $('#registeredCourseTable tbody').append(row);
@@ -32,4 +38,10 @@ function readRegisterCoursesResponse(data){
 
         initializeDataTable($('#registeredCourseTable'));
     }
+}
+
+function gradeStudentClick(registeredCourseId) {
+    console.log('registered course id is');
+    console.log(registeredCourseId);
+    window.registeredCourseId = registeredCourseId;
 }

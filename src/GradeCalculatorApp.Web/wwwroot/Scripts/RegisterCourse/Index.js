@@ -49,15 +49,9 @@ function registerCourses(){
         }
     });
     
-    console.log('course ids');
-    console.log(courseIds);
-    
     courses.forEach(course =>{
-       if (courseIds.includes(course.id)) registeredCourses.push({StudentId: studentId, CourseId: course.courseId, LecturerId: course.lecturerId});
+       if (courseIds.includes(course.id)) registeredCourses.push({StudentId: studentId, CourseId: course.courseId, LecturerId: course.lecturerId, SessionSemesterId: sessionSemesterId});
     });
-    
-    console.log('registered courses');
-    console.log(registeredCourses);
 
     api("POST",
         "/RegisterCourse/CreateRegisterCourse",
