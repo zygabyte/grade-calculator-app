@@ -23,6 +23,7 @@ function readRegisterCoursesResponse(data){
             let row = '<tr>';
             row += '<td>' + (i + 1) + '</td>';
             row += '<td>' + course.course + '</td>';
+            row += '<td>' + course.courseCode + '</td>';
             row += '<td>' + course.courseUnit + '</td>';
             row += '<td>' + course.lecturer + '</td>';
             row += `<td><div class="custom-control custom-checkbox">

@@ -7,19 +7,17 @@ namespace GradeCalculatorApp.Core.Services.Implementations
 {
     public class GradeService : IGradeService
     {
-        public RegisteredCourseGrade CalculateFinalGrade(RegisteredCourseGrade registeredCourseGrade)
+        public void CalculateFinalGrade(RegisteredCourseGrade registeredCourseGrade)
         {
             try
             {
                 CalculateTotalCa(registeredCourseGrade);
                 CalculateTotalScore(registeredCourseGrade);
                 CalculateGrade(registeredCourseGrade);
-
-                return registeredCourseGrade;
             }
             catch (Exception e)
             {
-                return registeredCourseGrade;
+                Console.WriteLine(e);
             }
         }
 

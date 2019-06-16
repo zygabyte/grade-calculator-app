@@ -56,6 +56,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                                 {
                                     Id = id++,
                                     Course = course?.Name,
+                                    CourseCode = course?.Code,
                                     Lecturer = $"{lecturer?.FirstName} {lecturer?.LastName}",
                                     CourseId = course?.Id,
                                     LecturerId = lecturer?.Id,
