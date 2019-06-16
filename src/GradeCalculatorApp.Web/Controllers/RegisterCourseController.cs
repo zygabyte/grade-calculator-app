@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
-    public class RegisterCoursesController : Controller
+    public class RegisterCourseController : Controller
     {
         private readonly ISessionSemesterService _sessionSemesterService;
 
-        public RegisterCoursesController(ISessionSemesterService sessionSemesterService) =>
+        public RegisterCourseController(ISessionSemesterService sessionSemesterService) =>
             _sessionSemesterService = sessionSemesterService;
         
         // GET

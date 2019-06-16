@@ -1,0 +1,58 @@
+@using GradeCalculatorApp.Data.Domains
+@model object
+
+@{
+    ViewBag.Title = "Register Courses";
+    Layout = "_Layout";
+
+    SessionSemester sessionSemester = ViewBag.SessionSemester;
+}
+
+<section class="wrapper">
+      <!-- page start-->
+      <section class="card">
+          <header class="card-header">
+              @if (sessionSemester == null)
+              {
+                  <span>No current session at this moment</span>
+              }
+              else
+              {
+                  <span>All courses for @sessionSemester.Session?.Name</span>
+              }
+          </header>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="adv-table">
+                          <table class="table table-hover p-table" id="registerCourseTable">
+                              <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Course</th>
+                                  <th>Course Credit</th>
+                                  <th>Lecturer</th>
+                                  <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                      </div>
+                      <span class="pull-right"><button type="button" onclick="registerCourses()" class="btn btn-success btn-sm">Register Courses</button></span>
+                  </div>
+              </div>
+          </div>
+      </section>
+</section>
+
+@section scripts
+{
+    <script>
+        let sessionSemesterId = @sessionSemester?.Id;
+        let studentId = 1;
+    </script>
+    
+    <script src="Scripts/RegisterCourse/Index.js"></script>
+}
+
+

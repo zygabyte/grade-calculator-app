@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
@@ -14,10 +12,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 
         private readonly ICourseService _courseService;
         private const string ObjectName = "Course"; 
-        private const string Courses = "Courses"; 
-        private const string SessionSemester = "Session Semester"; 
-        private const string Lecturer = "Lecturer"; 
-        private const string Programme = "Programme"; 
         public CourseController(ICourseService courseService) => _courseService = courseService;
 
         public ActionResult<ResponseData> CreateCourse(Course course)

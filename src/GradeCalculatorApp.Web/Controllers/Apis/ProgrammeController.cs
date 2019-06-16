@@ -16,13 +16,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "Programme"; 
         public ProgrammeController(IProgrammeService programmeService) => _programmeService = programmeService;
         
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
-
         public ActionResult<ResponseData> CreateProgramme(Programme programme)
         {
             try
