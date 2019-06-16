@@ -76,6 +76,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegistrationCourseService, RegistrationCourseService>();
             services.AddScoped<IRegisteredCourseService, RegisteredCourseService>();
             services.AddScoped<IRegisteredCourseGradeService, RegisteredCourseGradeService>();
+            services.AddScoped<IGradeService, GradeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

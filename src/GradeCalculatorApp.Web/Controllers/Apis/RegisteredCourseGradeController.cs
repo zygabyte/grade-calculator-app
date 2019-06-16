@@ -15,13 +15,13 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         
         public RegisteredCourseGradeController(IRegisteredCourseGradeService registeredCourseGradeService) => _registeredCourseGradeService = registeredCourseGradeService;
         
-        public ActionResult<ResponseData> CreateRegisteredCourseGrade(RegisteredCourseGrade registeredCourses)
+        public ActionResult<ResponseData> CreateRegisteredCourseGrade(RegisteredCourseGrade registeredCourseGrade)
         {
             try
             {
-                if (registeredCourses == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
+                if (registeredCourseGrade == null) return ResponseData.SendFailMsg(string.Format(DefaultConstants.InvalidObject, ObjectName));
 
-                return _registeredCourseGradeService.CreateRegisteredCourseGrades(registeredCourses) 
+                return _registeredCourseGradeService.CreateRegisteredCourseGrades(registeredCourseGrade) 
                     ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulCreate, ObjectName)) 
                     : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureCreate, ObjectName));
             }

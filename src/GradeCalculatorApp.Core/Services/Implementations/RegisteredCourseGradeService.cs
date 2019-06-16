@@ -9,12 +9,19 @@ namespace GradeCalculatorApp.Core.Services.Implementations
     public class RegisteredCourseGradeService : IRegisteredCourseGradeService
     {
         private readonly IRegisteredCourseGradeRepository _registeredCourseGradeRepository;
+        private readonly IGradeService _gradeService;
         
-        public RegisteredCourseGradeService(IRegisteredCourseGradeRepository registeredCourseGradeRepository) => _registeredCourseGradeRepository = registeredCourseGradeRepository;
+        public RegisteredCourseGradeService(IRegisteredCourseGradeRepository registeredCourseGradeRepository, IGradeService gradeService)
+        {
+            _registeredCourseGradeRepository = registeredCourseGradeRepository;
+            _gradeService = gradeService;
+        }
+
         public bool CreateRegisteredCourseGrades(RegisteredCourseGrade registeredCourseGrade)
         {
             try
             {
+                _gradeService.CalculateFinalGrade(registeredCourseGrade);
                 return _registeredCourseGradeRepository.CreateRegisteredCourseGrades(registeredCourseGrade);
             }
             catch (Exception e)
