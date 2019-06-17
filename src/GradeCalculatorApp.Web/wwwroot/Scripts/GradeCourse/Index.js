@@ -1,5 +1,3 @@
-let registeredCourseId;
-
 $(document).ready(function () {
     pageLoad();
 });
@@ -25,7 +23,7 @@ function readGradedCoursesResponse(data){
             row += '<td>' + gradedCourse.lecturer + '</td>';
             row += '<td>' + gradedCourse.grade + '</td>';
             row += `<td>
-                        <a href="#" title="View" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a>
+                        <button onclick="gradedCourseClick('${gradedCourse.id}')" title="View" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></button>
                     </td>`;
             row += '</tr>';
 
@@ -36,52 +34,14 @@ function readGradedCoursesResponse(data){
     }
 }
 
-function gradeStudentClick(registeredCourseId) {
-    window.registeredCourseId = registeredCourseId;
+function gradedCourseClick(gradedCourseId) {
+    api("GET",
+        "/GradeCourse/SetSessionAndStudent",
+        {gradedCourseId: gradedCourseId},
+        true,
+        gradedCourseClickResponse, true);
 }
 
-function createRegisteredCourseGrade() {
-    const quiz1 = $('#quiz1').val();
-    const quiz2 = $('#quiz2').val();
-    const assignment1 = $('#assignment1').val();
-    const assignment2 = $('#assignment2').val();
-    const attendance = $('#attendance').val();
-    const midSemester = $('#mid_semester').val();
-    const project = $('#project').val();
-    const exam = $('#exam').val();
-
-    const registeredCourseGrade = {
-        Quiz1: quiz1, Quiz2: quiz2,
-        Assignment1: assignment1, Assignment2: assignment2,
-        Attendance: attendance, MidSemester: midSemester,
-        Project: project, Exam: exam,
-        RegisteredCourseId: window.registeredCourseId
-    };
-
-    api('POST', '/RegisteredCourseGrade/CreateRegisteredCourseGrade',
-        {registeredCourseGrade: registeredCourseGrade}, true, registeredCourseGradeResponse, true);
-}
-
-function registeredCourseGradeResponse(data) {
-    if (data.status) onSuccessModalHide()
-}
-
-
-//______________________________________UTILITIES______________________________________
-function onSuccessModalHide() {
-    pageLoad();
-    resetField();
-
-    $('#gradeModal').modal('hide');
-}
-
-function resetField() {
-    $('#quiz1').val('');
-    $('#quiz2').val('');
-    $('#assignment1').val('');
-    $('#assignment2').val('');
-    $('#attendance').val('');
-    $('#mid_semester').val('');
-    $('#project').val('');
-    $('#exam').val('');
+function gradedCourseClickResponse(data) {
+    if (data.status) window.location = '/GradeCourse/GradeDetails';
 }

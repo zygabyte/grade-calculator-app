@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Data;
+using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         
         public GradeRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
         
-        public IEnumerable<GradedCourse> ReadGradedCourse(long sessionSemesterId, long studentId)
+        public IEnumerable<GradedCourse> ReadGradedCourses(long sessionSemesterId, long studentId)
         {
             try
             {
@@ -51,6 +52,19 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             catch (Exception e)
             {
                 return new List<GradedCourse>();
+            }
+        }
+
+        public RegisteredCourseGrade ReadGradedCourse(long gradedCourseId)
+        {
+            try
+            {
+                return _gradeCalculatorContext.RegisteredCourseGrades.FirstOrDefault(x =>
+                    !x.IsDeleted && x.Id == gradedCourseId);
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 

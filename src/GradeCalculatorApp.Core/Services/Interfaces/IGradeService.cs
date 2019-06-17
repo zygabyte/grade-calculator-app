@@ -8,5 +8,6 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
     {
         void CalculateFinalGrade(RegisteredCourseGrade registeredCourseGrade);
         IEnumerable<GradedCourse> ReadGradedCourses(long sessionSemesterId, long studentId);
+        RegisteredCourseGradeModel ReadGradedCourse(long gradedCourseId);
     }
 }

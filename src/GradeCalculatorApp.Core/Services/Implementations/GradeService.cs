@@ -32,11 +32,32 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                return _gradeRepository.ReadGradedCourse(sessionSemesterId, studentId);
+                return _gradeRepository.ReadGradedCourses(sessionSemesterId, studentId);
             }
             catch (Exception e)
             {
                 return new List<GradedCourse>();
+            }
+        }
+
+        public RegisteredCourseGradeModel ReadGradedCourse(long gradedCourseId)
+        {
+            try
+            {
+                var gradedCourse = _gradeRepository.ReadGradedCourse(gradedCourseId);
+                return new RegisteredCourseGradeModel
+                {
+                    Exam = gradedCourse.Exam, Quiz1 = gradedCourse.Quiz1, Quiz2 = gradedCourse.Quiz2,
+                    Assignment1 = gradedCourse.Assignment1, Assignment2 = gradedCourse.Assignment2,
+                    Project = gradedCourse.Project, Attendance = gradedCourse.Attendance,
+                    TotalCa = gradedCourse.TotalCa,
+                    FinalScore = gradedCourse.FinalScore, MidSemester = gradedCourse.MidSemester,
+                    Grade = gradedCourse.Grade.ToString()
+                };
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
 
