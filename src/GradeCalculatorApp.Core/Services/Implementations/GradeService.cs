@@ -1,12 +1,19 @@
 using System;
+using System.Collections.Generic;
+using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
+using GradeCalculatorApp.Data.Models;
 using GradeCalculatorApp.EnumLibrary;
 
 namespace GradeCalculatorApp.Core.Services.Implementations
 {
     public class GradeService : IGradeService
     {
+        private readonly IGradeRepository _gradeRepository;
+        
+        public GradeService(IGradeRepository gradeRepository) => _gradeRepository = gradeRepository;
+        
         public void CalculateFinalGrade(RegisteredCourseGrade registeredCourseGrade)
         {
             try
@@ -18,6 +25,18 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             catch (Exception e)
             {
                 Console.WriteLine(e);
+            }
+        }
+
+        public IEnumerable<GradedCourse> ReadGradedCourses(long sessionSemesterId, long studentId)
+        {
+            try
+            {
+                return _gradeRepository.ReadGradedCourse(sessionSemesterId, studentId);
+            }
+            catch (Exception e)
+            {
+                return new List<GradedCourse>();
             }
         }
 

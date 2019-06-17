@@ -59,6 +59,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegistrationCourseRepository, RegistrationCourseRepository>();
             services.AddScoped<IRegisteredCourseRepository, RegisteredCourseRepository>();
             services.AddScoped<IRegisteredCourseGradeRepository, RegisteredCourseGradeRepository>();
+            services.AddScoped<IGradeRepository, GradeRepository>();
             
             //  configure services
             services.AddScoped<ICourseService, CourseService>();

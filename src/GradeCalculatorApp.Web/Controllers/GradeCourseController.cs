@@ -1,14 +1,24 @@
+using GradeCalculatorApp.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
     public class GradeCourseController : Controller
     {
-        // GET
+        private readonly ISessionSemesterService _sessionSemesterService;
+
+        public GradeCourseController(ISessionSemesterService sessionSemesterService) =>
+            _sessionSemesterService = sessionSemesterService;
+        
         public IActionResult Index()
         {
-            return
-            View();
+            ViewBag.SessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
+            return View();
+        }
+        public IActionResult GradeDetails()
+        {
+            ViewBag.SessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
+            return View();
         }
     }
 }

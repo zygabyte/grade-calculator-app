@@ -1,6 +1,16 @@
+using GradeCalculatorApp.EnumLibrary;
+
 namespace GradeCalculatorApp.Data.Models
 {
-    public class RegistrationCourse
+    public class RegistrationCourse : CourseLecturer
+    {}
+
+    public class GradedCourse : CourseLecturer
+    {
+        public string Grade { get; set; }
+    }
+    
+    public class CourseLecturer
     {
         public long Id { get; set; }
         public string Course { get; set; }

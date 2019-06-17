@@ -1,0 +1,88 @@
+@model object
+
+@{
+    ViewBag.Title = "Grade Details";
+    Layout = "_Layout";
+}
+
+<section class="wrapper">
+    <div class="row state-overview">
+        <div class="col-lg-3 col-sm-6">
+            <section class="card">
+                <div class="symbol terques">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="value">
+                    <h1 id="exam">2</h1>
+                    <p>Exam</p>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="card">
+                <div class="symbol red">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="value">
+                    <h1 id="totalCa">2</h1>
+                    <p>Total CA</p>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="card">
+                <div class="symbol yellow">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="value">
+                    <h1 id="finalScore">2</h1>
+                    <p>Final Score</p>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <section class="card">
+                <div class="symbol blue">
+                    <i class="fa fa-book"></i>
+                </div>
+                <div class="value">
+                    <h1 id="grade">A</h1>
+                    <p>Grade</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <section class="card">
+        <header class="card-header">
+            Grade Details
+        </header>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="adv-table">
+                        <table class="table table-hover p-table" id="gradeTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Value</th>
+                                <th>Score</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+@section scripts
+{
+    <script>
+        let studentId = 1; // currently signed in student
+    </script>
+    
+    <script src="Scripts/RegisterCourse/Index.js"></script>
+}

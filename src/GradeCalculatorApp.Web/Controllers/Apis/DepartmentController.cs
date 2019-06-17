@@ -15,13 +15,6 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private readonly IDepartmentService _departmentService;
         private const string ObjectName = "Department"; 
         public DepartmentController(IDepartmentService departmentService) => _departmentService = departmentService;
-        
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
 
         public ActionResult<ResponseData> CreateDepartment(Department department)
         {
