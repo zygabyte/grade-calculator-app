@@ -33,7 +33,5 @@ function readGradedCourseResponse(data) {
         $('#gradeDetailsTable tbody').append(row);
 
         initializeDataTable($('#gradeDetailsTable'));
-        
-        
     }
 }

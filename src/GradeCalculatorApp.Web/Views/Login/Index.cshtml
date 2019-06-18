@@ -1,0 +1,23 @@
+@model object
+
+@{
+    ViewBag.Title = "Log In";
+    Layout = "_LayoutUnsecured";
+}
+
+<form class="form-signin" id="signInForm">
+    <h2 class="form-signin-heading">sign in</h2>
+    <div class="login-wrap">
+        <input type="text" id="matric" class="form-control" placeholder="Matric Number" autofocus>
+        <input type="password" id="password" class="form-control" placeholder="Password">
+        <button class="btn btn-sm btn-login btn-block" onclick="signIn()">Sign in</button>
+        <span class="pull-right">
+            <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
+        </span>
+    </div>
+</form>
+
+@section scripts
+{
+    <script src="/Scripts/LogIn/Index.js"></script>
+}
