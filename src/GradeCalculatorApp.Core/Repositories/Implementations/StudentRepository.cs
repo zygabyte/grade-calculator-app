@@ -60,6 +60,21 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public Student ReadStudentByEmail(string email)
+        {
+            try
+            {
+                return _gradeCalculatorContext.Students
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Email == email);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        
+
         public bool DeleteStudent(long studentId)
         {
             try

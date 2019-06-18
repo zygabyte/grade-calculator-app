@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeCalculatorApp.Core.Messaging;
 using GradeCalculatorApp.Core.Repositories.Implementations;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Implementations;
@@ -78,6 +79,11 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegisteredCourseService, RegisteredCourseService>();
             services.AddScoped<IRegisteredCourseGradeService, RegisteredCourseGradeService>();
             services.AddScoped<IGradeService, GradeService>();
+            services.AddScoped<IMessagingService, MessagingService>();
+            
+            
+            // configure smtp credentials
+            services.Configure<SmtpCredentials>(Configuration.GetSection("SmtpCredentials"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,10 +97,10 @@ namespace GradeCalculatorApp.Web
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+//                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+//            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

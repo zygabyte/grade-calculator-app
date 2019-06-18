@@ -59,6 +59,20 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public Lecturer ReadLecturerByEmail(string email)
+        {
+            try
+            {
+                return _gradeCalculatorContext.Lecturers
+                    .Include(x => x.Department)
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Email == email);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public bool DeleteLecturer(long lecturerId)
         {
             try

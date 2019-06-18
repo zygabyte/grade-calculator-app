@@ -14,6 +14,15 @@ namespace GradeCalculatorApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // unique constraints on email
+            modelBuilder.Entity<Student>()
+                .HasIndex(x => x.Email)
+                .IsUnique();
+            
+            modelBuilder.Entity<Lecturer>()
+                .HasIndex(x => x.Email)
+                .IsUnique();
             
             modelBuilder.Entity<Programme>()
                 .HasOne(p => p.Department)

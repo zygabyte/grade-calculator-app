@@ -10,6 +10,12 @@
     <div class="login-wrap">
         <input type="text" id="matric" class="form-control" placeholder="Matric Number" autofocus>
         <input type="password" id="password" class="form-control" placeholder="Password">
+        <select id="semester" class="form-control mb-2">
+            <option selected>Select User Role</option>
+            <option value="Administrator">Administrator</option>
+            <option value="Lecturer">Lecturer</option>
+            <option value="Student">Student</option>
+        </select>
         <button class="btn btn-sm btn-login btn-block" onclick="signIn()">Sign in</button>
         <span class="pull-right">
             <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
@@ -19,5 +25,5 @@
 
 @section scripts
 {
-    <script src="/Scripts/LogIn/Index.js"></script>
+    <script src="/Scripts/Account/LogIn.js"></script>
 }

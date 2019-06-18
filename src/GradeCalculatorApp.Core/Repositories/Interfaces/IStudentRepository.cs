@@ -8,6 +8,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         bool CreateStudent(Student student);
         IEnumerable<Student> ReadStudents(bool takeAll = true, int count = 1000);
         Student ReadStudent(long studentId);
+        Student ReadStudentByEmail(string email);
         bool DeleteStudent(long studentId);
         bool UpdateStudent(long studentId, Student student);
     }
