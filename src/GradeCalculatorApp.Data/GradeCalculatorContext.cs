@@ -16,13 +16,13 @@ namespace GradeCalculatorApp.Data
             base.OnModelCreating(modelBuilder);
 
             // unique constraints on email
-            modelBuilder.Entity<Student>()
-                .HasIndex(x => x.Email)
-                .IsUnique();
-            
-            modelBuilder.Entity<Lecturer>()
-                .HasIndex(x => x.Email)
-                .IsUnique();
+//            modelBuilder.Entity<Student>()
+//                .HasIndex(x => x.Email)
+//                .IsUnique();
+//            
+//            modelBuilder.Entity<Lecturer>()
+//                .HasIndex(x => x.Email)
+//                .IsUnique();
             
             modelBuilder.Entity<Programme>()
                 .HasOne(p => p.Department)
@@ -137,5 +137,7 @@ namespace GradeCalculatorApp.Data
         
         public DbSet<RegisteredCourse> RegisteredCourses { get; set; }
         public DbSet<RegisteredCourseGrade> RegisteredCourseGrades { get; set; }
+        
+        public DbSet<TokenUserMap> TokenUserMaps { get; set; }
     }
 }

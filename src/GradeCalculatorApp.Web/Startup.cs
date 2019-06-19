@@ -82,6 +82,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IGradeService, GradeService>();
             services.AddScoped<IMessagingService, MessagingService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IAccountService, AccountService>();
             
             
             // configure smtp credentials

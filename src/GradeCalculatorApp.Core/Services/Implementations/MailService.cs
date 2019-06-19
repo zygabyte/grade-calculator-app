@@ -19,11 +19,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             _mailConstants = new MailConstants(options);
         }
         
-        public void SendRegisterMail(string toEmail, string fullName, string userRole)
+        public void SendRegisterMail(string toEmail, string fullName, string userRole, string tokenMap)
         {
             try
             {
-                SendMail(toEmail, _mailConstants.RegisterHeading, string.Format(_mailConstants.RegisterBody, fullName, userRole, _mailConstants.BaseRegisterUrl(), toEmail));
+                SendMail(toEmail, _mailConstants.RegisterHeading, string.Format(_mailConstants.RegisterBody, fullName, userRole, _mailConstants.BaseRegisterUrl(), tokenMap, toEmail));
             }
             catch (Exception e)
             {

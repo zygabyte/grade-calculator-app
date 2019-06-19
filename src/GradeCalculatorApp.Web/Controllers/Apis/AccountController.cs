@@ -14,7 +14,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
 
         public AccountController(IAccountService accountService) => _accountService = accountService;
 
-        public ActionResult<ResponseData> LogIn(string email, string password, UserRole userRole)
+        public ActionResult<ResponseData> LogInUser(string email, string password, UserRole userRole)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> Register(string email, string password, UserRole userRole)
+        public ActionResult<ResponseData> RegisterUser(string email, string password, UserRole userRole)
         {
             try
             {

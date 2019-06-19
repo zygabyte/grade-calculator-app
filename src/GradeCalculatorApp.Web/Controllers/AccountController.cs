@@ -11,6 +11,12 @@ namespace GradeCalculatorApp.Web.Controllers
             View();
         }
         
+        public IActionResult Register()
+        {
+            return
+            View();
+        }
+        
         public IActionResult MailTemplate()
         {
             return

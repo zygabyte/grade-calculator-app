@@ -5,7 +5,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
 {
     public interface ILecturerRepository
     {
-        bool CreateLecturer(Lecturer lecturer);
+        bool CreateLecturer(Lecturer lecturer, string tokenMap);
         IEnumerable<Lecturer> ReadLecturers(bool takeAll = true, int count = 1000);
         Lecturer ReadLecturer(long lecturerId);
         Lecturer ReadLecturerByEmail(string email);

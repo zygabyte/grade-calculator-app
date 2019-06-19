@@ -14,11 +14,15 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         
         public LecturerRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
         
-        public bool CreateLecturer(Lecturer lecturer)
+        public bool CreateLecturer(Lecturer lecturer, string tokenMap)
         {
             try
             {
                 _gradeCalculatorContext.Lecturers.Add(lecturer);
+                _gradeCalculatorContext.TokenUserMaps.Add(new TokenUserMap
+                {
+                    Email = lecturer.Email, UserRole = lecturer.UserRole, Token = tokenMap
+                });
 
                 return _gradeCalculatorContext.SaveChanges() > 0;
             }

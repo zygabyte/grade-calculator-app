@@ -1,0 +1,28 @@
+@model object
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "_LayoutUnsecured";
+}
+
+<form class="form-signin" action="http://thevectorlab.net/flatlab-4/index.html">
+    <h2 class="form-signin-heading">complete registration</h2>
+    <div class="login-wrap">
+        <p>Enter necessary details below</p>
+        <input type="text" class="form-control" placeholder="First Name" autofocus>
+        <input type="text" class="form-control" placeholder="Last Name" autofocus>
+        <input type="text" readonly class="form-control" placeholder="Email" autofocus>
+        <input type="text" readonly class="form-control" placeholder="Matric Number" autofocus>
+        <input type="text" readonly class="form-control" placeholder="Programme" autofocus>
+        <input type="text" readonly class="form-control" placeholder="User Role" autofocus>
+        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Re-type Password">
+        <button class="btn btn-sm btn-login btn-block" type="submit">Register</button>
+    </div>
+
+</form>
+
+@section scripts
+{
+    <script src="/Scripts/Account/Register.js"></script>
+}

@@ -23,9 +23,10 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                if (student != null && _studentRepository.CreateStudent(student))
+                var tokenMap = Guid.NewGuid().ToString().Replace("-", "0");
+                if (student != null && _studentRepository.CreateStudent(student, tokenMap))
                 {
-                    _mailService.SendRegisterMail(student.Email, $"{student.FirstName} {student.LastName}", student.UserRole.ToString());
+                    _mailService.SendRegisterMail(student.Email, $"{student.FirstName} {student.LastName}", student.UserRole.ToString(), tokenMap);
                     return true;
                 }
 
