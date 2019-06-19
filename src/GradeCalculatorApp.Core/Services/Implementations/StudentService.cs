@@ -11,14 +11,25 @@ namespace GradeCalculatorApp.Core.Services.Implementations
     {
 
         private readonly IStudentRepository _studentRepository;
+        private readonly IMailService _mailService;
         
-        public StudentService(IStudentRepository studentRepository) => _studentRepository = studentRepository;
-        
+        public StudentService(IStudentRepository studentRepository, IMailService mailService)
+        {
+            _studentRepository = studentRepository;
+            _mailService = mailService;
+        }
+
         public bool CreateStudent(Student student)
         {
             try
             {
-                return student != null && _studentRepository.CreateStudent(student);
+                if (student != null && _studentRepository.CreateStudent(student))
+                {
+                    _mailService.SendRegisterMail(student.Email, $"{student.FirstName} {student.LastName}", student.UserRole.ToString());
+                    return true;
+                }
+
+                return false;
             }
             catch (Exception e)
             {

@@ -8,6 +8,7 @@ using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Implementations;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data;
+using GradeCalculatorApp.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -80,10 +81,12 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegisteredCourseGradeService, RegisteredCourseGradeService>();
             services.AddScoped<IGradeService, GradeService>();
             services.AddScoped<IMessagingService, MessagingService>();
+            services.AddScoped<IMailService, MailService>();
             
             
             // configure smtp credentials
             services.Configure<SmtpCredentials>(Configuration.GetSection("SmtpCredentials"));
+            services.Configure<HostName>(Configuration.GetSection("HostName"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

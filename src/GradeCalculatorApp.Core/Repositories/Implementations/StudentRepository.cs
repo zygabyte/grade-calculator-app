@@ -109,9 +109,9 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentStudent.LastName = student.LastName;
                 currentStudent.FirstName = student.FirstName;
                 currentStudent.UserRole = student.UserRole;
-                currentStudent.Programme = student.Programme;
                 currentStudent.ProgrammeId = student.ProgrammeId;
                 currentStudent.MatricNumber = student.MatricNumber;
+                currentStudent.PasswordHash = student.PasswordHash;
                 currentStudent.Modified = DateTime.Now;
                     
                 _gradeCalculatorContext.Entry(currentStudent).State = EntityState.Modified;

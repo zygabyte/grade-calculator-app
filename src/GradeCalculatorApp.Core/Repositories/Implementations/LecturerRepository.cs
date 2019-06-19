@@ -109,6 +109,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 currentLecturer.LastName = lecturer.LastName;
                 currentLecturer.FirstName = lecturer.FirstName;
                 currentLecturer.UserRole = lecturer.UserRole;
+                currentLecturer.PasswordHash = lecturer.PasswordHash;
                 currentLecturer.Modified = DateTime.Now;
                     
                 _gradeCalculatorContext.Entry(currentLecturer).State = EntityState.Modified;
