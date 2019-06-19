@@ -1,28 +1,67 @@
+@using GradeCalculatorApp.Data.Domains
 @model object
 
 @{
     ViewBag.Title = "Register";
     Layout = "_LayoutUnsecured";
+
+    var user = ViewBag.User;
+
+    Student student = null;
+    Lecturer lecturer = null;
+
+    string firstName = "", lastName = "", email = "";
+    var userType = "";
+    
+    if (user is Student newStudent)
+    {
+        student = newStudent;
+        firstName = student.FirstName;
+        lastName = student.LastName;
+        email = student.Email;
+        userType = "Student";
+    }
+    else if (user is Lecturer newLecturer)
+    {
+        lecturer = newLecturer;
+        firstName = lecturer.FirstName;
+        lastName = lecturer.LastName;
+        email = lecturer.Email;
+        userType = "Lecturer";
+    }
+    
 }
 
-<form class="form-signin" action="http://thevectorlab.net/flatlab-4/index.html">
+<form class="form-signin" id="registerForm">
     <h2 class="form-signin-heading">complete registration</h2>
     <div class="login-wrap">
         <p>Enter necessary details below</p>
-        <input type="text" class="form-control" placeholder="First Name" autofocus>
-        <input type="text" class="form-control" placeholder="Last Name" autofocus>
-        <input type="text" readonly class="form-control" placeholder="Email" autofocus>
-        <input type="text" readonly class="form-control" placeholder="Matric Number" autofocus>
-        <input type="text" readonly class="form-control" placeholder="Programme" autofocus>
-        <input type="text" readonly class="form-control" placeholder="User Role" autofocus>
-        <input type="password" class="form-control" placeholder="Password">
-        <input type="password" class="form-control" placeholder="Re-type Password">
-        <button class="btn btn-sm btn-login btn-block" type="submit">Register</button>
+        <input type="text" id="firstname" class="form-control" placeholder="First Name" autofocus value="@firstName">
+        <input type="text" id="lastname" class="form-control" placeholder="Last Name" autofocus value="@lastName">
+        <input type="text" readonly id="email" class="form-control" placeholder="Email" autofocus value="@email">
+        
+        @if (student != null)
+        {
+            <input type="text" readonly class="form-control" placeholder="Matric Number" autofocus value="@student.MatricNumber">
+            <input type="text" readonly class="form-control" placeholder="Programme" autofocus value="@student.Programme.Name">    
+        }
+        else if (lecturer != null)
+        {
+            <input type="text" readonly class="form-control" placeholder="Department" autofocus value="@lecturer.Department.Name">
+        }
+        
+        <input type="password" id="password" class="form-control" placeholder="Password">
+        <input type="password" id="confirm_password" class="form-control" placeholder="Re-type Password">
+        <button class="btn btn-sm btn-login btn-block" onclick="register()">Register</button>
     </div>
 
 </form>
 
 @section scripts
 {
+    <script>
+        const userType = '@userType';
+    </script>
+    
     <script src="/Scripts/Account/Register.js"></script>
 }

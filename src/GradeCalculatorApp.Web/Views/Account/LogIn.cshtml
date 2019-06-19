@@ -5,6 +5,15 @@
     Layout = "_LayoutUnsecured";
 }
 
+@section styles
+{
+    <style>
+        #semester {
+            font-size: 12px !important;
+        }
+    </style>
+}
+
 <form class="form-signin" id="signInForm">
     <h2 class="form-signin-heading">sign in</h2>
     <div class="login-wrap">
@@ -12,7 +21,6 @@
         <input type="password" id="password" class="form-control" placeholder="Password">
         <select id="semester" class="form-control mb-2">
             <option selected>Select User Role</option>
-            <option value="Administrator">Administrator</option>
             <option value="Lecturer">Lecturer</option>
             <option value="Student">Student</option>
         </select>

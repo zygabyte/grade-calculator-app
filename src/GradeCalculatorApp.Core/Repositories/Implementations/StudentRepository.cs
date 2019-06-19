@@ -56,7 +56,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             {
                 return _gradeCalculatorContext.Students
                     .Include(x => x.Programme)
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == studentId);
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Id == studentId && !x.Programme.IsDeleted);
             }
             catch (Exception e)
             {
@@ -69,7 +69,8 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return _gradeCalculatorContext.Students
-                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Email == email);
+                    .Include(x => x.Programme)
+                    .FirstOrDefault(x => !x.IsDeleted && x.IsActive && x.Email == email && !x.Programme.IsDeleted);
             }
             catch (Exception e)
             {

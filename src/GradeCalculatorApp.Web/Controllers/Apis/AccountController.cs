@@ -1,6 +1,7 @@
 using System;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
+using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
 using GradeCalculatorApp.EnumLibrary;
 using Microsoft.AspNetCore.Mvc;
@@ -28,18 +29,32 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
 
-        public ActionResult<ResponseData> RegisterUser(string email, string password, UserRole userRole)
+        public ActionResult<ResponseData> RegisterUser(User user)
         {
             try
             {
-                return _accountService.Register(email, password, userRole)
-                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulRegistered, email))
-                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRegister, email));
+                return _accountService.Register(user)
+                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulRegistered, user.Email))
+                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRegister, user.Email));
             }
             catch (Exception e)
             {
-                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionRegister, email));
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionRegister, user.Email));
             }
         }
+
+//        public ActionResult<ResponseData> RegisterLecturer(User registerUser)
+//        {
+//            try
+//            {
+//                return _accountService.Register(email, password, userRole)
+//                    ? ResponseData.SendSuccessMsg(string.Format(DefaultConstants.SuccessfulRegistered, email))
+//                    : ResponseData.SendFailMsg(string.Format(DefaultConstants.FailureRegister, email));
+//            }
+//            catch (Exception e)
+//            {
+//                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionRegister, email));
+//            }
+//        }
     }
 }

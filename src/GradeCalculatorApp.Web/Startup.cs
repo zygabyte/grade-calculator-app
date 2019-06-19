@@ -62,6 +62,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegisteredCourseRepository, RegisteredCourseRepository>();
             services.AddScoped<IRegisteredCourseGradeRepository, RegisteredCourseGradeRepository>();
             services.AddScoped<IGradeRepository, GradeRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
             
             //  configure services
             services.AddScoped<ICourseService, CourseService>();
@@ -83,6 +84,8 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IMessagingService, MessagingService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IHashService, HashService>();
             
             
             // configure smtp credentials

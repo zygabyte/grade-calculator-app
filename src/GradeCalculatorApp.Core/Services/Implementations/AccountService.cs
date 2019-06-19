@@ -1,6 +1,7 @@
 using System;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
+using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.EnumLibrary;
 
 namespace GradeCalculatorApp.Core.Services.Implementations
@@ -44,27 +45,31 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public bool Register(string email, string password, UserRole userRole)
+        public bool Register(User user)
         {
             try
             {
-                switch (userRole)
+                switch (user.UserRole)
                 {
                     case UserRole.Student:
-                        var student = _studentRepository.ReadStudentByEmail(email);
+                        var student = _studentRepository.ReadStudentByEmail(user.Email);
                         if (student != null)
                         {
-                            student.PasswordHash = _hashService.HashPassword(password);
+                            student.FirstName = user.FirstName;
+                            student.LastName = user.LastName;
+                            student.PasswordHash = _hashService.HashPassword(user.PasswordHash);
                             return _studentRepository.UpdateStudent(student.Id, student);
                         }
                         
                         break;
                     
                     case UserRole.Lecturer:
-                        var lecturer = _lecturerRepository.ReadLecturerByEmail(email);
+                        var lecturer = _lecturerRepository.ReadLecturerByEmail(user.Email);
                         if (lecturer != null)
                         {
-                            lecturer.PasswordHash = _hashService.HashPassword(password);
+                            lecturer.FirstName = user.FirstName;
+                            lecturer.LastName = user.LastName;
+                            lecturer.PasswordHash = _hashService.HashPassword(user.PasswordHash);
                             return _lecturerRepository.UpdateLecturer(lecturer.Id, lecturer);
                         }
 
