@@ -9,9 +9,25 @@ function pageLoad() {
 }
 
 function signIn() {
-    const matric = $('#matric').val();
-    const password = $('#password').val();
+    $('#signInButton').attr('disabled', true);
     
-    console.log('cred', matric, " password", password);
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const userRole = $('#userRole').val();
+
+    api("POST",
+        "/Account/LogInUser",
+        {email: email, password: password, userRole: userRole},
+        true,
+        logInResponse, true, true);
 }
 
+function logInResponse(data) {
+    if (data.status){
+        toastr.success('Successfully signed in', 'Success');
+        setTimeout(() => window.location = '/', 2000 );
+        return;
+    }
+
+    $('#signInButton').attr('disabled', false);
+}

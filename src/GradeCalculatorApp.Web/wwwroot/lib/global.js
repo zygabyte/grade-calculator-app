@@ -26,7 +26,12 @@ function api(apiConnectType, url, data, asyncMode, callback, feedBack = false, c
                     }
                 }
             } else {
-                if (callbackOnFailure && callback !== null && typeof callback === "function") callback(remoteData);
+                if (callbackOnFailure && callback !== null && typeof callback === "function")
+                    setTimeout(function () {
+                            callback(remoteData);
+                        },
+                        2000);
+                toastr.error(remoteData.message, 'Error');
                 //swalWarning(remoteData.Message);
             }
         },

@@ -10,6 +10,8 @@ function pageLoad() {
 
 
 function register(){
+    $('#registerButton').attr('disabled', true);
+    
     const firstname = $('#firstname').val();
     const lastname = $('#lastname').val();
     const email = $('#email').val();
@@ -33,13 +35,16 @@ function register(){
         "/Account/RegisterUser",
         {user: user},
         true,
-        registerUserResponse, true);
+        registerUserResponse, true, true);
 }
 
 function registerUserResponse(data) {
     if (data.status){
         toastr.success('Successfully registered. Kindly log in now', 'Success');
         
-        setTimeout(() => window.location = '/Account/LogIn', 3000 );
+        setTimeout(() => window.location = '/Account/LogIn', 2000 );
+        return;
     }
+
+    $('#registerButton').attr('disabled', false);
 }

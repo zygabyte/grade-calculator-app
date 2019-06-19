@@ -8,7 +8,7 @@
 @section styles
 {
     <style>
-        #semester {
+        #userRole {
             font-size: 12px !important;
         }
     </style>
@@ -17,14 +17,14 @@
 <form class="form-signin" id="signInForm">
     <h2 class="form-signin-heading">sign in</h2>
     <div class="login-wrap">
-        <input type="text" id="matric" class="form-control" placeholder="Matric Number" autofocus>
+        <input type="text" id="email" class="form-control" placeholder="Email" autofocus>
         <input type="password" id="password" class="form-control" placeholder="Password">
-        <select id="semester" class="form-control mb-2">
+        <select id="userRole" class="form-control mb-2">
             <option selected>Select User Role</option>
             <option value="Lecturer">Lecturer</option>
             <option value="Student">Student</option>
         </select>
-        <button class="btn btn-sm btn-login btn-block" onclick="signIn()">Sign in</button>
+        <button id="signInButton" class="btn btn-sm btn-login btn-block" onclick="signIn()">Sign in</button>
         <span class="pull-right">
             <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
         </span>
