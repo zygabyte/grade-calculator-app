@@ -1,12 +1,16 @@
 using GradeCalculatorApp.Core.Constants;
+using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
-    public class SessionSemesterController : Controller
+    public class SessionSemesterController : BaseController
     {
         private static long _sessionSemesterId;
+        
+        public SessionSemesterController(IAccountService accountService) : base(accountService){}
+        
         // GET
         public IActionResult Index()
         {

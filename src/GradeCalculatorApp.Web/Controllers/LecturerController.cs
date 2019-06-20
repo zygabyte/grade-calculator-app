@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
-    public class LecturerController : Controller
+    public class LecturerController : BaseController
     {
         private static long _lecturerId;
         private readonly ILecturerService _lecturerService;
 
-        public LecturerController(ILecturerService lecturerService) => _lecturerService = lecturerService;
+        public LecturerController(ILecturerService lecturerService, IAccountService accountService) : base(accountService) => _lecturerService = lecturerService;
         // GET
         public IActionResult Index()
         {

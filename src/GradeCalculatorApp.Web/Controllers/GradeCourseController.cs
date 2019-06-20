@@ -7,25 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers
 {
-    public class GradeCourseController : Controller
+    public class GradeCourseController : BaseController
     {
         private readonly ISessionSemesterService _sessionSemesterService;
-        private readonly IMessagingService _messagingService;
         private readonly IGradeService _gradeService;
         private const string ObjectName = "Grade Course";
 
         private static long _gradedCourseId;
 
-        public GradeCourseController(ISessionSemesterService sessionSemesterService, IGradeService gradeService, IMessagingService messagingService)
+        public GradeCourseController(ISessionSemesterService sessionSemesterService, IGradeService gradeService, IAccountService accountService) : base(accountService)
         {
             _sessionSemesterService = sessionSemesterService;
             _gradeService = gradeService;
-            _messagingService = messagingService;
         }
 
         public IActionResult Index()
         {
-            _messagingService.SendMail("eseosaehioghae@gmail.com", "", "", "Heading", "message", "");
             ViewBag.SessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
             return View();
         }

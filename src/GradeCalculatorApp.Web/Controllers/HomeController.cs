@@ -1,13 +1,19 @@
 ﻿using System.Diagnostics;
+using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GradeCalculatorApp.Web.Controllers.Apis
+namespace GradeCalculatorApp.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        private readonly IAccountService _accountService;
+
+        public HomeController(IAccountService accountService) : base(accountService) => _accountService = accountService;
+        
         public IActionResult Index()
         {
+            ViewBag.User = _accountService.GetUserInSession();
             return View();
         }
 

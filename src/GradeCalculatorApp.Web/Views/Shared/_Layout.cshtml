@@ -1,7 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using GradeCalculatorApp.Core.Utilities
+@using GradeCalculatorApp.Data.Domains
+@using GradeCalculatorApp.EnumLibrary
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    var user = HttpContextAccessor.HttpContext.Session.Get<User>("User");
+}
+
+<!DOCTYPE html>
 <html lang="en">
   
-<!-- Mirrored from thevectorlab.net/flatlab-4/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 May 2019 19:44:29 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -294,33 +302,42 @@
                       </a>
                   </li>
                   
-                  <li>
-                      <a href="@Url.Action("Index", "RegisterCourse")">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Register</span>
-                      </a>
-                  </li>
+                  @if (user.UserRole == UserRole.Student)
+                  {
+                      <li>
+                          <a href="@Url.Action("Index", "RegisterCourse")">
+                              <i class="fa fa-dashboard"></i>
+                              <span>Register</span>
+                          </a>
+                      </li>
+                      
+                      <li>
+                          <a href="@Url.Action("Index", "RegisterCourse")">
+                              <i class="fa fa-dashboard"></i>
+                              <span>Registered Courses - Students</span>
+                          </a>
+                      </li>
+                      
+                      <li>
+                          <a href="@Url.Action("Index", "GradeCourse")">
+                              <i class="fa fa-dashboard"></i>
+                              <span>Grades</span>
+                          </a>
+                      </li>
+                  }
                   
-                  <li>
-                      <a href="@Url.Action("Index", "RegisterCourse")">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Registered Courses - Students</span>
-                      </a>
-                  </li>
                   
-                  <li>
-                      <a href="@Url.Action("Index", "GradeCourse")">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Grades</span>
-                      </a>
-                  </li>
+                  @if (user.UserRole == UserRole.Lecturer)
+                  {
+                      <li>
+                          <a href="@Url.Action("Index", "RegisteredCourseGrade")">
+                              <i class="fa fa-dashboard"></i>
+                              <span>Registered Courses</span>
+                          </a>
+                      </li>
+                  }
                   
-                  <li>
-                      <a href="@Url.Action("Index", "RegisteredCourseGrade")">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Registered Courses</span>
-                      </a>
-                  </li>
+                 
                   
                   <li class="sub-menu">
                       <a href="javascript:;" >

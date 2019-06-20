@@ -101,7 +101,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             }
         }
 
-        public void SetUserInSession(User user)
+        private void SetUserInSession(User user)
         {
             try
             {
@@ -126,5 +126,32 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return null;
             }
         }
+
+        public bool IsUserSessionActive()
+        {
+            try
+            {
+                return SessionExtensions.Get<User>(_httpContextAccessor.HttpContext.Session, "User").Email != null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        public void ClearSession()
+        {
+            try
+            {
+                SessionExtensions.ClearSession(_httpContextAccessor.HttpContext.Session);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        
+        
     }
 }
