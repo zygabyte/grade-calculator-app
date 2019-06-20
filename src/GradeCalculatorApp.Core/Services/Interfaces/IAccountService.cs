@@ -7,5 +7,7 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
     {
         bool LogIn(string email, string password, UserRole userRole);
         bool Register(User user);
+        void SetUserInSession(User user);
+        User GetUserInSession();
     }
 }

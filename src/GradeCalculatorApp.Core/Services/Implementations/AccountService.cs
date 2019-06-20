@@ -3,6 +3,8 @@ using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.EnumLibrary;
+using Microsoft.AspNetCore.Http;
+using SessionExtensions = GradeCalculatorApp.Core.Utilities.SessionExtensions;
 
 namespace GradeCalculatorApp.Core.Services.Implementations
 {
@@ -11,12 +13,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         private readonly ILecturerRepository _lecturerRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IHashService _hashService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         
-        public AccountService(ILecturerRepository lecturerRepository, IStudentRepository studentRepository, IHashService hashService)
+        public AccountService(ILecturerRepository lecturerRepository, IStudentRepository studentRepository, IHashService hashService, IHttpContextAccessor httpContextAccessor)
         {
             _lecturerRepository = lecturerRepository;
             _studentRepository = studentRepository;
             _hashService = hashService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public bool LogIn(string email, string password, UserRole userRole)
@@ -24,20 +28,31 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             try
             {
                 string passwordHash;
+                User user;
                 switch (userRole)
                 {
                     case UserRole.Student:
-                        passwordHash = _studentRepository.ReadStudentByEmail(email)?.PasswordHash;
+                        user = _studentRepository.ReadStudentByEmail(email);
+                        passwordHash = user?.PasswordHash;
                         break;
                     
                     case UserRole.Lecturer:
-                        passwordHash = _lecturerRepository.ReadLecturerByEmail(email)?.PasswordHash;
+                        user = _lecturerRepository.ReadLecturerByEmail(email);
+                        passwordHash = user?.PasswordHash;
                         break;
                     
                     default: return false;
                 }
+
+                var status = !string.IsNullOrEmpty(passwordHash) &&
+                             _hashService.ValidatePassword(password, passwordHash);
                 
-                return !string.IsNullOrEmpty(passwordHash) && _hashService.ValidatePassword(password, passwordHash);
+                if (status) SetUserInSession(new User
+                {
+                    Id = user.Id, Email = user.Email, UserRole = user.UserRole, 
+                    FirstName = user.FirstName, LastName = user.LastName, PasswordHash = user.PasswordHash
+                });
+                return status;
             }
             catch (Exception e)
             {
@@ -83,6 +98,32 @@ namespace GradeCalculatorApp.Core.Services.Implementations
             catch (Exception e)
             {
                 return false;
+            }
+        }
+
+        public void SetUserInSession(User user)
+        {
+            try
+            {
+                SessionExtensions.Set(_httpContextAccessor.HttpContext.Session, "User", user);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public User GetUserInSession()
+        {
+            try
+            {
+                return SessionExtensions.Get<User>(_httpContextAccessor.HttpContext.Session, "User");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
             }
         }
     }
