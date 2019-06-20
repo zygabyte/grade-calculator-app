@@ -42,7 +42,7 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet" />
     <link href="/css/custom-style.css" rel="stylesheet" />
-
+    
     @RenderSection("styles", required: false)
 </head>
 
@@ -269,8 +269,8 @@
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" src="img/avatar1_small.jpg">
-                            <span class="username">John Doe</span>
+                            @* <img alt="" src="img/avatar1_small.jpg"> *@
+                            <span class="username">@user.FirstName @user.LastName - @user.UserRole.ToString()</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout dropdown-menu-right">
@@ -278,13 +278,9 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                            <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                            <li><a href="@Url.Action("LogOut", "Account")"><i class="fa fa-key"></i> Log Out</a></li>
                         </ul>
                     </li>
-                    <li class="sb-toggle-right">
-                        <i class="fa  fa-align-right"></i>
-                    </li>
-                    <!-- user login dropdown end -->
                 </ul>
                 <!--search & user info end-->
             </div>
@@ -337,43 +333,44 @@
                       </li>
                   }
                   
-                 
-                  
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Sessions/Semesters</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a href="@Url.Action("Index", "Session")">Sessions</a></li>
-                          <li><a href="@Url.Action("Index", "Semester")">Semesters</a></li>
-                          <li><a href="@Url.Action("Index", "SessionSemester")">Session - Semester</a></li>
-                      </ul>
-                  </li>
+                  @if (user.UserRole == UserRole.Administrator)
+                  {
+                      <li class="sub-menu">
+                          <a href="javascript:;" >
+                              <i class="fa fa-cogs"></i>
+                              <span>Sessions/Semesters</span>
+                          </a>
+                          <ul class="sub">
+                              <li><a href="@Url.Action("Index", "Session")">Sessions</a></li>
+                              <li><a href="@Url.Action("Index", "Semester")">Semesters</a></li>
+                              <li><a href="@Url.Action("Index", "SessionSemester")">Session - Semester</a></li>
+                          </ul>
+                      </li>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Division</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a href="@Url.Action("Index", "School")">Schools</a></li>
-                          <li><a href="@Url.Action("Index", "Department")">Departments</a></li>
-                          <li><a href="@Url.Action("Index", "Programme")">Programmes</a></li>
-                          <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
-                      </ul>
-                  </li>
+                      <li class="sub-menu">
+                          <a href="javascript:;" >
+                              <i class="fa fa-cogs"></i>
+                              <span>Division</span>
+                          </a>
+                          <ul class="sub">
+                              <li><a href="@Url.Action("Index", "School")">Schools</a></li>
+                              <li><a href="@Url.Action("Index", "Department")">Departments</a></li>
+                              <li><a href="@Url.Action("Index", "Programme")">Programmes</a></li>
+                              <li><a href="@Url.Action("Index", "Course")">Courses</a></li>
+                          </ul>
+                      </li>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Users</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a href="@Url.Action("Index", "Lecturer")">Lecturers</a></li>
-                          <li><a href="@Url.Action("Index", "Student")">Students</a></li>
-                      </ul>
-                  </li>
+                      <li class="sub-menu">
+                          <a href="javascript:;" >
+                              <i class="fa fa-cogs"></i>
+                              <span>Users</span>
+                          </a>
+                          <ul class="sub">
+                              <li><a href="@Url.Action("Index", "Lecturer")">Lecturers</a></li>
+                              <li><a href="@Url.Action("Index", "Student")">Students</a></li>
+                          </ul>
+                      </li>    
+                  }
               </ul>
               <!-- sidebar menu end-->
           </div>

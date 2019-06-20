@@ -12,13 +12,16 @@ namespace GradeCalculatorApp.Core.Services.Implementations
     {
         private readonly ILecturerRepository _lecturerRepository;
         private readonly IStudentRepository _studentRepository;
+        private readonly IAdministratorRepository _administratorRepository;
         private readonly IHashService _hashService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         
-        public AccountService(ILecturerRepository lecturerRepository, IStudentRepository studentRepository, IHashService hashService, IHttpContextAccessor httpContextAccessor)
+        public AccountService(ILecturerRepository lecturerRepository, IStudentRepository studentRepository, IAdministratorRepository administratorRepository, 
+            IHashService hashService, IHttpContextAccessor httpContextAccessor)
         {
             _lecturerRepository = lecturerRepository;
             _studentRepository = studentRepository;
+            _administratorRepository = administratorRepository;
             _hashService = hashService;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -38,6 +41,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                     
                     case UserRole.Lecturer:
                         user = _lecturerRepository.ReadLecturerByEmail(email);
+                        passwordHash = user?.PasswordHash;
+                        break;
+                    
+                    case UserRole.Administrator:
+                        user = _administratorRepository.ReadAdministratorByEmail(email);
                         passwordHash = user?.PasswordHash;
                         break;
                     
@@ -89,6 +97,14 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                         }
 
                         break;
+                    
+                    case UserRole.Administrator:
+                        user.PasswordHash = _hashService.HashPassword(user.PasswordHash);
+                        return _administratorRepository.CreateAdministrator(new Administrator
+                        {
+                            Email = user.Email, FirstName = user.FirstName, LastName = user.LastName,
+                            UserRole = user.UserRole, PasswordHash = user.PasswordHash
+                        });
                     
                     default: return false;
                 }

@@ -116,10 +116,10 @@ namespace GradeCalculatorApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
         }
         
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=GradeCalculator;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            optionsBuilder.UseSqlServer("Server=.;Database=GradeCalculator;Trusted_Connection=True;MultipleActiveResultSets=true");
+//        }
 
         public DbSet<SessionSemester> SessionSemesters { get; set; }
         public DbSet<Session> Sessions { get; set; }
@@ -130,6 +130,7 @@ namespace GradeCalculatorApp.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
         
         public DbSet<LecturerCourse> LecturerCourses { get; set; }
         public DbSet<ProgrammeCourse> ProgrammeCourses { get; set; }

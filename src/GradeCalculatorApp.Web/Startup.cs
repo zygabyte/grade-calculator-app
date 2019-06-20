@@ -74,6 +74,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IRegisteredCourseGradeRepository, RegisteredCourseGradeRepository>();
             services.AddScoped<IGradeRepository, GradeRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IAdministratorRepository, AdministratorRepository>();
             
             //  configure services
             services.AddScoped<ICourseService, CourseService>();
@@ -97,6 +98,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IHashService, HashService>();
+            services.AddScoped<IAdministratorService, AdministratorService>();
 
             services.AddHttpContextAccessor();
             

@@ -7,14 +7,23 @@ namespace GradeCalculatorApp.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ITokenService _tokenService;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ITokenService tokenService) => _tokenService = tokenService;
-        
-        // GET
+        public AccountController(ITokenService tokenService, IAccountService accountService)
+        {
+            _tokenService = tokenService;
+            _accountService = accountService;
+        }
+
         public IActionResult LogIn()
         {
-            return
-            View();
+            return View();
+        }
+
+        public IActionResult LogOut()
+        {
+            _accountService.ClearSession();
+            return RedirectToAction("LogIn");
         }
         
         public IActionResult Register(string id)
