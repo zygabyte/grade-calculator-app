@@ -25,5 +25,16 @@ namespace GradeCalculatorApp.Web.Controllers
             ViewBag.ProgrammeId = _studentService.ReadStudentByEmail(user?.Email)?.ProgrammeId;
             return View();
         }
+        
+        // GET
+        public IActionResult Student()
+        {
+            var user = _accountService.GetUserInSession();
+            ViewBag.SessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
+            ViewBag.User = user;
+            ViewBag.ProgrammeId = _studentService.ReadStudentByEmail(user?.Email)?.ProgrammeId;
+            return View();
+        }
+
     }
 }

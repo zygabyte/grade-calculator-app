@@ -8,5 +8,6 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
     {
         bool CreateRegisteredCourses(List<RegisteredCourse> registeredCourses);
         IEnumerable<RegisteredCourseModel> ReadRegisteredCourses(long sessionSemesterId, long lecturerId);
+        IEnumerable<RegisteredCourseModel> ReadRegisteredCoursesByStudent(long sessionSemesterId, long studentId);
     }
 }

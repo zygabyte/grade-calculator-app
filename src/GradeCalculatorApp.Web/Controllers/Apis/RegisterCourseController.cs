@@ -30,11 +30,25 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             }
         }
         
+        //  reading all registered courses by lecturer
         public ActionResult<ResponseData> ReadRegisteredCourses(long sessionSemesterId, long lecturerId)
         {
             try
             {
                 return ResponseData.SendSuccessMsg(data: _registeredCourseService.ReadRegisteredCourses(sessionSemesterId, lecturerId));
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionReadAll, ObjectName));
+            }
+        }
+        
+        //  reading all registered courses by student
+        public ActionResult<ResponseData> ReadRegisteredCoursesByStudent(long sessionSemesterId, long studentId)
+        {
+            try
+            {
+                return ResponseData.SendSuccessMsg(data: _registeredCourseService.ReadRegisteredCoursesByStudent(sessionSemesterId, studentId));
             }
             catch (Exception e)
             {

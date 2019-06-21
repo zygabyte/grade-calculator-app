@@ -14,7 +14,8 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "Registered Course"; 
         
         public RegisteredCourseGradeController(IRegisteredCourseGradeService registeredCourseGradeService) => _registeredCourseGradeService = registeredCourseGradeService;
-        
+      
+        //lecturer creating grade for student
         public ActionResult<ResponseData> CreateRegisteredCourseGrade(RegisteredCourseGrade registeredCourseGrade)
         {
             try

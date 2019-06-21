@@ -36,5 +36,16 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return new List<RegisteredCourseModel>();
             }
         }
+        public IEnumerable<RegisteredCourseModel> ReadRegisteredCoursesByStudent(long sessionSemesterId, long studentId)
+        {
+            try
+            {
+                return _registeredCourseRepository.ReadRegisteredCoursesByStudent(sessionSemesterId, studentId);
+            }
+            catch (Exception e)
+            {
+                return new List<RegisteredCourseModel>();
+            }
+        }
     }
 }
