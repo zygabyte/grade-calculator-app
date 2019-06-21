@@ -28,7 +28,6 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                                 x.RegisteredCourse.StudentId == studentId);
 
                 var gradedCourseList = new  List<GradedCourse>();
-                var i = 1;
                 foreach (var gradedCourse in gradedCourses)
                 {
                     var registeredCourse = gradedCourse.RegisteredCourse;
@@ -36,7 +35,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                     
                     gradedCourseList.Add(new GradedCourse
                     {
-                        Id = i++,
+                        Id = registeredCourse.Id,
                         Course = registeredCourse.Course.Name,
                         CourseId = registeredCourse.CourseId,
                         CourseCode = registeredCourse.Course.Code,
@@ -60,7 +59,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             try
             {
                 return _gradeCalculatorContext.RegisteredCourseGrades.FirstOrDefault(x =>
-                    !x.IsDeleted && x.Id == gradedCourseId);
+                    !x.IsDeleted && x.RegisteredCourseId == gradedCourseId);
             }
             catch (Exception e)
             {
