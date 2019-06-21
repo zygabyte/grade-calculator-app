@@ -9,7 +9,7 @@ $(document).ready(function () {
 function pageLoad() {
     api("GET",
         "/RegistrationCourse/ReadRegistrationCourses",
-        {sessionSemesterId: sessionSemesterId, programmeId: 1},
+        {sessionSemesterId: sessionSemesterId, programmeId: programmeId, studentId: studentId},
         true,
         readRegisterCoursesResponse, true);
 }

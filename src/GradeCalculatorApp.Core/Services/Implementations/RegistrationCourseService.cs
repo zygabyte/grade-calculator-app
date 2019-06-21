@@ -12,11 +12,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         
         public RegistrationCourseService(IRegistrationCourseRepository registrationCourseRepository) => _registrationCourseRepository = registrationCourseRepository;
         
-        public IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId)
+        public IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId, long studentId)
         {
             try
             {
-                return _registrationCourseRepository.ReadRegistrationCourses(sessionSemesterId, programmeId);
+                return _registrationCourseRepository.ReadRegistrationCourses(sessionSemesterId, programmeId, studentId);
             }
             catch (Exception e)
             {

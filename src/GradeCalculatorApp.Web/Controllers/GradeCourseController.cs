@@ -11,6 +11,7 @@ namespace GradeCalculatorApp.Web.Controllers
     {
         private readonly ISessionSemesterService _sessionSemesterService;
         private readonly IGradeService _gradeService;
+        private readonly IAccountService _accountService;
         private const string ObjectName = "Grade Course";
 
         private static long _gradedCourseId;
@@ -19,11 +20,13 @@ namespace GradeCalculatorApp.Web.Controllers
         {
             _sessionSemesterService = sessionSemesterService;
             _gradeService = gradeService;
+            _accountService = accountService;
         }
 
         public IActionResult Index()
         {
             ViewBag.SessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
+            ViewBag.User = _accountService.GetUserInSession();
             return View();
         }
         public IActionResult GradeDetails()

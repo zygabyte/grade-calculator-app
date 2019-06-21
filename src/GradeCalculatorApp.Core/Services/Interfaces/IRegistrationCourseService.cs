@@ -5,6 +5,6 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
 {
     public interface IRegistrationCourseService
     {
-        IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId);
+        IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId, long studentId);
     }
 }

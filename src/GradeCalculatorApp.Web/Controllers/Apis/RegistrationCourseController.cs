@@ -12,11 +12,11 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private const string ObjectName = "RegistrationCourse"; 
         public RegistrationCourseController(IRegistrationCourseService registrationCourseService) => _registrationCourseService = registrationCourseService;
         
-        public ActionResult<ResponseData> ReadRegistrationCourses(long sessionSemesterId, long programmeId)
+        public ActionResult<ResponseData> ReadRegistrationCourses(long sessionSemesterId, long programmeId, long studentId)
         {
             try
             {
-                return ResponseData.SendSuccessMsg(data: _registrationCourseService.ReadRegistrationCourses(sessionSemesterId, programmeId));
+                return ResponseData.SendSuccessMsg(data: _registrationCourseService.ReadRegistrationCourses(sessionSemesterId, programmeId, studentId));
             }
             catch (Exception e)
             {

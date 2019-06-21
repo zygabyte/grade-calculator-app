@@ -15,21 +15,26 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
         
         public RegistrationCourseRepository(GradeCalculatorContext gradeCalculatorContext) => _gradeCalculatorContext = gradeCalculatorContext;
         
-        public IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId)
+        public IEnumerable<RegistrationCourse> ReadRegistrationCourses(long sessionSemesterId, long programmeId, long studentId)
         {
             try
             {
-                var programmeCourseIds = _gradeCalculatorContext.ProgrammeCourses.Where(x => !x.IsDeleted && x.ProgrammeId == programmeId)
-                    .Select(x => x.CourseId).ToList();
-                var sessionSemesterCourseIds = _gradeCalculatorContext.SessionSemesterCourses.Where(x => !x.IsDeleted && x.SessionSemesterId == sessionSemesterId)
-                    .Select(x => x.CourseId).ToList();
+                var programmeCourseIds = _gradeCalculatorContext.ProgrammeCourses.
+                    Include(x => x.Programme)
+                    .Where(x => !x.IsDeleted && !x.Programme.IsDeleted && x.ProgrammeId == programmeId).Select(x => x.CourseId).ToList();
+                var sessionSemesterCourseIds = _gradeCalculatorContext.SessionSemesterCourses
+                    .Include(x => x.Course)
+                    .Where(x => !x.IsDeleted && !x.Course.IsDeleted && x.SessionSemesterId == sessionSemesterId).Select(x => x.CourseId).ToList();
+                var registeredCourseIds = _gradeCalculatorContext.RegisteredCourses  // registered courses for this student... we don't wanna add already registered courses
+                    .Include(x => x.Student)
+                    .Where(x => !x.IsDeleted && !x.Student.IsDeleted && x.StudentId == studentId).Select(x => x.CourseId).ToList();
                 
                 var registrationCourseIds = new List<long>();
                 var registrationCourses = new List<RegistrationCourse>();
                 
                 Parallel.ForEach(programmeCourseIds,programmeCourseId =>
-                {
-                    if (sessionSemesterCourseIds.Contains(programmeCourseId)) registrationCourseIds.Add(programmeCourseId);
+                { // as long as this course is in this session semester and it isn't yet registered... add it up
+                    if (sessionSemesterCourseIds.Contains(programmeCourseId) && !registeredCourseIds.Contains(programmeCourseId)) registrationCourseIds.Add(programmeCourseId);
                 });
 
                 // for each course, who are all the lecturers teaching that course

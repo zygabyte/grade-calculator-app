@@ -61,6 +61,18 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return null;
             }
         }
+        
+        public Student ReadStudentByEmail(string email)
+        {
+            try
+            {
+                return _studentRepository.ReadStudentByEmail(email);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
         public bool DeleteStudent(long studentId)
         {

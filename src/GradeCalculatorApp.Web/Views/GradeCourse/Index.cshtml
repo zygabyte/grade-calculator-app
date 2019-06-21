@@ -6,6 +6,7 @@
     Layout = "_Layout";
     
     SessionSemester sessionSemester = ViewBag.SessionSemester;
+    User user = ViewBag.User;
 }
 
 <section class="wrapper">
@@ -42,7 +43,7 @@
 {
     <script>
         let sessionSemesterId = @sessionSemester?.Id; 
-        let studentId = 1; 
+        let studentId = @user?.Id; 
     </script>
     
     <script src="Scripts/GradeCourse/Index.js"></script>
