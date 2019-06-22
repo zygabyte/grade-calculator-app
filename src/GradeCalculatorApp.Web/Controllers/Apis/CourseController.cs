@@ -1,8 +1,10 @@
 using System;
+using System.IO;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers.Apis
@@ -85,6 +87,37 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             catch (Exception e)
             {
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, courseId));
+            }
+        }
+        
+        public ActionResult<ResponseData> UploadCourses()
+        {
+            try
+            {
+                var formFile = Request.Form.Files[0];
+                if (formFile == null || formFile.Length == 0) return ResponseData.SendFailMsg(DefaultConstants.InvalidFileUpload);
+
+                return _courseService.UploadCourses(formFile)
+                    ? ResponseData.SendSuccessMsg()
+                    : ResponseData.SendFailMsg(DefaultConstants.FailureFileUpload);
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(DefaultConstants.ExceptionFileUpload);
+            }
+        }
+        
+        public IActionResult DownloadCourseTemplate()
+        {
+            try
+            {
+                var fileModel = _courseService.DownloadCourseTemplate();
+                return File(fileModel.MemoryStream, fileModel.ContentType, Path.GetFileName(fileModel.Path));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return default;
             }
         }
     }

@@ -14,7 +14,7 @@
       <!-- page start-->
       <section class="card">
           <header class="card-header">
-              @if (sessionSemester == null)
+              @if (sessionSemester?.Session == null)
               {
                   <span>No current session at this moment</span>
               }

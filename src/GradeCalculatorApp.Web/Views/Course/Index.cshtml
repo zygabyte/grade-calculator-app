@@ -5,13 +5,35 @@
     Layout = "_Layout";
 }
 
+@section styles
+{
+    <link rel="stylesheet" href="css/jquery.fileupload.css"/>
+    <link rel="stylesheet" href="css/jquery.fileupload-ui.css"/>
+    
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-noscript.css">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
+    </noscript>
+}
+
 <section class="wrapper">
       <!-- page start-->
       <section class="card">
           <header class="card-header">
               All Courses
+              <br/><br/>
+              
+              <a href="javascript;" id="downloadCourseTemplate" class="btn btn-primary btn-sm">Download Template</a>
+              <span class="btn btn-primary btn-sm  fileinput-button">
+                  <span>Upload Courses</span>
+                  <input id="coursesUpload" type="file" name="coursesUpload">
+              </span>
+
               <span class="pull-right">
-                  <a href="#newCourseModal" data-toggle="modal" onclick="showCreateCourseButton()" class="btn btn-success btn-sm">New Course</a>
+                  @* <a href="#newCourseModal" data-toggle="modal" onclick="showCreateCourseButton()" class="btn btn-primary btn-sm">Upload Courses</a> *@
+                  <a href="#newCourseModal" data-toggle="modal" onclick="showCreateCourseButton()" class="btn btn-primary btn-sm">New Course</a>
               </span>
           </header>
           <div class="card-body">
@@ -102,6 +124,8 @@
 
 @section scripts
 {
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/main.js"></script>
     <script src="Scripts/Course/Index.js"></script>
 }
 

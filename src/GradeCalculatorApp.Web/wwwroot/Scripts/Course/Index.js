@@ -2,6 +2,13 @@ let courseId;
 
 $(document).ready(function () {
     pageLoad();
+
+    $('#downloadCourseTemplate').click(function(e) {
+        e.preventDefault();  //stop the browser from following
+        window.location.href = '/Course/DownloadCourseTemplate';
+    });
+
+    $('#coursesUpload').on('change', uploadCourses);
 });
 
 function pageLoad() {
@@ -117,8 +124,28 @@ function deleteCourseResponse(data) {
     if (data.status) onSuccessModalHide();
 }
 
+function uploadCourses() {
+    const fileInput = document.getElementById('coursesUpload');
 
+    const data = fileInput.files[0];
 
+    const formData = new FormData();
+    formData.append(data.name, data);
+
+    apiFile("POST",
+        "/Course/UploadCourses",
+        formData,
+        true,
+        uploadCoursesResponse,
+        true, true);
+}
+
+function uploadCoursesResponse(data) {
+    if (data.status) {
+        toastr.success('Successfully uploaded courses', 'Success');
+        pageLoad();
+    }
+}
 
 //______________________________________UTILITIES______________________________________
 function onSuccessModalHide() {

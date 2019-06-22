@@ -28,6 +28,20 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public bool CreateCourses(List<Course> courses)
+        {
+            try
+            {
+                _gradeCalculatorContext.Courses.AddRange(courses);
+
+                return  _gradeCalculatorContext.SaveChanges() > 0;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public IEnumerable<Course> ReadCourses(bool takeAll = true, int count = 1000)
         {
             try

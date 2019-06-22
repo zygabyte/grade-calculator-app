@@ -93,7 +93,7 @@ function createSessionSemester(){
     };
 
     api('POST', '/SessionSemester/CreateSessionSemester',
-        {sessionSemester: sessionSemesterObject}, true, createSessionSemesterResponse, true);
+        {sessionSemester: sessionSemesterObject}, true, createSessionSemesterResponse, true, true);
 }
 
 function createSessionSemesterResponse(data){
