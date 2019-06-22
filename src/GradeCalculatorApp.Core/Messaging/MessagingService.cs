@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Options;
+//using SendGrid;
+//using SendGrid.Helpers.Mail;
 
 namespace GradeCalculatorApp.Core.Messaging
 {
@@ -113,7 +115,8 @@ namespace GradeCalculatorApp.Core.Messaging
                         new NetworkCredential(_smtpCredentials.Username, _smtpCredentials.Password),
                     EnableSsl = _smtpCredentials.SslMode,
                     Host = _smtpCredentials.Server,
-                    Port = _smtpCredentials.ServerPort
+                    Port = _smtpCredentials.ServerPort,
+                    Timeout = 200000
                 };
 
                 smClient.Send(myMessage);
@@ -127,5 +130,60 @@ namespace GradeCalculatorApp.Core.Messaging
                 return false;
             }
         }
+        
+//        public bool SendMail(string destination, string ccDestination, string bccDestination,
+//              string messageHeading, string message, string attachments)
+//        {
+//            try
+//            {
+//                string template;
+//
+//                
+//                try
+//                {
+//                    var templateHtml = _smtpCredentials.MailTemplate;
+//                    
+//                    using (var webClient = new WebClient())
+//                    {
+//                        //A web location for the template of the email body
+//                        template = webClient.DownloadString(templateHtml);
+//                    }
+//
+////                    if (templateHtml == null)
+////                    {
+////                        var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Views", "Security", "MailTemplate.cshtml") ;
+////                        if (File.Exists(dir))
+////                            template = File.ReadAllText(dir);
+////                    }
+////                    else
+//                    {
+//                        
+//                    }
+//                }
+//                catch (Exception e)
+//                {
+//                    Console.WriteLine(e);
+//                    return false;
+//                }
+//
+//                template = template.Replace("{title}", messageHeading).Replace("{message}", message);
+////                var apiKey = Environment.GetEnvironmentVariable("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+//                var client = new SendGridClient(_smtpCredentials.Password);
+//                var from = new EmailAddress(_smtpCredentials.MailFrom, "Example User");
+//                var subject = _smtpCredentials.MailHead;
+//                var to = new EmailAddress(destination, "Example User");
+////                var plainTextContent = "and easy to do anywhere, even with C#";
+//                var htmlContent = template;
+//                var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
+//                var response = client.SendEmailAsync(msg).Result;
+//
+//                return response.StatusCode == HttpStatusCode.Accepted;
+//            }
+//            catch (Exception exception)
+//            {
+//                Console.WriteLine(exception);
+//                return false;
+//            }
+//        }
     }
 }
