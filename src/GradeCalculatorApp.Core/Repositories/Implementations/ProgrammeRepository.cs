@@ -59,6 +59,19 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public Programme ReadDefaultProgramme()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Programmes
+                    .FirstOrDefault(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
         public bool DeleteProgramme(long programmeId)
         {
             try

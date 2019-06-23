@@ -157,7 +157,6 @@ function mapCourseResponse(data) {
     if (data.status) window.location = "/Lecturer/LecturerCourses"
 }
 
-
 function uploadLecturers() {
     const fileInput = document.getElementById('lecturersUpload');
 

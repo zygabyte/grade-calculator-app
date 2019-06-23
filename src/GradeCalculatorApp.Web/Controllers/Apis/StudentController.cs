@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
@@ -15,14 +16,7 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
         private readonly IStudentService _studentService;
         private const string ObjectName = "Student"; 
         public StudentController(IStudentService studentService) => _studentService = studentService;
-        
-        // GET
-//        public IActionResult Index()
-//        {
-//            return
-//            View();
-//        }
-
+ 
         public ActionResult<ResponseData> CreateStudent(Student student)
         {
             try
@@ -102,6 +96,35 @@ namespace GradeCalculatorApp.Web.Controllers.Apis
             catch (Exception e)
             {
                 return ResponseData.SendFailMsg(string.Format(DefaultConstants.ExceptionDelete, ObjectName, studentId));
+            }
+        }
+        
+        public ActionResult<ResponseData> UploadStudents()
+        {
+            try
+            {
+                var formFile = Request.Form.Files[0];
+                if (formFile == null || formFile.Length == 0) return ResponseData.SendFailMsg(DefaultConstants.InvalidFileUpload);
+
+                return _studentService.UploadStudents(formFile);
+            }
+            catch (Exception e)
+            {
+                return ResponseData.SendFailMsg(DefaultConstants.ExceptionFileUpload);
+            }
+        }
+        
+        public IActionResult DownloadStudentTemplate()
+        {
+            try
+            {
+                var fileModel = _studentService.DownloadStudentTemplate();
+                return File(fileModel.MemoryStream, fileModel.ContentType, Path.GetFileName(fileModel.Path));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return default;
             }
         }
     }

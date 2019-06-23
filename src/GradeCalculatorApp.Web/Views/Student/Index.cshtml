@@ -5,11 +5,32 @@
     Layout = "_Layout";
 }
 
+@section styles
+{
+    <link rel="stylesheet" href="css/jquery.fileupload.css"/>
+    <link rel="stylesheet" href="css/jquery.fileupload-ui.css"/>
+    
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-noscript.css">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
+    </noscript>
+}
+
 <section class="wrapper">
       <!-- page start-->
       <section class="card">
           <header class="card-header">
               All Students
+              <br/><br/>
+              
+              <a href="javascript;" id="downloadStudentTemplate" class="btn btn-primary btn-sm">Download Template</a>
+              <span class="btn btn-primary btn-sm  fileinput-button">
+                  <span>Upload Students</span>
+                  <input id="studentsUpload" type="file" name="studentsUpload">
+              </span>
+              
               <span class="pull-right">
                   <a href="#newStudentModal" data-toggle="modal" onclick="showCreateStudentButton()" class="btn btn-success btn-sm">New Student</a>
               </span>

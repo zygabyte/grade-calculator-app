@@ -2,6 +2,13 @@ let studentId;
 
 $(document).ready(function () {
     pageLoad();
+
+    $('#downloadStudentTemplate').click(function(e) {
+        e.preventDefault();  //stop the browser from following
+        window.location.href = '/Student/DownloadStudentTemplate';
+    });
+
+    $('#studentsUpload').on('change', uploadStudents);
 });
 
 function pageLoad() {
@@ -147,6 +154,28 @@ function deleteStudentResponse(data) {
     if (data.status) onSuccessModalHide();
 }
 
+function uploadStudents() {
+    const fileInput = document.getElementById('studentsUpload');
+
+    const data = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append(data.name, data);
+
+    apiFile("POST",
+        "/Student/UploadStudents",
+        formData,
+        true,
+        uploadStudentsResponse,
+        true, true);
+}
+
+function uploadStudentsResponse(data) {
+    if (data.status) {
+        toastr.success('Successfully uploaded students', 'Success');
+        pageLoad();
+    }
+}
 
 
 

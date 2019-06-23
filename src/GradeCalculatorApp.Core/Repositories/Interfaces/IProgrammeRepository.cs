@@ -8,6 +8,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         bool CreateProgramme(Programme programme);
         IEnumerable<Programme> ReadProgrammes(bool takeAll = true, int count = 1000);
         Programme ReadProgramme(long programmeId);
+        Programme ReadDefaultProgramme();
         bool DeleteProgramme(long programmeId);
         bool UpdateProgramme(long programmeId, Programme programme);
     }
