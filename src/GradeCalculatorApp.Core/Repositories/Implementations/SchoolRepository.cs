@@ -98,6 +98,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return false;
             }
         }
+        
+        public int CountTotalSchools()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Schools.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
 
         public void Dispose()
         {

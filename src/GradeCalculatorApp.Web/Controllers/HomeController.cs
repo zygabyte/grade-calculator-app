@@ -10,17 +10,33 @@ namespace GradeCalculatorApp.Web.Controllers
     public class HomeController : BaseController
     {
         private readonly IAccountService _accountService;
-
-        public HomeController(IAccountService accountService) : base(accountService) => _accountService = accountService;
+        private readonly IDashboardService _dashboardService;
+        private readonly ISessionSemesterService _sessionSemesterService;
         
+        public HomeController(IAccountService accountService, IDashboardService dashboardService, ISessionSemesterService sessionSemesterService) : base(accountService)
+        {
+            _accountService = accountService;
+            _dashboardService = dashboardService;
+            _sessionSemesterService = sessionSemesterService;
+        }
+
         public IActionResult Index()
         {
-//            _accountService.Register(new User
-//            {
-//                Email = "admin@gmail.com", FirstName = "Master", LastName = "Chief", UserRole = UserRole.Administrator,
-//                PasswordHash = "admin123$"
-//            });
-            ViewBag.User = _accountService.GetUserInSession();
+            var user = _accountService.GetUserInSession();
+            var sessionSemester = _sessionSemesterService.ReadCurrentSessionSemester();
+
+            switch (user.UserRole)
+            {
+                case UserRole.Lecturer when sessionSemester.Id > 0:
+                    ViewBag.DashboardModel = _dashboardService.GetLecturerDashboard(sessionSemester.Id, user.Id);
+                    break;
+                case UserRole.Administrator:
+                    ViewBag.DashboardModel = _dashboardService.GetAdminDashboard();
+                    break;
+            }
+
+            ViewBag.SessionSemester = sessionSemester;
+            ViewBag.User = user;
             return View();
         }
 

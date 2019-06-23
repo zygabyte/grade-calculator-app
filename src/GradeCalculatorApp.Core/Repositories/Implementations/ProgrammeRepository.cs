@@ -117,6 +117,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return false;
             }
         }
+        
+        public int CountTotalProgrammes()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Programmes.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
 
         public void Dispose()
         {

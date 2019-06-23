@@ -12,5 +12,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         SessionSemester ReadCurrentSessionSemester();
         bool DeleteSessionSemester(long sessionId);
         bool UpdateSessionSemester(long sessionId, SessionSemester sessionSemester);
+        
+        int CountTotalSessionSemesters();
     }
 }

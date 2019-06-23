@@ -43,6 +43,25 @@
     <link href="/css/style-responsive.css" rel="stylesheet" />
     <link href="/css/custom-style.css" rel="stylesheet" />
     
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        #main-content {
+            padding-bottom: 2.5rem;    /* Footer height */
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;            /* Footer height */
+            z-index: -1;
+        }
+    </style>
+    
     @RenderSection("styles", required: false)
 </head>
 

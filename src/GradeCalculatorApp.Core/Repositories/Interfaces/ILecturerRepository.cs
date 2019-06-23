@@ -11,5 +11,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         Lecturer ReadLecturerByEmail(string email);
         bool DeleteLecturer(long lecturerId);
         bool UpdateLecturer(long lecturerId, Lecturer lecturer);
+        
+        int CountTotalLecturers();
     }
 }

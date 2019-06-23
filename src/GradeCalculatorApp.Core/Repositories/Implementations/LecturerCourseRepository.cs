@@ -130,6 +130,21 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public int CountTotalLecturerCourses(long lecturerId)
+        {
+            try
+            {
+                return _gradeCalculatorContext.LecturerCourses
+                    .Include(x => x.Course)
+                    .Include(x => x.Lecturer)
+                    .Count(x => !x.IsDeleted && !x.Course.IsDeleted && !x.Lecturer.IsDeleted && x.LecturerId == lecturerId);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
         public void Dispose()
         {
             _gradeCalculatorContext?.Dispose();

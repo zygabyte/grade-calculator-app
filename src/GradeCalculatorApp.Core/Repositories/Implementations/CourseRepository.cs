@@ -113,6 +113,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public int CountTotalCourses()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Courses.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
 //        public bool MapCourseToSessionSemesterCourse(long sessionSemesterCourseId, long courseId)
 //        {
 //            try

@@ -11,5 +11,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         Programme ReadDefaultProgramme();
         bool DeleteProgramme(long programmeId);
         bool UpdateProgramme(long programmeId, Programme programme);
+        
+        int CountTotalProgrammes();
     }
 }

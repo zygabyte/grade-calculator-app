@@ -99,6 +99,7 @@ namespace GradeCalculatorApp.Web
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IHashService, HashService>();
             services.AddScoped<IAdministratorService, AdministratorService>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             services.AddHttpContextAccessor();
             

@@ -11,5 +11,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         Student ReadStudentByEmail(string email);
         bool DeleteStudent(long studentId);
         bool UpdateStudent(long studentId, Student student);
+        
+        int CountTotalStudents();
     }
 }

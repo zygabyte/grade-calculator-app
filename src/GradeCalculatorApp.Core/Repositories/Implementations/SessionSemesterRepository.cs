@@ -69,7 +69,7 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
             catch (Exception e)
             {
-                return null;
+                return default;
             }
         }
 
@@ -129,6 +129,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             catch (Exception e)
             {
                 return false;
+            }
+        }
+        
+        public int CountTotalSessionSemesters()
+        {
+            try
+            {
+                return _gradeCalculatorContext.SessionSemesters.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
             }
         }
 

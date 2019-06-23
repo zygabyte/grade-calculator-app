@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Data;
 using GradeCalculatorApp.Data.Domains;
@@ -70,6 +71,40 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             catch (Exception e)
             {
                 return new List<RegisteredCourseModel>();
+            }
+        }
+
+        public int CountTotalLecturerRegisteredCourses(long sessionSemesterId, long lecturerId)
+        {
+            try
+            {
+                return _gradeCalculatorContext.RegisteredCourses
+                    .Include(x => x.SessionSemester)
+                    .Include(x => x.Lecturer)
+                    .Count(x => !x.IsDeleted && !x.SessionSemester.IsDeleted && !x.Lecturer.IsDeleted 
+                                && x.SessionSemesterId == sessionSemesterId && x.LecturerId == lecturerId);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
+        public int CountTotalLecturerStudents(long sessionSemesterId, long lecturerId)
+        {
+            try
+            {
+                return _gradeCalculatorContext.RegisteredCourses
+                    .Include(x => x.SessionSemester)
+                    .Include(x => x.Lecturer)
+                    .Where(x => !x.IsDeleted && !x.SessionSemester.IsDeleted && !x.Lecturer.IsDeleted
+                                && x.SessionSemesterId == sessionSemesterId && x.LecturerId == lecturerId)
+                    .GroupBy(x => x.StudentId).Select(x => x.FirstOrDefault()).Count();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 

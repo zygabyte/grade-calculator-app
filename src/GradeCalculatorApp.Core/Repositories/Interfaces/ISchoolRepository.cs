@@ -10,5 +10,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         School ReadSchool(long schoolId);
         bool DeleteSchool(long schoolId);
         bool UpdateSchool(long schoolId, School school);
+        
+        int CountTotalSchools();
     }
 }

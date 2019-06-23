@@ -11,5 +11,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         Department ReadDefaultDepartment();
         bool DeleteDepartment(long departmentId);
         bool UpdateDepartment(long departmentId, Department department);
+        
+        int CountTotalDepartments();
     }
 }

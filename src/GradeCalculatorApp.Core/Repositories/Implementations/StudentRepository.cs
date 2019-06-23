@@ -128,6 +128,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return false;
             }
         }
+        
+        public int CountTotalStudents()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Students.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
 
         public void Dispose()
         {

@@ -65,11 +65,11 @@ namespace GradeCalculatorApp.Core.Services.Implementations
         {
             try
             {
-                return CurrentExists() ? _sessionSemesterRepository.ReadCurrentSessionSemester() : new SessionSemester();
+                return CurrentExists() ? _sessionSemesterRepository.ReadCurrentSessionSemester() : default;
             }
             catch (Exception e)
             {
-                return new SessionSemester();
+                return default;
             }
         }
 

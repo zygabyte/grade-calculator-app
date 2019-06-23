@@ -119,6 +119,18 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
                 return false;
             }
         }
+        
+        public int CountTotalDepartments()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Departments.Count(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
 
         public void Dispose()
         {
