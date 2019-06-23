@@ -2,6 +2,13 @@ let lecturerId;
 
 $(document).ready(function () {
     pageLoad();
+
+    $('#downloadLecturerTemplate').click(function(e) {
+        e.preventDefault();  //stop the browser from following
+        window.location.href = '/Lecturer/DownloadLecturerTemplate';
+    });
+
+    $('#lecturersUpload').on('change', uploadLecturers);
 });
 
 function pageLoad() {
@@ -151,6 +158,28 @@ function mapCourseResponse(data) {
 }
 
 
+function uploadLecturers() {
+    const fileInput = document.getElementById('lecturersUpload');
+
+    const data = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append(data.name, data);
+
+    apiFile("POST",
+        "/Lecturer/UploadLecturers",
+        formData,
+        true,
+        uploadLecturersResponse,
+        true, true);
+}
+
+function uploadLecturersResponse(data) {
+    if (data.status) {
+        toastr.success('Successfully uploaded lecturers', 'Success');
+        pageLoad();
+    }
+}
 //______________________________________UTILITIES______________________________________
 function onSuccessModalHide() {
     pageLoad();

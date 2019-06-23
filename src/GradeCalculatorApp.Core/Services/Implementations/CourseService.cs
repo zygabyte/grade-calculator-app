@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Repositories.Interfaces;
 using GradeCalculatorApp.Core.Services.Interfaces;
+using GradeCalculatorApp.Core.Utilities;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
 using Microsoft.AspNetCore.Http;
@@ -130,7 +131,7 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 using (var stream = new FileStream(path, FileMode.Open)) stream.CopyTo(memory);  
                 memory.Position = 0;  
                 
-                return new FileModel { MemoryStream = memory, ContentType = GetContentType(path), Path = path };
+                return new FileModel { MemoryStream = memory, ContentType = DirectoryUtility.GetContentType(path), Path = path };
             }
             catch(Exception e)
             {
@@ -138,31 +139,6 @@ namespace GradeCalculatorApp.Core.Services.Implementations
                 return new FileModel();
             }
         }
-        
-        private static string GetContentType(string path)  
-        {  
-            var types = GetMimeTypes();  
-            var ext = Path.GetExtension(path).ToLowerInvariant();  
-            return types[ext];  
-        }
-        
-        private static Dictionary<string, string> GetMimeTypes()  
-        {  
-            return new Dictionary<string, string>  
-            {  
-                {".txt", "text/plain"},  
-                {".pdf", "application/pdf"},  
-                {".doc", "application/vnd.ms-word"},  
-                {".docx", "application/vnd.ms-word"},  
-                {".xls", "application/vnd.ms-excel"},  
-                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},  
-                {".png", "image/png"},  
-                {".jpg", "image/jpeg"},  
-                {".jpeg", "image/jpeg"},  
-                {".gif", "image/gif"},  
-                {".csv", "text/csv"}  
-            };  
-        } 
         
 //        public bool MapCourseToSessionSemesterCourse(long sessionSemesterCourseId, List<long> courseIds)
 //        {

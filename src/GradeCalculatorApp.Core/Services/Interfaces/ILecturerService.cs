@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using GradeCalculatorApp.Data.Domains;
+using GradeCalculatorApp.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GradeCalculatorApp.Core.Services.Interfaces
 {
@@ -11,5 +13,7 @@ namespace GradeCalculatorApp.Core.Services.Interfaces
         Lecturer ReadLecturerByEmail(string email);
         bool DeleteLecturer(long lecturerId);
         bool UpdateLecturer(long lecturerId, Lecturer lecturer);
+        ResponseData UploadLecturers(IFormFile formFile);
+        FileModel DownloadLecturerTemplate(string filename = "LecturersTemplate.xlsx");
     }
 }

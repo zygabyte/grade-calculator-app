@@ -4,7 +4,6 @@ using GradeCalculatorApp.Core.Constants;
 using GradeCalculatorApp.Core.Services.Interfaces;
 using GradeCalculatorApp.Data.Domains;
 using GradeCalculatorApp.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradeCalculatorApp.Web.Controllers.Apis

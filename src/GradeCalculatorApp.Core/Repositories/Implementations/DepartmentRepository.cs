@@ -59,6 +59,19 @@ namespace GradeCalculatorApp.Core.Repositories.Implementations
             }
         }
 
+        public Department ReadDefaultDepartment()
+        {
+            try
+            {
+                return _gradeCalculatorContext.Departments
+                    .FirstOrDefault(x => !x.IsDeleted);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
         public bool DeleteDepartment(long departmentId)
         {
             try

@@ -15,6 +15,7 @@ namespace GradeCalculatorApp.Core.Constants
         public static string FailureDelete { get; } = "Failure in deleting {0} with Id {1}";
         public static string FailureReadAll { get; } = "Failure in reading all {0}";
         public static string FailureFileUpload { get; } = "Failure in uploading file";
+        public static string FailureLecturerFileUpload { get; } = "Not all lecturers were successfully uploaded. Kindly confirm  which ones were";
         public static string FailureRead { get; } = "Failure in reading {0} with Id {1}";
         public static string FailureLogIn { get; } = "Failure in logging in user with email {0}";
         public static string FailureRegister { get; } = "Failure in registering user with email {0}";

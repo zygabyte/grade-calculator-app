@@ -5,11 +5,32 @@
     Layout = "_Layout";
 }
 
+@section styles
+{
+    <link rel="stylesheet" href="css/jquery.fileupload.css"/>
+    <link rel="stylesheet" href="css/jquery.fileupload-ui.css"/>
+    
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-noscript.css">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
+    </noscript>
+}
+
 <section class="wrapper">
       <!-- page start-->
       <section class="card">
           <header class="card-header">
               All Lecturers
+              <br/><br/>
+              
+              <a href="javascript;" id="downloadLecturerTemplate" class="btn btn-primary btn-sm">Download Template</a>
+              <span class="btn btn-primary btn-sm  fileinput-button">
+                  <span>Upload Lecturers</span>
+                  <input id="lecturersUpload" type="file" name="lecturersUpload">
+              </span>
+              
               <span class="pull-right">
                   <a href="#newLecturerModal" data-toggle="modal" onclick="showCreateLecturerButton()" class="btn btn-success btn-sm">New Lecturer</a>
               </span>
@@ -109,5 +130,7 @@
 
 @section scripts
 {
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/main.js"></script>
     <script src="Scripts/Lecturer/Index.js"></script>
 }

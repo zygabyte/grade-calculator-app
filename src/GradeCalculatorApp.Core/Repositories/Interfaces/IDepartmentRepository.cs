@@ -8,6 +8,7 @@ namespace GradeCalculatorApp.Core.Repositories.Interfaces
         bool CreateDepartment(Department department);
         IEnumerable<Department> ReadDepartments(bool takeAll = true, int count = 1000);
         Department ReadDepartment(long departmentId);
+        Department ReadDefaultDepartment();
         bool DeleteDepartment(long departmentId);
         bool UpdateDepartment(long departmentId, Department department);
     }
